@@ -65,6 +65,5 @@ func handleWebSocketConnection(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("textureCoordinates: %v\n", len(data.GeometryTextureCoordinates))
 		fmt.Printf("triangleIndices: %v\n", len(data.GeometryTriangleIndices))
 		fmt.Printf("triangleCount: %v\n", data.GeometryTriangleCount)
-
 	}
 }

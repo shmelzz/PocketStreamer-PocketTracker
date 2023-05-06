@@ -73,14 +73,14 @@ class FaceTrackingViewController: UIViewController {
         
         present(alertController, animated: true)
     }
-
+    
     
     private func setupSceneView() {
-         sceneView = ARSCNView(frame: view.bounds)
-         sceneView.delegate = self
-         sceneView.session.delegate = self
-         sceneView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-         view.addSubview(sceneView)
+        sceneView = ARSCNView(frame: view.bounds)
+        sceneView.delegate = self
+        sceneView.session.delegate = self
+        sceneView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(sceneView)
         
         sceneView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -89,12 +89,12 @@ class FaceTrackingViewController: UIViewController {
             sceneView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             sceneView.topAnchor.constraint(equalTo: view.topAnchor),
         ])
-         
-         let faceGeometry = ARSCNFaceGeometry(device: sceneView.device!)
-         faceNode = SCNNode(geometry: faceGeometry)
-         faceNode.geometry?.firstMaterial?.fillMode = .lines
-     }
-     
+        
+        let faceGeometry = ARSCNFaceGeometry(device: sceneView.device!)
+        faceNode = SCNNode(geometry: faceGeometry)
+        faceNode.geometry?.firstMaterial?.fillMode = .lines
+    }
+    
     
     private func setupARFaceTracking() {
         guard ARFaceTrackingConfiguration.isSupported else {
@@ -175,7 +175,7 @@ extension FaceTrackingViewController: WebSocketDelegate {
             print("WebSocket error: \(error?.localizedDescription ?? "Unknown error")")
         }
     }
-
+    
 }
 
 
