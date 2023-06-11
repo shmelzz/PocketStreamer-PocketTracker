@@ -13,14 +13,60 @@ const (
 	port = 3000 // Your port number
 )
 
-type FaceTrackingData struct {
-	TimeCode                   int64     `json:"timeCode"`
-	LeftEye                    []float32 `json:"leftEye"`
-	RightEye                   []float32 `json:"rightEye"`
-	GeometryVertices           []float32 `json:"geometryVertices"`
-	GeometryTextureCoordinates []float32 `json:"geometryTextureCoordinates"`
-	GeometryTriangleIndices    []float32 `json:"geometryTriangleIndices"`
-	GeometryTriangleCount      int32     `json:"geometryTriangleCount"`
+type FaceTrackingFeatures struct {
+	TimeCode        float32 `json:"timeCode"`
+	MouthStretchR   float32 `json:"mouthStretch_R"`
+	MouthRollUpper  float32 `json:"mouthRollUpper"`
+	BrowOuterUpR    float32 `json:"browOuterUp_R"`
+	EyeLookUpL      float32 `json:"eyeLookUp_L"`
+	EyeSquintR      float32 `json:"eyeSquint_R"`
+	MouthLeft       float32 `json:"mouthLeft"`
+	BrowDownR       float32 `json:"browDown_R"`
+	MouthFrownR     float32 `json:"mouthFrown_R"`
+	EyeBlinkR       float32 `json:"eyeBlink_R"`
+	MouthFrownL     float32 `json:"mouthFrown_L"`
+	EyeLookDownR    float32 `json:"eyeLookDown_R"`
+	EyeSquintL      float32 `json:"eyeSquint_L"`
+	EyeLookOutL     float32 `json:"eyeLookOut_L"`
+	JawForward      float32 `json:"jawForward"`
+	MouthRollLower  float32 `json:"mouthRollLower"`
+	MouthDimpleL    float32 `json:"mouthDimple_L"`
+	MouthSmileL     float32 `json:"mouthSmile_L"`
+	EyeWideL        float32 `json:"eyeWide_L"`
+	BrowOuterUpL    float32 `json:"browOuterUp_L"`
+	EyeLookUpR      float32 `json:"eyeLookUp_R"`
+	MouthShrugLower float32 `json:"mouthShrugLower"`
+	BrowInnerUp     float32 `json:"browInnerUp"`
+	MouthUpperUpR   float32 `json:"mouthUpperUp_R"`
+	MouthClose      float32 `json:"mouthClose"`
+	JawLeft         float32 `json:"jawLeft"`
+	MouthStretchL   float32 `json:"mouthStretch_L"`
+	JawRight        float32 `json:"jawRight"`
+	JawOpen         float32 `json:"jawOpen"`
+	CheekSquintR    float32 `json:"cheekSquint_R"`
+	EyeLookInL      float32 `json:"eyeLookIn_L"`
+	MouthDimpleR    float32 `json:"mouthDimple_R"`
+	MouthPucker     float32 `json:"mouthPucker"`
+	BrowDownL       float32 `json:"browDown_L"`
+	MouthLowerDownL float32 `json:"mouthLowerDown_L"`
+	MouthUpperUpL   float32 `json:"mouthUpperUp_L"`
+	NoseSneerR      float32 `json:"noseSneer_R"`
+	EyeLookDownL    float32 `json:"eyeLookDown_L"`
+	MouthRight      float32 `json:"mouthRight"`
+	MouthPressR     float32 `json:"mouthPress_R"`
+	MouthPressL     float32 `json:"mouthPress_L"`
+	CheekPuff       float32 `json:"cheekPuff"`
+	CheekSquintL    float32 `json:"cheekSquint_L"`
+	EyeLookInR      float32 `json:"eyeLookIn_R"`
+	MouthSmileR     float32 `json:"mouthSmile_R"`
+	MouthShrugUpper float32 `json:"mouthShrugUpper"`
+	EyeBlinkL       float32 `json:"eyeBlink_L"`
+	MouthFunnel     float32 `json:"mouthFunnel"`
+	NoseSneerL      float32 `json:"noseSneer_L"`
+	MouthLowerDownR float32 `json:"mouthLowerDown_R"`
+	EyeLookOutR     float32 `json:"eyeLookOut_R"`
+	EyeWideR        float32 `json:"eyeWide_R"`
+	TongueOut       float32 `json:"tongueOut"`
 }
 
 var upgrader = websocket.Upgrader{
@@ -49,7 +95,7 @@ func handleWebSocketConnection(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-		var data FaceTrackingData
+		var data FaceTrackingFeatures
 		err = json.Unmarshal(message, &data)
 		if err != nil {
 			log.Println("Error unmarshalling JSON:", err)
@@ -58,12 +104,6 @@ func handleWebSocketConnection(w http.ResponseWriter, r *http.Request) {
 
 		fmt.Printf("Received face tracking data:\n")
 		fmt.Printf("TimeCode: %v\n", data.TimeCode)
-		fmt.Printf("LeftEye: %v\n", data.LeftEye)
-		fmt.Printf("RightEye: %v\n", data.RightEye)
-		fmt.Printf("Geometry:")
-		fmt.Printf("vertices: %v\n", len(data.GeometryVertices))
-		fmt.Printf("textureCoordinates: %v\n", len(data.GeometryTextureCoordinates))
-		fmt.Printf("triangleIndices: %v\n", len(data.GeometryTriangleIndices))
-		fmt.Printf("triangleCount: %v\n", data.GeometryTriangleCount)
+		fmt.Printf("TongueOut: %v\n", data.TongueOut)
 	}
 }

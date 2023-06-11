@@ -19,11 +19,14 @@ class FaceTrackingViewController: UIViewController {
     
     private var isWebsocketConnected: Bool = false
     
+    private let connectButton = UIButton(type: .system)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Loaded")
         setupSceneView()
         setupARFaceTracking()
+        setupConnectButton()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -36,6 +39,26 @@ class FaceTrackingViewController: UIViewController {
     }
     
     // MARK: Private
+    
+    private func setupConnectButton() {
+        connectButton.backgroundColor = .gray
+        connectButton.setTitle("Connect", for: .normal)
+        connectButton.addTarget(self, action: #selector(connectButtonTapped), for: .touchUpInside)
+        connectButton.layer.cornerRadius = 10
+        
+        view.addSubview(connectButton)
+        connectButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            connectButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            connectButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+        ])
+    }
+    
+    @objc private func connectButtonTapped() {
+        presentWebSocketConfigAlert()
+    }
+
     
     private func presentWebSocketConfigAlert() {
         let alertController = UIAlertController(title: "WebSocket Configuration", message: "Enter WebSocket address and port", preferredStyle: .alert)
@@ -144,6 +167,7 @@ extension FaceTrackingViewController: WebSocketDelegate {
     func didReceive(event: WebSocketEvent, client: WebSocket) {
         switch event {
         case .connected(let headers):
+            connectButton.backgroundColor = .green
             print("WebSocket connected")
             isWebsocketConnected = true
             guard let jsonData = try? JSONSerialization.data(withJSONObject: ["leftEye":[1.2], "rightEye":[2.3], "geometry":[1]], options: []) else {
@@ -155,6 +179,7 @@ extension FaceTrackingViewController: WebSocketDelegate {
             }
             websocket.write(data: jsonData)
         case .disconnected(let reason, let code):
+            connectButton.backgroundColor = .gray
             print("WebSocket disconnected: \(reason)")
             isWebsocketConnected = false
         case .text(let text):
@@ -170,6 +195,7 @@ extension FaceTrackingViewController: WebSocketDelegate {
         case .reconnectSuggested(_):
             break
         case .cancelled:
+            connectButton.backgroundColor = .red
             print("WebSocket cancelled")
         case .error(let error):
             print("WebSocket error: \(error?.localizedDescription ?? "Unknown error")")
