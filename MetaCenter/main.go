@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"sync"
 
 	"github.com/gorilla/websocket"
 )
@@ -12,6 +13,8 @@ import (
 const (
 	port = 3000 // Your port number
 )
+
+// The rest of your code...
 
 type FaceTrackingFeatures struct {
 	TimeCode        float32 `json:"timeCode"`
@@ -69,41 +72,109 @@ type FaceTrackingFeatures struct {
 	TongueOut       float32 `json:"tongueOut"`
 }
 
-var upgrader = websocket.Upgrader{
-	ReadBufferSize:  1024,
-	WriteBufferSize: 1024,
+type client struct {
+	conn *websocket.Conn
+	send chan []byte
 }
 
+var (
+	upgrader = websocket.Upgrader{
+		ReadBufferSize:  1024,
+		WriteBufferSize: 1024,
+	}
+
+	clients = make(map[*client]bool)
+	mu      sync.Mutex
+)
+
 func main() {
-	http.HandleFunc("/", handleWebSocketConnection)
+	http.HandleFunc("/send", handleSender)
+	http.HandleFunc("/receive", handleReceiver)
 	fmt.Println("Listening on port", port, "...")
 	log.Fatal(http.ListenAndServe("0.0.0.0:"+fmt.Sprintf("%d", port), nil))
 }
 
-func handleWebSocketConnection(w http.ResponseWriter, r *http.Request) {
+func handleSender(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println(err)
 		return
 	}
-	defer conn.Close()
 
-	for {
-		_, message, err := conn.ReadMessage()
-		if err != nil {
-			log.Println("Error reading message:", err)
-			break
+	client := &client{conn: conn, send: make(chan []byte)}
+	clients[client] = true
+
+	go func() {
+		defer deleteClient(client)
+		for {
+			_, message, err := conn.ReadMessage()
+			log.Println("Message received:", message)
+			if err != nil {
+				log.Println("Error reading message:", err)
+				return
+			}
+			var data FaceTrackingFeatures
+			err = json.Unmarshal(message, &data)
+			if err != nil {
+				log.Println("Error unmarshalling JSON:", err)
+				continue
+			}
+
+			broadcast(message)
 		}
+	}()
+}
 
-		var data FaceTrackingFeatures
-		err = json.Unmarshal(message, &data)
-		if err != nil {
-			log.Println("Error unmarshalling JSON:", err)
-			continue
-		}
-
-		fmt.Printf("Received face tracking data:\n")
-		fmt.Printf("TimeCode: %v\n", data.TimeCode)
-		fmt.Printf("TongueOut: %v\n", data.TongueOut)
+func handleReceiver(w http.ResponseWriter, r *http.Request) {
+	conn, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Println(err)
+		return
 	}
+
+	client := &client{conn: conn, send: make(chan []byte)}
+	clients[client] = true
+
+	go sendToClient(client)
+}
+
+func deleteClient(c *client) {
+	mu.Lock()
+	delete(clients, c)
+	mu.Unlock()
+
+	c.conn.Close()
+	close(c.send)
+}
+
+func sendToClient(c *client) {
+	defer deleteClient(c)
+	for {
+		select {
+		case message, ok := <-c.send:
+			if !ok {
+				return
+			}
+
+			err := c.conn.WriteMessage(websocket.TextMessage, message)
+			log.Println("Message send:", message)
+			if err != nil {
+				log.Println("Error writing message:", err)
+				return
+			}
+		}
+	}
+}
+
+func broadcast(message []byte) {
+	mu.Lock()
+	for client := range clients {
+		select {
+		case client.send <- message:
+			log.Println("Message send to", client)
+		default:
+			log.Println("client")
+		}
+	}
+	mu.Unlock()
 }
