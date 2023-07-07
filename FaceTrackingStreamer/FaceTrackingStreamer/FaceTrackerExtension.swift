@@ -13,8 +13,8 @@ extension ARFaceAnchor {
     var eyeNoseMouthData: [String: Float] {
         var blendShapes = Dictionary(uniqueKeysWithValues:
                                         blendShapes.map { key, value in (key.rawValue, value.floatValue) })
-        print(blendShapes.keys.count)
         blendShapes["timeCode"] = Float(DispatchTime.now().uptimeNanoseconds)
+        print(blendShapes["timeCode"])
         return blendShapes
     }
 }
