@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"sync"
 
@@ -88,13 +89,24 @@ var (
 )
 
 func main() {
-	http.HandleFunc("/send", handleSender)
-	http.HandleFunc("/receive", handleReceiver)
-	fmt.Println("Listening on port", port, "...")
+	http.HandleFunc("/facetracking", handleFaceTracking)
+	http.HandleFunc("/composed", handleReceiver)
+	addrs, err := net.InterfaceAddrs()
+	if err != nil {
+		panic(err)
+	}
+	for _, addr := range addrs {
+		if ipnet, ok := addr.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+			if ipnet.IP.To4() != nil {
+				fmt.Println(ipnet.IP.String())
+			}
+		}
+	}
+	fmt.Println("Listening on port", port, "...", "From IP: ")
 	log.Fatal(http.ListenAndServe("0.0.0.0:"+fmt.Sprintf("%d", port), nil))
 }
 
-func handleSender(w http.ResponseWriter, r *http.Request) {
+func handleFaceTracking(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println(err)
@@ -108,7 +120,6 @@ func handleSender(w http.ResponseWriter, r *http.Request) {
 		defer deleteClient(client)
 		for {
 			_, message, err := conn.ReadMessage()
-			log.Println("Message received:", message)
 			if err != nil {
 				log.Println("Error reading message:", err)
 				return
@@ -157,7 +168,6 @@ func sendToClient(c *client) {
 			}
 
 			err := c.conn.WriteMessage(websocket.TextMessage, message)
-			log.Println("Message send:", message)
 			if err != nil {
 				log.Println("Error writing message:", err)
 				return

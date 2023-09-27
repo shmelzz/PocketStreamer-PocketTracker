@@ -80,9 +80,9 @@ class FaceTrackingViewController: UIViewController {
             
             var addressPort = ""
             if !address.isEmpty && !port.isEmpty {
-                addressPort = "ws://\(address):\(port)/send"
+                addressPort = "ws://\(address):\(port)/facetracking"
             } else {
-                addressPort = "ws://192.168.0.9:3000/send"
+                addressPort = "ws://192.168.31.186:3000/facetracking"
             }
             self.setupWebSocketConnection(url: addressPort)
             print(addressPort)
