@@ -1,13 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Concurrent;  // Required for ConcurrentQueue
 using UnityEngine;
-
 using NativeWebSocket;
+using Newtonsoft.Json;
+using MetaComposer.Assets;
 
 public class WebSocketConnection : MonoBehaviour
 {
     WebSocket websocket;
+    private ConcurrentQueue<Action> actions = new ConcurrentQueue<Action>();  // Create a thread-safe queue for actions
 
     // Start is called before the first frame update
     async void Start()
@@ -33,9 +36,16 @@ public class WebSocketConnection : MonoBehaviour
         {
             // getting the message as a string
             var message = System.Text.Encoding.UTF8.GetString(bytes);
-            Debug.Log("OnMessage! " + message);
+            // Enqueue the action you want to perform on the main thread
+            actions.Enqueue(() =>
+            {
+                // Parse the JSON message and use it to change your game object
+                // This is just a placeholder, replace with your own logic
+                FaceTrackingData faceData = JsonConvert.DeserializeObject<FaceTrackingData>(message);
+                Debug.Log("Changing game object based on message: " + faceData.mouthStretch_R);
+                GetComponent<Rigidbody>().velocity = new Vector3(0, (float)faceData.mouthStretch_R, 0);
+            });
         };
-
 
         // waiting for messages
         await websocket.Connect();
@@ -45,6 +55,15 @@ public class WebSocketConnection : MonoBehaviour
     {
 #if !UNITY_WEBGL || UNITY_EDITOR
         websocket.DispatchMessageQueue();
+
+        // Dequeue and perform the actions on the main thread
+        while (actions.Count > 0)
+        {
+            if (actions.TryDequeue(out var action))
+            {
+                action?.Invoke();
+            }
+        }
 #endif
     }
 
@@ -64,5 +83,4 @@ public class WebSocketConnection : MonoBehaviour
     {
         await websocket.Close();
     }
-
 }
