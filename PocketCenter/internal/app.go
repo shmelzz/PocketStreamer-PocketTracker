@@ -8,6 +8,7 @@ import (
 	"pocketcenter/internal/config"
 	"pocketcenter/internal/handlers"
 	"pocketcenter/internal/router"
+	"pocketcenter/internal/services"
 )
 
 type App struct {
@@ -16,7 +17,7 @@ type App struct {
 
 // NewApp creates and configures your application.
 func NewApp(cfg *config.Config) *App {
-	handlers := handlers.NewFeatureHandler()
+	handlers := handlers.NewFeatureHandler(services.NewBroadcastService())
 	router.InitRoutes(handlers)
 	// Set up the router and routes.
 
