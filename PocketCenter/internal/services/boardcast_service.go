@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"sync"
 
+	"pocketcenter/metrics"
+
 	"github.com/gorilla/websocket"
 )
 
@@ -74,8 +76,10 @@ func (s *BroadcastService) Broadcast(message []byte) {
 	for client := range s.clients {
 		select {
 		case client.Send <- message:
+			metrics.ComposerDataStatus.WithLabelValues("success").Inc()
 			log.Printf("Send a message to client, client count: %d", len(s.clients))
 		default:
+			metrics.ComposerDataStatus.WithLabelValues("failed").Inc()
 			log.Printf("Failed to send message to client, client count: %d", len(s.clients))
 		}
 	}
