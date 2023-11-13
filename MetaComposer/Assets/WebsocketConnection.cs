@@ -15,7 +15,8 @@ public class WebSocketConnection : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
-        websocket = new WebSocket("ws://localhost:3000/composed");
+        Debug.Log("Start");
+        websocket = new WebSocket("ws://localhost:8080/composed");
 
         websocket.OnOpen += () =>
         {
