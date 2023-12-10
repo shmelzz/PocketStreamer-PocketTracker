@@ -14,7 +14,7 @@ func LoadConfig() (*Config, error) {
 	port := os.Getenv("SERVER_PORT")
 	if serverAddress == "" {
 		serverAddress = "0.0.0.0"
-		port = "8080" // Default address
+		port = "4545" // Default address
 	}
 	return &Config{
 		ServerAddress: serverAddress,
