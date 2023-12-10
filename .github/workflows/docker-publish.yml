@@ -34,8 +34,8 @@ jobs:
         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d
         with:
           registry: ${{ secrets.REGISTRY }}
-          username: ${{ secrets.YC_USER }}
-          password: ${{ secrets.YC_PASSWORD }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_API_KEY }}
 
       - name: Extract Docker metadata
         id: meta
