@@ -12,4 +12,5 @@ func InitRoutes(handler *handlers.FeatureHandler) {
 	http.HandleFunc("/facetracking", handler.HandleFaceTracking)
 	http.HandleFunc("/composed", handler.HandleReceiver)
 	http.Handle("/metrics", promhttp.Handler())
+	http.HandleFunc("/version", handler.HandleVersion)
 }

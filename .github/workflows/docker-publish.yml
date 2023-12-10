@@ -10,7 +10,7 @@ env:
   IMAGE_NAME: pocket-center
 
 jobs:
-  build:
+  build and push:
     runs-on: self-hosted
     permissions:
       contents: read
