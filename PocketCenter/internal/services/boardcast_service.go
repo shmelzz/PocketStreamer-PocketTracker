@@ -1,15 +1,11 @@
 package services
 
 import (
-	"context"
 	"log"
 	"net/http"
-	"pocketcenter/metrics"
 	"sync"
-	"time"
 
 	"github.com/gorilla/websocket"
-	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 )
 
 var upgrader = websocket.Upgrader{
@@ -75,34 +71,13 @@ func (s *BroadcastService) Broadcast(message []byte) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	influxClient := influxdb2.NewClient("http://localhost:8086", "Tjo_7XVMbeaLlqim3rmeG-yawFKPkHa6DbsSKBzCNFWajsMrd1ppx7idadnRVLi6MHFRzk2X2mQH6VuWLfQxEA==")
-	writeAPI := influxClient.WriteAPIBlocking("pocket-center", "pocket-center")
-
 	for client := range s.clients {
 		select {
 		case client.Send <- message:
-			p := influxdb2.NewPointWithMeasurement("sendToComposerStatus").
-				AddField("status", true).
-				SetTime(time.Now())
-			err := writeAPI.WritePoint(context.Background(), p)
-			if err != nil {
-				panic(err)
-			}
-			metrics.ComposerDataStatus.WithLabelValues("success").Inc()
-			//log.Printf("Send a message to client, client count: %d", len(s.clients))
+			log.Printf("Send a message to client, client count: %d", len(s.clients))
 		default:
-			p := influxdb2.NewPointWithMeasurement("sendToComposerStatus").
-				AddField("status", false).
-				SetTime(time.Now())
-			err := writeAPI.WritePoint(context.Background(), p)
-			if err != nil {
-				panic(err)
-			}
-			metrics.ComposerDataStatus.WithLabelValues("failed").Inc()
 			log.Printf("Failed to send message to client, client count: %d", len(s.clients))
 		}
-		influxClient.Close()
-
 	}
 }
 
