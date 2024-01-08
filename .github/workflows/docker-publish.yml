@@ -72,7 +72,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
           YC_VM_USERNAME: ${{ vars.YC_VM_USERNAME }}
-          YC_VM_SSH: ${{ env.YC_VM_SSH }}
+          YC_VM_SSH: ${{ vars.YC_VM_SSH }}
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           folder-id: ${{ secrets.YC_FOLDER_ID }}
