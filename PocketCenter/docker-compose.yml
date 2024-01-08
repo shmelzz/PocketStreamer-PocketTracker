@@ -4,7 +4,7 @@ services:
   app:
     build:
       context: "."
-      dockerfile: "build/Dockerfile"
+      dockerfile: "build/run.Dockerfile"
     ports:
       - "4545:4545" # Map the default port from the container to the host
     environment:

@@ -16,7 +16,7 @@ COPY . .
 RUN go build -o myapp ./cmd
 
 # Start the second stage for running the application
-FROM debian:buster-slim
+FROM golang:1.21
 
 # Set the working directory in the container
 WORKDIR /app
