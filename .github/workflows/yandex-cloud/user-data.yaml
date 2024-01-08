@@ -1,7 +1,7 @@
 users:
-  - name: {{ env.YC_VM_USERNAME }}
+  - name: {{ vars.YC_VM_USERNAME }}
     groups: sudo
     shell: /bin/bash
     sudo: ["ALL=(ALL) NOPASSWD:ALL"]
     ssh_authorized_keys:
-      - {{ env.YC_VM_SSH }}
+      - {{ vars.YC_VM_SSH }}
