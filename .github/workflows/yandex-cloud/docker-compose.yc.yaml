@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  app:
+    image: {{ env.IMAGE_NAME }}
+    ports:
+      - "0.0.0.0:4545:4545" # Map the default port from the container to the host
+    environment:
+      - SERVER_ADDRESS=0.0.0.0
+      - SERVER_PORT=4545
+    restart: always
