@@ -80,10 +80,10 @@ jobs:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           folder-id: b1grqb7ja7b0e8uqu8np
           vm-name: yc-action-demo
-          vm-service-account-id: ajem2roiv1taif0617c3
+          vm-service-account-id: ${{ secrets.YC_SERVICE_ACCOUNT_ID }}
           vm-cores: 2
           vm-memory: 2Gb
           vm-core-fraction: 100
-          vm-subnet-id: e2lq92n6svpi4k2udj2q
+          vm-subnet-id: ${{ secrets.YC_SUBNET_ID }}
           user-data-path: "./.github/workflows/yandex-cloud/user-data.yaml"
           docker-compose-path: "./.github/workflows/yandex-cloud/docker-compose.yc.yaml"
