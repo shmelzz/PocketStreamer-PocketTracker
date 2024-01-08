@@ -9,4 +9,5 @@ import (
 func InitRoutes(handler *handlers.FeatureHandler) {
 	http.HandleFunc("/facetracking", handler.HandleFaceTracking)
 	http.HandleFunc("/composed", handler.HandleReceiver)
+	http.HandleFunc("/version", handler.HandleVersion)
 }

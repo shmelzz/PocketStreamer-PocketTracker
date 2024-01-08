@@ -16,6 +16,18 @@ func NewFeatureHandler(broadcastService *services.BroadcastService) *FeatureHand
 	return &FeatureHandler{broadcastService: broadcastService}
 }
 
+type VersionResponse struct {
+	Version string `json:"version"`
+}
+
+func (f *FeatureHandler) HandleVersion(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	json.NewEncoder(w).Encode(VersionResponse{Version: "v1"})
+}
+
 func (f *FeatureHandler) HandleFaceTracking(w http.ResponseWriter, r *http.Request) {
 	client, err := f.broadcastService.AddTracker(w, r)
 	if err != nil {
