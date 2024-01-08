@@ -13,12 +13,11 @@ RUN go mod download
 COPY . .
 
 # Build your application
+ENV CGO_ENABLED=0
 RUN go build -o myapp ./cmd
 
-# Start the second stage for running the application
-FROM golang:1.21
+FROM alpine:latest
 
-# Set the working directory in the container
 WORKDIR /app
 
 # Copy the binary from the builder stage
