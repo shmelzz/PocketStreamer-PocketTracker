@@ -80,7 +80,7 @@ jobs:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           folder-id: b1grqb7ja7b0e8uqu8np
           vm-name: yc-action-demo
-          vm-service-account-id: ajej034gvpglqkemmvl0
+          vm-service-account-id: ajem2roiv1taif0617c3
           vm-cores: 2
           vm-memory: 2Gb
           vm-core-fraction: 100
