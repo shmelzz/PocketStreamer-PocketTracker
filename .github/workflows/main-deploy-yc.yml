@@ -1,4 +1,4 @@
-name: Docker Build and Push PocketCenter
+name: Pocket Center Production deploy to yc
 
 on:
   push:
@@ -66,7 +66,6 @@ jobs:
           vm-service-account-id: ${{ secrets.YC_SERVICE_ACCOUNT_ID }}
           vm-cores: 2
           vm-memory: 2Gb
-          vm-disk-size: 10Gb
           vm-core-fraction: 100
           vm-subnet-id: ${{ secrets.YC_SUBNET_ID }}
           user-data-path: "./.github/workflows/yandex-cloud/user-data.yaml"
