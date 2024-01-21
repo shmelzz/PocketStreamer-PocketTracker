@@ -1,16 +1,11 @@
-//
-//  FaceTrackingViewController.swift
-//  FaceTrackingStreamer
-//
-//  Created by ZhengWu Pan on 06.05.2023.
-//
-
 import UIKit
 import ARKit
 import Network
 import Starscream
 
 final class FaceTrackingViewController: UIViewController {
+    
+    private let endpointStorage: IApiEndpointStorage
     
     private var websocket: WebSocket!
     
@@ -21,16 +16,28 @@ final class FaceTrackingViewController: UIViewController {
     
     private let connectButton = UIButton(type: .system)
     
+    // MARK: Init
+    
+    init(
+        endpointStorage: IApiEndpointStorage
+    ) {
+        self.endpointStorage = endpointStorage
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Loaded")
         setupSceneView()
         setupARFaceTracking()
         setupConnectButton()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        presentWebSocketConfigAlert()
+        connectButtonTapped()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -55,21 +62,35 @@ final class FaceTrackingViewController: UIViewController {
         ])
     }
     
-    @objc private func connectButtonTapped() {
-        presentWebSocketConfigAlert()
+    @objc
+    private func connectButtonTapped() {
+        let endpointModel = endpointStorage.get()
+        presentWebSocketConfigAlert(with: endpointModel)
     }
 
-    
-    private func presentWebSocketConfigAlert() {
+    private func presentWebSocketConfigAlert(with currentConfig: ApiEndpoint?) {
         let alertController = UIAlertController(title: "WebSocket Configuration", message: "Enter WebSocket address and port", preferredStyle: .alert)
         
-        alertController.addTextField { textField in
-            textField.placeholder = "Address (e.g., 192.168.0.8)"
-        }
+        // TODO: refactor
         
-        alertController.addTextField { textField in
-            textField.placeholder = "Port (e.g., 12345)"
-            textField.keyboardType = .numberPad
+        if let model = currentConfig {
+            alertController.addTextField { textField in
+                textField.text = model.endpoint
+            }
+            
+            alertController.addTextField { textField in
+                textField.text = model.port
+                textField.keyboardType = .numberPad
+            }
+        } else {
+            alertController.addTextField { textField in
+                textField.placeholder = "Enter address (e.g., 192.168.0.8)"
+            }
+            
+            alertController.addTextField { textField in
+                textField.placeholder = "Enter port (e.g., 12345)"
+                textField.keyboardType = .numberPad
+            }
         }
         
         let connectAction = UIAlertAction(title: "Connect", style: .default) { [weak self] _ in
@@ -80,12 +101,12 @@ final class FaceTrackingViewController: UIViewController {
             
             var addressPort = ""
             if !address.isEmpty && !port.isEmpty {
+                endpointStorage.set(ApiEndpoint(endpoint: address, port: port))
                 addressPort = "ws://\(address):\(port)/facetracking"
             } else {
                 addressPort = "ws://192.168.31.186:3000/facetracking"
             }
             self.setupWebSocketConnection(url: addressPort)
-            print(addressPort)
         }
         
         
