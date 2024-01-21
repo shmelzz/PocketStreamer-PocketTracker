@@ -149,9 +149,6 @@ final class FaceTrackingViewController: UIViewController {
         let configuration = ARFaceTrackingConfiguration()
         configuration.isLightEstimationEnabled = true
         sceneView.session.run(configuration)
-        
-        let configurationBody = ARBodyTrackingConfiguration()
-        sceneView.session.run(configurationBody)
     }
     
     private func setupWebSocketConnection(url: String) {
