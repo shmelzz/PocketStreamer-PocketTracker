@@ -1,0 +1,12 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '14.0'
+
+target 'FaceTrackingStreamer' do
+  
+  use_frameworks!
+
+  # Pods
+  
+  pod 'SwiftLint'
+  pod 'GoogleWebRTC', '~> 1.1'
+end
