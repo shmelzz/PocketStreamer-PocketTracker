@@ -22,6 +22,7 @@ WORKDIR /app
 
 # Copy the binary from the builder stage
 COPY --from=builder /app/myapp /app/myapp
+COPY --from=builder /app/migrations /app/migrations
 
 # Command to run when starting the container
 CMD ["./myapp"]
