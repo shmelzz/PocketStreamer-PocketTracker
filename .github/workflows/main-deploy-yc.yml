@@ -17,6 +17,9 @@ jobs:
       contents: read
       packages: write
       id-token: write
+    strategy:
+      matrix:
+        service: [FaceBodyFeatureService]
 
     steps:
       - name: Checkout repository
@@ -40,8 +43,8 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           provenance: false
-          file: PocketCenter/build/run.Dockerfile
-          context: PocketCenter
+          file: PocketCenter/${{ matrix.service }}/build/run.Dockerfile
+          context: PocketCenter/${{ matrix.service }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
           labels: ${{ steps.meta.outputs.labels }}
