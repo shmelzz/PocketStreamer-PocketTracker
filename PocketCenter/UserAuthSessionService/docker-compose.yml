@@ -36,7 +36,8 @@ services:
       OTEL_ADDRESS: "taxi-jaeger:4317"
 
   user_db:
-    image: postgis/postgis:14-3.4
+    image: postgres
+    platform: linux/amd64
     restart: always
     expose:
       - 5432
@@ -52,3 +53,5 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data

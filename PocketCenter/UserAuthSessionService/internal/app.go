@@ -11,6 +11,8 @@ import (
 	"userauth/internal/router"
 	"userauth/internal/service"
 
+	docs "userauth/internal/docs"
+
 	"github.com/gin-gonic/gin"
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
@@ -25,6 +27,7 @@ type App struct {
 
 // NewApp creates and configures your application.
 func NewApp(cfg *config.Config) *App {
+	docs.SwaggerInfo.BasePath = "/auth"
 	pgxPool, err := initDB(context.Background(), &cfg.Repo)
 	if err != nil {
 		log.Fatal(err)
@@ -33,9 +36,6 @@ func NewApp(cfg *config.Config) *App {
 	userAuthService := service.NewUserAuthService(repository)
 	handler := handlers.NewUserAuthHandler(userAuthService)
 	engine := router.InitRoutes(handler)
-	// handlers := handlers.NewFeatureHandler(services.NewBroadcastService())
-	// router.InitRoutes(handlers)
-	// Set up the router and routes.
 
 	return &App{
 		Engine: engine,

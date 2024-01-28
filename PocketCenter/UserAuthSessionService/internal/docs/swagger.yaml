@@ -1,0 +1,104 @@
+definitions:
+  model.UserInfoResponse:
+    properties:
+      username:
+        type: string
+    type: object
+  model.UserLoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  model.UserLoginResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  model.UserRegisterResponse:
+    properties:
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Log in with username and password
+      parameters:
+      - description: Login Credentials
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserLoginResponse'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+      summary: User login
+      tags:
+      - auth
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user with a username and password
+      parameters:
+      - description: User Info
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserRegisterResponse'
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Register new user
+      tags:
+      - auth
+  /validate:
+    post:
+      consumes:
+      - application/json
+      description: Check if the JWT token is valid
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserInfoResponse'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      summary: Validate JWT token
+      tags:
+      - auth
+swagger: "2.0"
