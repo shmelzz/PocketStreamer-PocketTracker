@@ -1,0 +1,54 @@
+version: '3.7'
+
+services:
+  # locaiton service
+  auth_build:
+    image: location_build:develop
+    build:
+      context: "./location-service"
+      dockerfile: ".docker/build.Dockerfile"
+
+  auth_service:
+    build:
+      context: "./location-service"
+      dockerfile: ".docker/location.Dockerfile"
+    restart: unless-stopped
+    depends_on:
+      auth_build:
+        condition: service_completed_successfully
+      user_db:
+        condition: service_healthy
+    volumes:
+      - './location-service/migrations/location/:/app/migrations/location'
+    expose:
+      - "9091"
+      - "8088"
+    ports:
+      - "8088:8088"
+    environment:
+      DEBUG: "false"
+      DSN: "postgres://usr:authpwd@user_db:5432/auth?sslmode=disable"
+      MIGRATIONS_DIR: "file://migrations/location"
+      SERVE_ADDRESS: ":8088"
+      BASE_PATH: "/api/v1"
+      SWAGGER_ADDRESS: "localhost:8088"
+      PROM_ADDRESS: ":9091"
+      OTEL_ADDRESS: "taxi-jaeger:4317"
+
+  user_db:
+    image: postgis/postgis:14-3.4
+    restart: always
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    environment:
+      PGUSER: usr
+      POSTGRES_DB: auth
+      POSTGRES_USER: usr
+      POSTGRES_PASSWORD: authpwd
+    healthcheck:
+      test: "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"
+      interval: 10s
+      timeout: 5s
+      retries: 5

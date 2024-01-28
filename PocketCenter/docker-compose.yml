@@ -1,12 +1,18 @@
 version: '3.8'
 
 services:
-  app:
+  facebody:
     build:
       context: "."
-      dockerfile: "build/run.Dockerfile"
+      dockerfile: "FaceBodyFeatureService/build/run.Dockerfile"
     ports:
       - "4545:4545" # Map the default port from the container to the host
     environment:
       - SERVER_ADDRESS=0.0.0.0
       - SERVER_PORT=4545
+  userauth:
+    build:
+      context: "."
+      dockerfile: "UserAuthSessionService/build/run.Dockerfile"
+    ports:
+      
