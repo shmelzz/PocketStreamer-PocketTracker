@@ -22,7 +22,7 @@ services:
       - "0.0.0.0:8088:8088"
     environment:
       DSN: "postgres://usr:authpwd@user_db:5432/auth?sslmode=disable"
-      MIGRATIONS_DIR: "file://migrations/location"
+      MIGRATIONS_DIR: "file://migrations/auth"
       SERVER_ADDRESS: "0.0.0.0"
       SERVER_PORT: "8088"
 
