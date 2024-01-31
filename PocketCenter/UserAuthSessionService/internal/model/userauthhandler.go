@@ -24,3 +24,12 @@ type UserInfoResponse struct {
 type GetSessionResponse struct {
 	SessionId string `json:"sessionid"`
 }
+
+type WaitForTrackerResponse struct {
+	Username string `json:"username"`
+	Token    string `json:"token"`
+}
+
+type WaitForTrackerRequest struct {
+	SessionId string `json:"sessionid"`
+}

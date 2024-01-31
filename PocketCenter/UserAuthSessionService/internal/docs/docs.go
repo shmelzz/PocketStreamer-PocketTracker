@@ -15,6 +15,47 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/findcomposer": {
+            "post": {
+                "description": "Find composer from waiting list",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "session"
+                ],
+                "summary": "Find composer",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Session Id",
+                        "name": "sessionid",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.WaitForTrackerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
         "/login": {
             "post": {
                 "description": "Log in with username and password",
@@ -161,6 +202,43 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/waitfortracker": {
+            "post": {
+                "description": "Wait for tracker to connect",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "session"
+                ],
+                "summary": "Wait for tracker to connect",
+                "parameters": [
+                    {
+                        "description": "Session Id",
+                        "name": "sessionid",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.WaitForTrackerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.WaitForTrackerResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -203,6 +281,25 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.WaitForTrackerRequest": {
+            "type": "object",
+            "properties": {
+                "sessionid": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.WaitForTrackerResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }

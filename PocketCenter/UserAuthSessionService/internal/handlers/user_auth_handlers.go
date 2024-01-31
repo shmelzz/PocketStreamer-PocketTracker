@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"userauth/internal/model"
 	"userauth/internal/service"
@@ -21,6 +20,72 @@ func NewUserAuthHandler(
 	return &UserAuthHandler{
 		userAuthService: userAuthService,
 		sessionService:  sessionService,
+	}
+}
+
+// FindComposer godoc
+// @Summary Find composer
+// @Description Find composer from waiting list
+// @Tags session
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Authorization"
+// @Param sessionid body model.WaitForTrackerRequest true "Session Id"
+// @Success 200 "Ok"
+// @Failure 404 "Not Found"
+// @Router /findcomposer [post]
+func (h *UserAuthHandler) FindComposer(c *gin.Context) {
+	tokenString := c.GetHeader("Authorization")
+
+	token, err := h.userAuthService.ValidateToken(tokenString)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid or expired token"})
+		return
+	}
+
+	claims, ok := token.Claims.(*service.Claims)
+	if !ok {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to parse claims"})
+		return
+	}
+
+	var req model.WaitForTrackerRequest
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	err = h.sessionService.FindComposer(c, req.SessionId, claims.Username, tokenString)
+
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+	} else {
+		c.JSON(http.StatusOK, nil)
+	}
+}
+
+// WaitForTacker godoc
+// @Summary Wait for tracker to connect
+// @Description Wait for tracker to connect
+// @Tags session
+// @Accept json
+// @Produce json
+// @Param sessionid body model.WaitForTrackerRequest true "Session Id"
+// @Success 200 {object} model.WaitForTrackerResponse
+// @Failure 404 "Not Found"
+// @Router /waitfortracker [post]
+func (h *UserAuthHandler) WaitForTracker(c *gin.Context) {
+	var req model.WaitForTrackerRequest
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	response, err := h.sessionService.WaitForTracker(c, req.SessionId)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+	} else {
+		c.JSON(http.StatusOK, response)
 	}
 }
 
@@ -60,10 +125,7 @@ func (h *UserAuthHandler) GetSession(c *gin.Context) {
 // @Failure 500 "Internal Server Error"
 // @Router /register [post]
 func (h *UserAuthHandler) RegisterUser(c *gin.Context) {
-	var req struct {
-		Username string `json:"username"`
-		Password string `json:"password"`
-	}
+	var req model.UserLoginRequest
 
 	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -91,10 +153,7 @@ func (h *UserAuthHandler) RegisterUser(c *gin.Context) {
 // @Failure 401 "Unauthorized"
 // @Router /login [post]
 func (h *UserAuthHandler) LoginUser(c *gin.Context) {
-	var req struct {
-		Username string `json:"username"`
-		Password string `json:"password"`
-	}
+	var req model.UserLoginRequest
 
 	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -122,8 +181,8 @@ func (h *UserAuthHandler) LoginUser(c *gin.Context) {
 // @Failure 500 "Internal Server Error"
 // @Router /validate [post]
 func (h *UserAuthHandler) ValidateToken(c *gin.Context) {
+	// TODO: If user really exist in the database
 	tokenString := c.GetHeader("Authorization")
-	fmt.Println(c.Request.Header)
 
 	token, err := h.userAuthService.ValidateToken(tokenString)
 	if err != nil {

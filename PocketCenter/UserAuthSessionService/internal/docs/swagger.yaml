@@ -26,9 +26,48 @@ definitions:
       message:
         type: string
     type: object
+  model.WaitForTrackerRequest:
+    properties:
+      sessionid:
+        type: string
+    type: object
+  model.WaitForTrackerResponse:
+    properties:
+      token:
+        type: string
+      username:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
+  /findcomposer:
+    post:
+      consumes:
+      - application/json
+      description: Find composer from waiting list
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Session Id
+        in: body
+        name: sessionid
+        required: true
+        schema:
+          $ref: '#/definitions/model.WaitForTrackerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ok
+        "404":
+          description: Not Found
+      summary: Find composer
+      tags:
+      - session
   /login:
     post:
       consumes:
@@ -125,4 +164,28 @@ paths:
       summary: Validate JWT token
       tags:
       - auth
+  /waitfortracker:
+    post:
+      consumes:
+      - application/json
+      description: Wait for tracker to connect
+      parameters:
+      - description: Session Id
+        in: body
+        name: sessionid
+        required: true
+        schema:
+          $ref: '#/definitions/model.WaitForTrackerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WaitForTrackerResponse'
+        "404":
+          description: Not Found
+      summary: Wait for tracker to connect
+      tags:
+      - session
 swagger: "2.0"
