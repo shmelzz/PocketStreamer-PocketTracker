@@ -20,3 +20,7 @@ type UserLoginResponse struct {
 type UserInfoResponse struct {
 	Username string `json:"username"`
 }
+
+type GetSessionResponse struct {
+	SessionId string `json:"sessionid"`
+}

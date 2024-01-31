@@ -95,6 +95,35 @@ const docTemplate = `{
                 }
             }
         },
+        "/session": {
+            "get": {
+                "description": "Generate new session id and return it",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "session"
+                ],
+                "summary": "Get new generated session id",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.GetSessionResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
         "/validate": {
             "post": {
                 "description": "Check if the JWT token is valid",
@@ -135,6 +164,14 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "model.GetSessionResponse": {
+            "type": "object",
+            "properties": {
+                "sessionid": {
+                    "type": "string"
+                }
+            }
+        },
         "model.UserInfoResponse": {
             "type": "object",
             "properties": {

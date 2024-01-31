@@ -16,6 +16,7 @@ func InitRoutes(handler *handlers.UserAuthHandler) *gin.Engine {
 		apiRoutes.POST("/validate", handler.ValidateToken)
 		apiRoutes.POST("/login", handler.LoginUser)
 		apiRoutes.POST("/register", handler.RegisterUser)
+		apiRoutes.GET("/session", handler.GetSession)
 
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"userauth/internal/model"
 	"userauth/internal/service"
 
 	"github.com/gin-gonic/gin"
@@ -10,12 +11,41 @@ import (
 
 type UserAuthHandler struct {
 	userAuthService *service.UserAuthService
+	sessionService  *service.SessionService
 }
 
-func NewUserAuthHandler(userAuthService *service.UserAuthService) *UserAuthHandler {
+func NewUserAuthHandler(
+	userAuthService *service.UserAuthService,
+	sessionService *service.SessionService,
+) *UserAuthHandler {
 	return &UserAuthHandler{
 		userAuthService: userAuthService,
+		sessionService:  sessionService,
 	}
+}
+
+// GetSession godoc
+// @Summary Get new generated session id
+// @Description Generate new session id and return it
+// @Tags session
+// @Accept json
+// @Produce json
+// @Success 200 {object} model.GetSessionResponse
+// @Failure 400 "Bad Request"
+// @Failure 500 "Internal Server Error"
+// @Router /session [get]
+func (h *UserAuthHandler) GetSession(c *gin.Context) {
+	id, err := h.sessionService.GetSessionId(c)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to get session id"})
+		return
+	}
+	response := model.GetSessionResponse{
+		SessionId: id,
+	}
+
+	c.JSON(http.StatusOK, response)
 }
 
 // RegisterUser godoc

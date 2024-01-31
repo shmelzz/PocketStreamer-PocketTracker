@@ -1,4 +1,9 @@
 definitions:
+  model.GetSessionResponse:
+    properties:
+      sessionid:
+        type: string
+    type: object
   model.UserInfoResponse:
     properties:
       username:
@@ -76,6 +81,25 @@ paths:
       summary: Register new user
       tags:
       - auth
+  /session:
+    get:
+      consumes:
+      - application/json
+      description: Generate new session id and return it
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.GetSessionResponse'
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Get new generated session id
+      tags:
+      - session
   /validate:
     post:
       consumes:

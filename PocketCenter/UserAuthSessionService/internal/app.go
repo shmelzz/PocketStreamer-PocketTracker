@@ -32,9 +32,11 @@ func NewApp(cfg *config.Config) *App {
 	if err != nil {
 		log.Fatal(err)
 	}
-	repository := repository.NewUserAuthRepository(pgxPool)
-	userAuthService := service.NewUserAuthService(repository)
-	handler := handlers.NewUserAuthHandler(userAuthService)
+	userAuthRepository := repository.NewUserAuthRepository(pgxPool)
+	sessionRepository := repository.NewSessionRepository(pgxPool)
+	userAuthService := service.NewUserAuthService(userAuthRepository)
+	sessionService := service.NewSessionService(sessionRepository)
+	handler := handlers.NewUserAuthHandler(userAuthService, sessionService)
 	engine := router.InitRoutes(handler)
 
 	return &App{
