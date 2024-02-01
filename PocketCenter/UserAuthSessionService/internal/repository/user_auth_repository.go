@@ -26,6 +26,21 @@ func (r *UserAuthRepository) CreateUser(ctx context.Context, user *model.User) e
 	return r.pgxPool.QueryRow(ctx, sql, user.Username, user.Password).Scan(&user.ID)
 }
 
+// Is user exist
+func (r *UserAuthRepository) IsUserExist(ctx context.Context, username string) (bool, error) {
+	sql := `SELECT EXISTS (
+		SELECT 1 
+		FROM users 
+		WHERE username = $1
+	   )`
+	var isUserExist bool
+	err := r.pgxPool.QueryRow(ctx, sql, username).Scan(&isUserExist)
+	if err != nil {
+		return false, fmt.Errorf("error cant found is user exist %w", err)
+	}
+	return isUserExist, nil
+}
+
 // GetUserByUsername fetches a user by username
 func (r *UserAuthRepository) GetUserByUsername(ctx context.Context, username string) (*model.User, error) {
 	var user model.User

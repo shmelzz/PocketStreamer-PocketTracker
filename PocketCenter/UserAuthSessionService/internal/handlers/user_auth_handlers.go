@@ -181,7 +181,6 @@ func (h *UserAuthHandler) LoginUser(c *gin.Context) {
 // @Failure 500 "Internal Server Error"
 // @Router /validate [post]
 func (h *UserAuthHandler) ValidateToken(c *gin.Context) {
-	// TODO: If user really exist in the database
 	tokenString := c.GetHeader("Authorization")
 
 	token, err := h.userAuthService.ValidateToken(tokenString)
@@ -196,5 +195,16 @@ func (h *UserAuthHandler) ValidateToken(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"username": claims.Username})
+	username := claims.Username
+	isExist, err := h.userAuthService.IsUserExist(c, username)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to check is user exist"})
+		return
+	}
+	if !isExist {
+		c.JSON(http.StatusNotFound, gin.H{"error": "cant found user"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"username": username})
+
 }

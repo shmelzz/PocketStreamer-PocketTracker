@@ -90,3 +90,7 @@ func (s *UserAuthService) ValidateToken(tokenString string) (*jwt.Token, error) 
 
 	return token, nil
 }
+
+func (s *UserAuthService) IsUserExist(ctx context.Context, username string) (bool, error) {
+	return s.UserAuthRepository.IsUserExist(ctx, username)
+}
