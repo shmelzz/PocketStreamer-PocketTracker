@@ -37,6 +37,9 @@
 		CC85ADAD2B71948700C91BFD /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADAC2B71948700C91BFD /* KeychainWrapper.swift */; };
 		CC85ADAF2B7194A900C91BFD /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADAE2B7194A900C91BFD /* KeychainItemAccessibility.swift */; };
 		CC85ADB12B71960F00C91BFD /* AuthRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADB02B71960F00C91BFD /* AuthRequest.swift */; };
+		CC85ADB42B719AF200C91BFD /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADB32B719AF200C91BFD /* AuthViewController.swift */; };
+		CC85ADB62B719C2A00C91BFD /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADB52B719C2A00C91BFD /* AuthPresenter.swift */; };
+		CC85ADB82B719C4500C91BFD /* AuthContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADB72B719C4500C91BFD /* AuthContract.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +75,9 @@
 		CC85ADAC2B71948700C91BFD /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		CC85ADAE2B7194A900C91BFD /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
 		CC85ADB02B71960F00C91BFD /* AuthRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequest.swift; sourceTree = "<group>"; };
+		CC85ADB32B719AF200C91BFD /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		CC85ADB52B719C2A00C91BFD /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
+		CC85ADB72B719C4500C91BFD /* AuthContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthContract.swift; sourceTree = "<group>"; };
 		E1209DA5110D3EE75E6F4DDA /* Pods-FaceTrackingStreamer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FaceTrackingStreamer.release.xcconfig"; path = "Target Support Files/Pods-FaceTrackingStreamer/Pods-FaceTrackingStreamer.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,6 +158,7 @@
 		CC0C3A262B4832E900C43AA5 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				CC85ADB22B719AE200C91BFD /* Auth */,
 				CC0C3A292B483E0D00C43AA5 /* Streaming */,
 				CC0C3A282B483DFE00C43AA5 /* Chat */,
 				CC0C3A272B483DED00C43AA5 /* DebugMenu */,
@@ -312,6 +319,16 @@
 			path = KeychainWrapper;
 			sourceTree = "<group>";
 		};
+		CC85ADB22B719AE200C91BFD /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				CC85ADB32B719AF200C91BFD /* AuthViewController.swift */,
+				CC85ADB52B719C2A00C91BFD /* AuthPresenter.swift */,
+				CC85ADB72B719C4500C91BFD /* AuthContract.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -436,6 +453,7 @@
 				6D3D34CF2A0668560052AE68 /* OldFaceTrackingViewController.swift in Sources */,
 				CC40BEB02B5F0D95004036F3 /* StreamSessionManager.swift in Sources */,
 				6D3D34D12A066FF20052AE68 /* FaceTrackerExtension.swift in Sources */,
+				CC85ADB82B719C4500C91BFD /* AuthContract.swift in Sources */,
 				CC85ADAD2B71948700C91BFD /* KeychainWrapper.swift in Sources */,
 				CC40BEA32B5DA011004036F3 /* DebugMenuModuleAssembly.swift in Sources */,
 				CC40BEAA2B5F08F4004036F3 /* FaceTrackingView.swift in Sources */,
@@ -445,11 +463,13 @@
 				CC40BEAD2B5F097A004036F3 /* FaceTrackingContract.swift in Sources */,
 				CC0C3A2B2B483E2B00C43AA5 /* DebugMenuViewController.swift in Sources */,
 				CC85ADAF2B7194A900C91BFD /* KeychainItemAccessibility.swift in Sources */,
+				CC85ADB62B719C2A00C91BFD /* AuthPresenter.swift in Sources */,
 				CC40BEA62B5DA2C4004036F3 /* IModule.swift in Sources */,
 				6D3D34BB2A06683D0052AE68 /* AppDelegate.swift in Sources */,
 				CC3F81E72B4B2923006EDC95 /* FaceTrackingService.swift in Sources */,
 				CC85ADB12B71960F00C91BFD /* AuthRequest.swift in Sources */,
 				CC40BE9F2B5D9FEA004036F3 /* DebugMenuContract.swift in Sources */,
+				CC85ADB42B719AF200C91BFD /* AuthViewController.swift in Sources */,
 				CC3F81EB2B4B320F006EDC95 /* BodyTrackingViewController.swift in Sources */,
 				CC85ADA52B71807900C91BFD /* StartViewController.swift in Sources */,
 				CC3F81FF2B5D6204006EDC95 /* ApiEndpointStorage.swift in Sources */,
