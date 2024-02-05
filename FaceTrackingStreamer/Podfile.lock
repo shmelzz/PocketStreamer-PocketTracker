@@ -1,0 +1,20 @@
+PODS:
+  - GoogleWebRTC (1.1.32000)
+  - SwiftLint (0.52.1)
+
+DEPENDENCIES:
+  - GoogleWebRTC (~> 1.1)
+  - SwiftLint
+
+SPEC REPOS:
+  trunk:
+    - GoogleWebRTC
+    - SwiftLint
+
+SPEC CHECKSUMS:
+  GoogleWebRTC: 4d261187b30512efdb711d21fa961a6adf138717
+  SwiftLint: 437c13044ba689c96b37c66f7c646f46efba7176
+
+PODFILE CHECKSUM: 8691ba7928acba611d997a183c130ff0aef8b4cd
+
+COCOAPODS: 1.12.1
