@@ -3,7 +3,7 @@ import ARKit
 import Network
 import Starscream
 
-final class FaceTrackingViewController: UIViewController {
+final class OldFaceTrackingViewController: UIViewController {
     
     private let endpointStorage: IApiEndpointStorage
     
@@ -14,7 +14,41 @@ final class FaceTrackingViewController: UIViewController {
     
     private var isWebsocketConnected: Bool = false
     
-    private let connectButton = UIButton(type: .system)
+    private lazy var vc = DebugMenuViewController()
+    private lazy var presenter = DebugMenuPresenter(endpointStorage: endpointStorage, view: vc)
+
+    
+    private lazy var connectButton: UIButton = {
+        let button = UIButton(configuration: .filled())
+        button.setTitle("Connect", for: .normal)
+        button.addTarget(self, action: #selector(onConnectTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var settingsButton: UIButton = {
+        let button = UIButton(configuration: .filled())
+        button.setTitle("Settings", for: .normal)
+        button.addTarget(self, action: #selector(onSettingsTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc
+    private func onSettingsTapped() {
+        vc.presenter = presenter
+        present(vc, animated: true)
+    }
+    
+    @objc
+    private func onConnectTapped() {
+        var addressPort = ""
+        guard let endpoint = endpointStorage.get() else { return }
+        if !endpoint.endpoint.isEmpty && !endpoint.port.isEmpty {
+            addressPort = "ws://\(endpoint.endpoint):\(endpoint.port)/facetracking"
+        } else {
+            addressPort = "ws://192.168.31.186:3000/facetracking"
+        }
+        self.setupWebSocketConnection(url: addressPort)
+    }
     
     // MARK: Init
     
@@ -33,11 +67,11 @@ final class FaceTrackingViewController: UIViewController {
         super.viewDidLoad()
         setupSceneView()
         setupARFaceTracking()
-        setupConnectButton()
+        setupView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        connectButtonTapped()
+        // connectButtonTapped()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -47,25 +81,28 @@ final class FaceTrackingViewController: UIViewController {
     
     // MARK: Private
     
-    private func setupConnectButton() {
-        connectButton.backgroundColor = .gray
-        connectButton.setTitle("Connect", for: .normal)
-        connectButton.addTarget(self, action: #selector(connectButtonTapped), for: .touchUpInside)
-        connectButton.layer.cornerRadius = 10
-        
+    private func setupView() {
         view.addSubview(connectButton)
         connectButton.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
-            connectButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            connectButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+            connectButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            connectButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24)
+        ])
+        
+        view.addSubview(settingsButton)
+        settingsButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            settingsButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            settingsButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24)
         ])
     }
     
     @objc
     private func connectButtonTapped() {
-        let endpointModel = endpointStorage.get()
-        presentWebSocketConfigAlert(with: endpointModel)
+        // let endpointModel = endpointStorage.get()
+        vc.presenter = presenter
+        // presentWebSocketConfigAlert(with: endpointModel)
+        present(vc, animated: true)
     }
 
     private func presentWebSocketConfigAlert(with currentConfig: ApiEndpoint?) {
@@ -153,7 +190,7 @@ final class FaceTrackingViewController: UIViewController {
     
     private func setupWebSocketConnection(url: String) {
         var request = URLRequest(url: URL(string: url)!)
-        request.timeoutInterval = 5
+        request.timeoutInterval = 10
         websocket = WebSocket(request: request)
         websocket.delegate = self
         websocket.connect()
@@ -163,8 +200,6 @@ final class FaceTrackingViewController: UIViewController {
         guard let websocket = websocket else {
             return
         }
-        
-        print(faceTrackingData)
         
         if !isWebsocketConnected {
             return
@@ -185,10 +220,46 @@ final class FaceTrackingViewController: UIViewController {
     }
 }
 
-extension FaceTrackingViewController: WebSocketDelegate {
+extension OldFaceTrackingViewController: WebSocketDelegate {
     
     func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
-        
+        switch event {
+        case .connected(let headers):
+            connectButton.backgroundColor = .green
+            print("WebSocket connected")
+            isWebsocketConnected = true
+            guard let jsonData = try? JSONSerialization.data(withJSONObject: ["leftEye":[1.2], "rightEye":[2.3], "geometry":[1]], options: []) else {
+                print("Error encoding face tracking data")
+                return
+            }
+            guard let websocket = websocket else {
+                return
+            }
+            websocket.write(data: jsonData)
+        case .disconnected(let reason, let code):
+            connectButton.backgroundColor = .gray
+            print("WebSocket disconnected: \(reason)")
+            isWebsocketConnected = false
+        case .text(let text):
+            print("Received text: \(text)")
+        case .binary(let data):
+            print("Received data: \(data)")
+        case .ping(_):
+            break
+        case .pong(_):
+            break
+        case .viabilityChanged(_):
+            break
+        case .reconnectSuggested(_):
+            break
+        case .cancelled:
+            connectButton.backgroundColor = .red
+            print("WebSocket cancelled")
+        case .error(let error):
+            print("WebSocket error: \(error?.localizedDescription ?? "Unknown error")")
+        case .peerClosed:
+            print()
+        }
     }
     
     func didReceive(event: WebSocketEvent, client: WebSocket) {
@@ -233,8 +304,7 @@ extension FaceTrackingViewController: WebSocketDelegate {
     
 }
 
-
-extension FaceTrackingViewController: ARSessionDelegate {
+extension OldFaceTrackingViewController: ARSessionDelegate {
     
     func session(_ session: ARSession, didUpdate anchors: [ARAnchor]) {
         for anchor in anchors {
@@ -245,7 +315,7 @@ extension FaceTrackingViewController: ARSessionDelegate {
     }
 }
 
-extension FaceTrackingViewController: ARSCNViewDelegate {
+extension OldFaceTrackingViewController: ARSCNViewDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         if anchor is ARFaceAnchor {

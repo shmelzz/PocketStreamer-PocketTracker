@@ -1,6 +1,6 @@
 import UIKit
 
-final class DebugMenuViewController: UIViewController, IDebugMenuView {
+final class DebugMenuViewController: UIViewController, IDebugMenuView, UITextFieldDelegate {
     
     private enum Constants {
         static let cellIdetifier = "DebugMenuCell"
@@ -16,11 +16,15 @@ final class DebugMenuViewController: UIViewController, IDebugMenuView {
     }
     
     private lazy var endpointTextInput: UITextField = {
-        return UITextField()
+        let field = UITextField()
+        field.placeholder = "Endpoint"
+        return field
     }()
     
     private lazy var portTextInput: UITextField = {
-        return UITextField()
+        let field = UITextField()
+        field.placeholder = "Port"
+        return field
     }()
     
     private lazy var environmentControl: UISegmentedControl = {
@@ -38,6 +42,7 @@ final class DebugMenuViewController: UIViewController, IDebugMenuView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         setupView()
         presenter?.onViewReady()
     }
@@ -53,12 +58,15 @@ final class DebugMenuViewController: UIViewController, IDebugMenuView {
     
     @objc
     private func onButtonTapped() {
+        // let env: ApiEndpoint.Environment = (environmentControl.selectedSegmentIndex == 0) ? .debug : .release
         presenter?.onSaveButtonTappped(
             with: ApiEndpoint(
+                // environment: env,
                 endpoint: endpointTextInput.text ?? "",
                 port: portTextInput.text ?? ""
             )
         )
+        dismiss(animated: true)
     }
     
     // MARK: View setup
@@ -72,36 +80,43 @@ final class DebugMenuViewController: UIViewController, IDebugMenuView {
 //            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
 //            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
 //        ])
+        
         view.addSubview(endpointTextInput)
         endpointTextInput.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            endpointTextInput.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            endpointTextInput.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            endpointTextInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            endpointTextInput.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 26),
+            endpointTextInput.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            endpointTextInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
+        endpointTextInput.delegate = self
         
         view.addSubview(portTextInput)
         portTextInput.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            portTextInput.topAnchor.constraint(equalTo: endpointTextInput.bottomAnchor, constant: 8),
-            portTextInput.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            portTextInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            portTextInput.topAnchor.constraint(equalTo: endpointTextInput.bottomAnchor, constant: 16),
+            portTextInput.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            portTextInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
+        portTextInput.delegate = self
         
         view.addSubview(environmentControl)
         environmentControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            environmentControl.topAnchor.constraint(equalTo: portTextInput.bottomAnchor, constant: 8),
-            environmentControl.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            environmentControl.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            environmentControl.topAnchor.constraint(equalTo: portTextInput.bottomAnchor, constant: 16),
+            environmentControl.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            environmentControl.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
         
         view.addSubview(saveButton)
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            saveButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            saveButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24),
+            saveButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            saveButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
     }
 }
