@@ -32,31 +32,41 @@ func (s *SessionService) GetSessionId(ctx context.Context) (string, error) {
 	return sessionId, nil
 }
 
+func (s *SessionService) deleteSessionId(ctx context.Context, sessionId string) error {
+	s.mu.RLock()
+	delete(s.waitingComposers, sessionId)
+	err := s.SessionRepository.DeleteSessionById(ctx, sessionId)
+	s.mu.RUnlock()
+	return err
+}
+
 func (s *SessionService) WaitForTracker(ctx context.Context, sessionId string) (model.WaitForTrackerResponse, error) {
+	isSessionExist, err := s.SessionRepository.IsSessionExist(ctx, sessionId)
+	if err != nil {
+		return model.WaitForTrackerResponse{}, fmt.Errorf("cant perform exist repo")
+	}
+	if !isSessionExist {
+		return model.WaitForTrackerResponse{}, fmt.Errorf("session not found")
+	}
 	ch := make(chan model.WaitForTrackerResponse)
 	s.waitingComposers[sessionId] = ch
 
-	timeoutCtx, cancel := context.WithTimeout(ctx, 30*time.Second)
+	timeout := time.Duration(30)
+	timeoutCtx, cancel := context.WithTimeout(ctx, timeout*time.Second)
 	defer cancel()
 
 	for {
 		select {
 		case val := <-ch:
-			s.mu.RLock()
-			delete(s.waitingComposers, sessionId)
-			s.mu.RUnlock()
+			s.deleteSessionId(ctx, sessionId)
 			return val, nil
 		case <-timeoutCtx.Done():
 			// Handle the cancellation case
-			s.mu.RLock()
-			delete(s.waitingComposers, sessionId)
-			s.mu.RUnlock()
+			s.deleteSessionId(ctx, sessionId)
 			return model.WaitForTrackerResponse{}, fmt.Errorf("request was cancelled after 5 second timemout ")
 		case <-ctx.Done():
 			// Handle the cancellation case
-			s.mu.RLock()
-			delete(s.waitingComposers, sessionId)
-			s.mu.RUnlock()
+			s.deleteSessionId(ctx, sessionId)
 			return model.WaitForTrackerResponse{}, fmt.Errorf("request was cancelled")
 		}
 	}

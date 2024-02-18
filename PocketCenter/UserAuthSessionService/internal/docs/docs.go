@@ -31,8 +31,8 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Authorization",
-                        "name": "Authorization",
+                        "description": "Authentication",
+                        "name": "Authentication",
                         "in": "header",
                         "required": true
                     },
@@ -181,8 +181,8 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Authorization",
-                        "name": "Authorization",
+                        "description": "Authentication",
+                        "name": "Authentication",
                         "in": "header",
                         "required": true
                     }

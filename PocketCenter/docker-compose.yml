@@ -1,18 +1,52 @@
-version: '3.8'
+version: '3.7'
 
 services:
   facebody:
     build:
-      context: "."
-      dockerfile: "FaceBodyFeatureService/build/run.Dockerfile"
+      context: "./FaceBodyFeatureService"
+      dockerfile: "build/run.Dockerfile"
     ports:
       - "4545:4545" # Map the default port from the container to the host
     environment:
       - SERVER_ADDRESS=0.0.0.0
       - SERVER_PORT=4545
-  userauth:
+    restart: always
+  auth_service:
     build:
-      context: "."
-      dockerfile: "UserAuthSessionService/build/run.Dockerfile"
+      context: "./UserAuthSessionService"
+      dockerfile: "build/run.Dockerfile"
+    restart: unless-stopped
+    depends_on:
+      user_db:
+        condition: service_healthy
+    expose:
+      - "9091"
+      - "8088"
     ports:
-      
+      - "8088:8088"
+    environment:
+      DSN: "postgres://usr:authpwd@user_db:5432/auth?sslmode=disable"
+      MIGRATIONS_DIR: "file://migrations/auth"
+      SERVER_ADDRESS: "0.0.0.0"
+      SERVER_PORT: "8088"
+
+  user_db:
+    image: postgres
+    platform: linux/amd64
+    restart: always
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    environment:
+      PGUSER: usr
+      POSTGRES_DB: auth
+      POSTGRES_USER: usr
+      POSTGRES_PASSWORD: authpwd
+    healthcheck:
+      test: "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data

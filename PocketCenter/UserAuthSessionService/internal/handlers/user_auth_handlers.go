@@ -29,13 +29,13 @@ func NewUserAuthHandler(
 // @Tags session
 // @Accept json
 // @Produce json
-// @Param Authorization header string true "Authorization"
+// @Param Authentication header string true "Authentication"
 // @Param sessionid body model.WaitForTrackerRequest true "Session Id"
 // @Success 200 "Ok"
 // @Failure 404 "Not Found"
 // @Router /findcomposer [post]
 func (h *UserAuthHandler) FindComposer(c *gin.Context) {
-	tokenString := c.GetHeader("Authorization")
+	tokenString := c.GetHeader("Authentication")
 
 	token, err := h.userAuthService.ValidateToken(tokenString)
 	if err != nil {
@@ -175,13 +175,13 @@ func (h *UserAuthHandler) LoginUser(c *gin.Context) {
 // @Tags auth
 // @Accept json
 // @Produce json
-// @Param Authorization header string true "Authorization"
+// @Param Authentication header string true "Authentication"
 // @Success 200 {object} model.UserInfoResponse
 // @Failure 401 "Unauthorized"
 // @Failure 500 "Internal Server Error"
 // @Router /validate [post]
 func (h *UserAuthHandler) ValidateToken(c *gin.Context) {
-	tokenString := c.GetHeader("Authorization")
+	tokenString := c.GetHeader("Authentication")
 
 	token, err := h.userAuthService.ValidateToken(tokenString)
 	if err != nil {
