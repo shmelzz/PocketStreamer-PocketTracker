@@ -21,6 +21,10 @@ final class DebugMenuPresenter: IDebugMenuPresenter {
         endpointStorage.set(model)
     }
     
+    func onSaveButtonTappped(with model: DebugMenuModel) {
+        
+    }
+    
     func onViewReady() {
         guard let model = endpointStorage.get() else { return }
         view.setView(with: model)

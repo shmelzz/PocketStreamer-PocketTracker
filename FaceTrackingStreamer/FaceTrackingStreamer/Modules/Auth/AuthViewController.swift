@@ -48,6 +48,7 @@ final class AuthViewController: UIViewController, UITextFieldDelegate {
         setupView()
         
         view.addGestureRecognizer(tapGestureRecognizer)
+        tapGestureRecognizer.cancelsTouchesInView = false
     }
     
     private func setupView() {

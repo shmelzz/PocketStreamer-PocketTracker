@@ -2,18 +2,18 @@ import UIKit
 
 final class DebugMenuViewController: UIViewController, IDebugMenuView, UITextFieldDelegate {
     
-    private enum Constants {
-        static let cellIdetifier = "DebugMenuCell"
-    }
-    
-    private let tableView = UITableView()
-    
-    private lazy var dataSource = UITableViewDiffableDataSource<Int, UUID>(
-        tableView: tableView
-    ) { _, indexPath, itemIdentifier in
-        let cell = DebugMenuCell(style: .subtitle, reuseIdentifier: Constants.cellIdetifier)
-        return cell
-    }
+//    private enum Constants {
+//        static let cellIdetifier = "DebugMenuCell"
+//    }
+//    
+//    private let tableView = UITableView()
+//    
+//    private lazy var dataSource = UITableViewDiffableDataSource<Int, UUID>(
+//        tableView: tableView
+//    ) { _, indexPath, itemIdentifier in
+//        let cell = DebugMenuCell(style: .subtitle, reuseIdentifier: Constants.cellIdetifier)
+//        return cell
+//    }
     
     private lazy var endpointTextInput: UITextField = {
         let field = UITextField()
@@ -38,6 +38,18 @@ final class DebugMenuViewController: UIViewController, IDebugMenuView, UITextFie
         return button
     }()
     
+    private lazy var sessionIdTextInput: UITextField = {
+        let field = UITextField()
+        field.placeholder = "Session Id"
+        return field
+    }()
+    
+    private lazy var jwtTokenTextInput: UITextField = {
+        let field = UITextField()
+        field.placeholder = "JWT Token"
+        return field
+    }()
+    
     weak var presenter: IDebugMenuPresenter?
     
     override func viewDidLoad() {
@@ -54,33 +66,49 @@ final class DebugMenuViewController: UIViewController, IDebugMenuView, UITextFie
         endpointTextInput.text = model.endpoint
     }
     
+    func setView(with model: DebugMenuModel) {
+        portTextInput.text = model.endpoint.port
+        endpointTextInput.text = model.endpoint.endpoint
+        
+        sessionIdTextInput.text = model.authData.sessionId
+        jwtTokenTextInput.text = model.authData.token
+    }
+    
+    // MARK: UITextFieldDelegate
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
+    }
+    
     // MARK: Private
     
     @objc
     private func onButtonTapped() {
         // let env: ApiEndpoint.Environment = (environmentControl.selectedSegmentIndex == 0) ? .debug : .release
-        presenter?.onSaveButtonTappped(
-            with: ApiEndpoint(
-                // environment: env,
-                endpoint: endpointTextInput.text ?? "",
-                port: portTextInput.text ?? ""
-            )
+        
+        let endpointModel = ApiEndpoint(
+            // environment: env,
+            endpoint: endpointTextInput.text ?? "",
+            port: portTextInput.text ?? ""
         )
+        
+        let authModel = AuthData(
+            sessionId: sessionIdTextInput.text ?? "",
+            token: jwtTokenTextInput.text ?? ""
+        )
+        
+        presenter?.onSaveButtonTappped(with: endpointModel)
+        
+        let model = DebugMenuModel(endpoint: endpointModel, authData: authModel)
+        
+        // presenter?.onSaveButtonTappped(with: model)
+        
         dismiss(animated: true)
     }
     
     // MARK: View setup
     
     private func setupView() {
-//        view.addSubview(tableView)
-//        tableView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-//            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-//            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-//        ])
-        
         view.addSubview(endpointTextInput)
         endpointTextInput.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -107,6 +135,22 @@ final class DebugMenuViewController: UIViewController, IDebugMenuView, UITextFie
             environmentControl.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
         
+        view.addSubview(sessionIdTextInput)
+        sessionIdTextInput.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            sessionIdTextInput.topAnchor.constraint(equalTo: environmentControl.bottomAnchor, constant: 16),
+            sessionIdTextInput.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            sessionIdTextInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
+        ])
+        
+        view.addSubview(jwtTokenTextInput)
+        jwtTokenTextInput.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            jwtTokenTextInput.topAnchor.constraint(equalTo: sessionIdTextInput.bottomAnchor, constant: 16),
+            jwtTokenTextInput.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            jwtTokenTextInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
+        ])
+        
         view.addSubview(saveButton)
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -114,9 +158,5 @@ final class DebugMenuViewController: UIViewController, IDebugMenuView, UITextFie
             saveButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             saveButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        return textField.resignFirstResponder()
     }
 }
