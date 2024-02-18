@@ -261,47 +261,6 @@ extension OldFaceTrackingViewController: WebSocketDelegate {
             print()
         }
     }
-    
-    func didReceive(event: WebSocketEvent, client: WebSocket) {
-        switch event {
-        case .connected(let headers):
-            connectButton.backgroundColor = .green
-            print("WebSocket connected")
-            isWebsocketConnected = true
-            guard let jsonData = try? JSONSerialization.data(withJSONObject: ["leftEye":[1.2], "rightEye":[2.3], "geometry":[1]], options: []) else {
-                print("Error encoding face tracking data")
-                return
-            }
-            guard let websocket = websocket else {
-                return
-            }
-            websocket.write(data: jsonData)
-        case .disconnected(let reason, let code):
-            connectButton.backgroundColor = .gray
-            print("WebSocket disconnected: \(reason)")
-            isWebsocketConnected = false
-        case .text(let text):
-            print("Received text: \(text)")
-        case .binary(let data):
-            print("Received data: \(data)")
-        case .ping(_):
-            break
-        case .pong(_):
-            break
-        case .viabilityChanged(_):
-            break
-        case .reconnectSuggested(_):
-            break
-        case .cancelled:
-            connectButton.backgroundColor = .red
-            print("WebSocket cancelled")
-        case .error(let error):
-            print("WebSocket error: \(error?.localizedDescription ?? "Unknown error")")
-        case .peerClosed:
-            print()
-        }
-    }
-    
 }
 
 extension OldFaceTrackingViewController: ARSessionDelegate {
