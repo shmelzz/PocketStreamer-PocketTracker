@@ -1,14 +1,15 @@
 import Foundation
 
 struct DebugMenuModel {
-    let endpoint: ApiEndpoint
+    let environments: Environments?
+    let authData: AuthData?
 }
 
 protocol IDebugMenuPresenter: AnyObject {
-    func onSaveButtonTappped(with model: ApiEndpoint)
     func onViewReady()
+    func onSaveButtonTappped(with model: DebugMenuModel)
 }
 
 protocol IDebugMenuView {
-    func setView(with model: ApiEndpoint)
+    func setView(with model: DebugMenuModel)
 }

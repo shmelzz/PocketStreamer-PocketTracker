@@ -6,6 +6,7 @@ import Starscream
 final class OldFaceTrackingViewController: UIViewController {
     
     private let endpointStorage: IApiEndpointStorage
+    private let authStorage: IAuthStorage
     
     private var websocket: WebSocket!
     
@@ -15,9 +16,12 @@ final class OldFaceTrackingViewController: UIViewController {
     private var isWebsocketConnected: Bool = false
     
     private lazy var vc = DebugMenuViewController()
-    private lazy var presenter = DebugMenuPresenter(endpointStorage: endpointStorage, view: vc)
+    private lazy var presenter = DebugMenuPresenter(
+        endpointStorage: endpointStorage,
+        authStorage: authStorage,
+        view: vc
+    )
 
-    
     private lazy var connectButton: UIButton = {
         let button = UIButton(configuration: .filled())
         button.setTitle("Connect", for: .normal)
@@ -32,30 +36,14 @@ final class OldFaceTrackingViewController: UIViewController {
         return button
     }()
     
-    @objc
-    private func onSettingsTapped() {
-        vc.presenter = presenter
-        present(vc, animated: true)
-    }
-    
-    @objc
-    private func onConnectTapped() {
-        var addressPort = ""
-        guard let endpoint = endpointStorage.get() else { return }
-        if !endpoint.endpoint.isEmpty && !endpoint.port.isEmpty {
-            addressPort = "ws://\(endpoint.endpoint):\(endpoint.port)/facetracking"
-        } else {
-            addressPort = "ws://192.168.31.186:3000/facetracking"
-        }
-        self.setupWebSocketConnection(url: addressPort)
-    }
-    
     // MARK: Init
     
     init(
-        endpointStorage: IApiEndpointStorage
+        endpointStorage: IApiEndpointStorage,
+        authStorage: IAuthStorage
     ) {
         self.endpointStorage = endpointStorage
+        self.authStorage = authStorage
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -98,63 +86,32 @@ final class OldFaceTrackingViewController: UIViewController {
     }
     
     @objc
+    private func onSettingsTapped() {
+        vc.presenter = presenter
+        present(vc, animated: true)
+    }
+    
+    @objc
+    private func onConnectTapped() {
+        guard let envs = endpointStorage.get() else { return }
+        let endpoint = envs.environments.first(where: { $0.isSelected })
+        
+        guard let urlAddress = endpoint?.endpoint.endpoint,
+              let port = endpoint?.endpoint.port
+        else { return }
+        
+        let address = "ws://\(urlAddress):\(port)/facetracking"
+        
+        self.setupWebSocketConnection(url: address)
+    }
+    
+    @objc
     private func connectButtonTapped() {
         // let endpointModel = endpointStorage.get()
         vc.presenter = presenter
         // presentWebSocketConfigAlert(with: endpointModel)
         present(vc, animated: true)
     }
-
-    private func presentWebSocketConfigAlert(with currentConfig: ApiEndpoint?) {
-        let alertController = UIAlertController(title: "WebSocket Configuration", message: "Enter WebSocket address and port", preferredStyle: .alert)
-        
-        // TODO: refactor
-        
-        if let model = currentConfig {
-            alertController.addTextField { textField in
-                textField.text = model.endpoint
-            }
-            
-            alertController.addTextField { textField in
-                textField.text = model.port
-                textField.keyboardType = .numberPad
-            }
-        } else {
-            alertController.addTextField { textField in
-                textField.placeholder = "Enter address (e.g., 192.168.0.8)"
-            }
-            
-            alertController.addTextField { textField in
-                textField.placeholder = "Enter port (e.g., 12345)"
-                textField.keyboardType = .numberPad
-            }
-        }
-        
-        let connectAction = UIAlertAction(title: "Connect", style: .default) { [weak self] _ in
-            guard let self = self else { return }
-            
-            let address = alertController.textFields?[0].text ?? ""
-            let port = alertController.textFields?[1].text ?? ""
-            
-            var addressPort = ""
-            if !address.isEmpty && !port.isEmpty {
-                endpointStorage.set(ApiEndpoint(endpoint: address, port: port))
-                addressPort = "ws://\(address):\(port)/facetracking"
-            } else {
-                addressPort = "ws://192.168.31.186:3000/facetracking"
-            }
-            self.setupWebSocketConnection(url: addressPort)
-        }
-        
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        alertController.addAction(connectAction)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true)
-    }
-    
     
     private func setupSceneView() {
         sceneView = ARSCNView(frame: view.bounds)
