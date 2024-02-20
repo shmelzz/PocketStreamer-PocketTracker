@@ -6,37 +6,39 @@ struct AuthModel {
 }
 
 protocol IAuthService {
-    func login(with model: AuthModel)
-    func register(with model: AuthModel)
+    func login(with model: AuthModel, completion: @escaping (Result<LoginResponse, Error>) -> Void)
+    func register(with model: AuthModel, completion: @escaping (Result<RegisterResponse, Error>) -> Void)
 }
 
 final class AuthService: IAuthService {
-    
-    private enum Constants {
-        static let loginEndpoint = "auth/login"
-        static let registerEndpoint = "auth/register"
-    }
-    
+
     private let requestManager: IRequestManager
-    private let authCredentialsStorage: KeychainWrapper
+    private let endpointProvider: IEndpointProvider
     
     init(
         requestManager: IRequestManager,
-        authCredentialsStorage: KeychainWrapper = .defaultKeychainWrapper
+        endpointProvider: IEndpointProvider
     ) {
         self.requestManager = requestManager
-        self.authCredentialsStorage = authCredentialsStorage
+        self.endpointProvider = endpointProvider
     }
     
-    
-    func login(with model: AuthModel) {
-        let request = AuthRequest(username: model.username, password: model.password)
-        requestManager.execute(request)
+    func login(with model: AuthModel, completion: @escaping (Result<LoginResponse, Error>) -> Void) {
+        let request = LoginRequest(
+            username: model.username,
+            password: model.password,
+            endpoint: endpointProvider.endpoint()
+        )
+        requestManager.execute(request: request, completion: completion)
     }
     
-    func register(with model: AuthModel) {
-        let request = AuthRequest(username: model.username, password: model.password)
-        requestManager.execute(request)
+    func register(with model: AuthModel, completion: @escaping (Result<RegisterResponse, Error>) -> Void) {
+        let request = RegisterRequest(
+            username: model.username,
+            password: model.password,
+            endpoint: endpointProvider.endpoint()
+        )
+        requestManager.execute(request: request, completion: completion)
     }
 }
 

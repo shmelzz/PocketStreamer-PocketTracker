@@ -1,20 +1,24 @@
 PODS:
   - GoogleWebRTC (1.1.32000)
   - SwiftLint (0.52.1)
+  - SwiftyJSON (4.3.0)
 
 DEPENDENCIES:
   - GoogleWebRTC (~> 1.1)
   - SwiftLint
+  - SwiftyJSON (~> 4.0)
 
 SPEC REPOS:
   trunk:
     - GoogleWebRTC
     - SwiftLint
+    - SwiftyJSON
 
 SPEC CHECKSUMS:
   GoogleWebRTC: 4d261187b30512efdb711d21fa961a6adf138717
   SwiftLint: 437c13044ba689c96b37c66f7c646f46efba7176
+  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: 8691ba7928acba611d997a183c130ff0aef8b4cd
+PODFILE CHECKSUM: f01c15f701a732400d8ff602e195e077b4586cd4
 
 COCOAPODS: 1.12.1

@@ -8,12 +8,12 @@ struct AuthData: UserDefaultsStorable {
     let token: String
 }
 
-protocol IAuthStorage: AnyObject {
+protocol ISessionStorage: AnyObject {
     func get() -> AuthData?
     func set(_ value: AuthData?)
 }
 
-final class AuthStorageDefaults: UserDefaultsStorage<AuthData>, IAuthStorage { }
+final class SessionStorage: UserDefaultsStorage<AuthData>, ISessionStorage { }
 
 // TODO with keychain
 
