@@ -1,35 +1,30 @@
 import Foundation
 
-struct ApiEndpoint: UserDefaultsStorable {
-    
-    static let key = "apiEndpoint"
-    
+struct ApiEndpoint: Codable {
     let endpoint: String
     let port: String
 }
 
-protocol IApiEndpointStorage: AnyObject {
-    func set(_ value: ApiEndpoint?)
-    func get() -> ApiEndpoint?
+struct EnvironmentEndpoint: Codable {
+    let environment: EnvironmentType
+    let endpoint: ApiEndpoint
+    let isSelected: Bool
+    
+    enum EnvironmentType: Codable {
+        case prod
+        case test
+    }
 }
 
-final class ApiEndpointStorage: UserDefaultsStorage<ApiEndpoint>, IApiEndpointStorage {}
-
-// MARK: - new
-
-struct EnvironmentStorage: UserDefaultsStorable {
+struct Environments: UserDefaultsStorable {
     static let key = "environmentKeys"
     
     let environments: [EnvironmentEndpoint]
 }
 
-struct EnvironmentEndpoint: Codable {
-    let environment: EnvironmentType
-    let endpoint: String
-    let port: String
-    
-    enum EnvironmentType: Codable {
-        case debug
-        case release
-    }
+protocol IApiEndpointStorage: AnyObject {
+    func set(_ value: Environments?)
+    func get() -> Environments?
 }
+
+final class ApiEndpointStorage: UserDefaultsStorage<Environments>, IApiEndpointStorage {}
