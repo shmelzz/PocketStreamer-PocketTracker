@@ -63,7 +63,7 @@ final class FaceTrackingService: IFaceTrackingService, WebSocketDelegate {
     }
     
     func connect() {
-        guard let endpoint = endpointProvider.get() else { return }
+        guard let endpoint = endpointProvider.get()?.environments.first(where: { $0.isSelected })?.endpoint else { return }
         connect(to: endpoint)
     }
     

@@ -31,10 +31,12 @@ final class AuthService: IAuthService {
     
     func login(with model: AuthModel) {
         let request = AuthRequest(username: model.username, password: model.password)
+        requestManager.execute(request)
     }
     
     func register(with model: AuthModel) {
         let request = AuthRequest(username: model.username, password: model.password)
+        requestManager.execute(request)
     }
 }
 

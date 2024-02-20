@@ -23,10 +23,11 @@ final class StartViewController: UIViewController {
     }
     
     private let apiStorage = ApiEndpointStorage(suiteName: "PocketTracker")
+    private let authStorage = AuthStorageDefaults(suiteName: "PocketTracker")
     
     @objc
     private func onFaceButton() {
-        let faceTrackingVC = OldFaceTrackingViewController(endpointStorage: apiStorage)
+        let faceTrackingVC = OldFaceTrackingViewController(endpointStorage: apiStorage, authStorage: authStorage)
         
         navigationController?.pushViewController(
             faceTrackingVC,
