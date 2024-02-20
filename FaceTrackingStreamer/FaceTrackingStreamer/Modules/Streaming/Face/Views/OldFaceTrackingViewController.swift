@@ -6,7 +6,7 @@ import Starscream
 final class OldFaceTrackingViewController: UIViewController {
     
     private let endpointStorage: IApiEndpointStorage
-    private let authStorage: IAuthStorage
+    private let authStorage: ISessionStorage
     
     private var websocket: WebSocket!
     
@@ -40,7 +40,7 @@ final class OldFaceTrackingViewController: UIViewController {
     
     init(
         endpointStorage: IApiEndpointStorage,
-        authStorage: IAuthStorage
+        authStorage: ISessionStorage
     ) {
         self.endpointStorage = endpointStorage
         self.authStorage = authStorage

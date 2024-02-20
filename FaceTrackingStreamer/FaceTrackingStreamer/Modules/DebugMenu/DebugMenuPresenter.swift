@@ -5,12 +5,12 @@ final class DebugMenuPresenter: IDebugMenuPresenter {
     // MARK: - DI
     
     private let endpointStorage: IApiEndpointStorage
-    private let authStorage: IAuthStorage
+    private let authStorage: ISessionStorage
     private let view: IDebugMenuView
     
     init(
         endpointStorage: IApiEndpointStorage,
-        authStorage: IAuthStorage,
+        authStorage: ISessionStorage,
         view: IDebugMenuView
     ) {
         self.endpointStorage = endpointStorage

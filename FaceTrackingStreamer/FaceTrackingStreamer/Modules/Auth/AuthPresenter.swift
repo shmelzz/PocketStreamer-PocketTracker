@@ -5,11 +5,11 @@ final class AuthPresenter: IAuthPresenter {
     // MARK: - DI
     
     private let authService: IAuthService
-    private let authStorage: IAuthStorage
+    private let authStorage: ISessionStorage
     
     init(
         authService: IAuthService,
-        authStorage: IAuthStorage
+        authStorage: ISessionStorage
     ) {
         self.authService = authService
         self.authStorage = authStorage
