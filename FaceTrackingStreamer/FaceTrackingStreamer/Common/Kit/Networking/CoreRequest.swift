@@ -44,6 +44,6 @@ class CoreRequest: IRequest {
     }
     
     func authorizationType() -> AuthorizationType {
-        .token
+        .none
     }
 }
