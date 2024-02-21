@@ -5,23 +5,34 @@ final class AuthPresenter: IAuthPresenter {
     // MARK: - DI
     
     private let authService: IAuthService
-    private let authStorage: ISessionStorage
     
     init(
-        authService: IAuthService,
-        authStorage: ISessionStorage
+        authService: IAuthService
     ) {
         self.authService = authService
-        self.authStorage = authStorage
     }
     
     // MARK: - IAuthPresenter
     
     func onLoginButtonTapped(with model: AuthModel) {
-        authService.login(with: model)
+        authService.login(with: model) { result in
+            switch result {
+            case .success(_):
+                break
+            case .failure(_):
+                break
+            }
+        }
     }
     
     func onRegisterButtonTapped(with model: AuthModel) {
-        authService.register(with: model)
+        authService.register(with: model) { result in
+            switch result {
+            case .success(_):
+                break
+            case .failure(_):
+                break
+            }
+        }
     }
 }
