@@ -52,6 +52,15 @@
 		CCB800C12B84FD56003F9AD2 /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800C02B84FD56003F9AD2 /* RegisterRequest.swift */; };
 		CCB800C32B84FDED003F9AD2 /* EndpointProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800C22B84FDED003F9AD2 /* EndpointProvider.swift */; };
 		CCB800C52B85F227003F9AD2 /* SessionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800C42B85F227003F9AD2 /* SessionProvider.swift */; };
+		CCB800C82B85FE20003F9AD2 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800C72B85FE20003F9AD2 /* Router.swift */; };
+		CCB800CA2B861F1E003F9AD2 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800C92B861F1E003F9AD2 /* BaseCoordinator.swift */; };
+		CCB800CC2B861F45003F9AD2 /* IRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800CB2B861F45003F9AD2 /* IRouter.swift */; };
+		CCB800CE2B861FF3003F9AD2 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800CD2B861FF3003F9AD2 /* AppCoordinator.swift */; };
+		CCB800D02B862193003F9AD2 /* CoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800CF2B862193003F9AD2 /* CoordinatorFactory.swift */; };
+		CCB800D62B86279C003F9AD2 /* AuthorizationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800D52B86279C003F9AD2 /* AuthorizationCoordinator.swift */; };
+		CCB800D82B86283E003F9AD2 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800D72B86283E003F9AD2 /* MainFlowCoordinator.swift */; };
+		CCB800DA2B865704003F9AD2 /* BaseModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800D92B865704003F9AD2 /* BaseModuleAssembly.swift */; };
+		CCB800DC2B865784003F9AD2 /* ServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800DB2B865784003F9AD2 /* ServicesAssembly.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -102,6 +111,15 @@
 		CCB800C02B84FD56003F9AD2 /* RegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
 		CCB800C22B84FDED003F9AD2 /* EndpointProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointProvider.swift; sourceTree = "<group>"; };
 		CCB800C42B85F227003F9AD2 /* SessionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionProvider.swift; sourceTree = "<group>"; };
+		CCB800C72B85FE20003F9AD2 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		CCB800C92B861F1E003F9AD2 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
+		CCB800CB2B861F45003F9AD2 /* IRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRouter.swift; sourceTree = "<group>"; };
+		CCB800CD2B861FF3003F9AD2 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		CCB800CF2B862193003F9AD2 /* CoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFactory.swift; sourceTree = "<group>"; };
+		CCB800D52B86279C003F9AD2 /* AuthorizationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationCoordinator.swift; sourceTree = "<group>"; };
+		CCB800D72B86283E003F9AD2 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
+		CCB800D92B865704003F9AD2 /* BaseModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModuleAssembly.swift; sourceTree = "<group>"; };
+		CCB800DB2B865784003F9AD2 /* ServicesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssembly.swift; sourceTree = "<group>"; };
 		E1209DA5110D3EE75E6F4DDA /* Pods-FaceTrackingStreamer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FaceTrackingStreamer.release.xcconfig"; path = "Target Support Files/Pods-FaceTrackingStreamer/Pods-FaceTrackingStreamer.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -143,6 +161,7 @@
 				CC3F81F42B4C2151006EDC95 /* Resources */,
 				CC0C3A2C2B483E4500C43AA5 /* Common */,
 				CC0C3A252B4832E100C43AA5 /* Core */,
+				CCB800D42B86278B003F9AD2 /* Coordinators */,
 				CC0C3A262B4832E900C43AA5 /* Modules */,
 				6D3D34C32A06683E0052AE68 /* Assets.xcassets */,
 				6D3D34C52A06683E0052AE68 /* LaunchScreen.storyboard */,
@@ -172,7 +191,7 @@
 		CC0C3A252B4832E100C43AA5 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				CC40BEA42B5DA2B4004036F3 /* Routing */,
+				CC40BEA42B5DA2B4004036F3 /* Navigation */,
 				CC3F81FB2B5D5F10006EDC95 /* Storage */,
 				CC0C3A2D2B483E5500C43AA5 /* Services */,
 			);
@@ -234,6 +253,7 @@
 			children = (
 				CC85ADA62B71917900C91BFD /* Auth */,
 				CC3F81E52B4B28F3006EDC95 /* FaceTracking */,
+				CCB800DB2B865784003F9AD2 /* ServicesAssembly.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -290,20 +310,21 @@
 			path = Storage;
 			sourceTree = "<group>";
 		};
-		CC40BEA42B5DA2B4004036F3 /* Routing */ = {
+		CC40BEA42B5DA2B4004036F3 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				CC40BEA52B5DA2C4004036F3 /* IModule.swift */,
+				CCB800D32B8625A8003F9AD2 /* Module */,
+				CCB800D22B862597003F9AD2 /* Coordinator */,
+				CCB800D12B86258C003F9AD2 /* Router */,
 			);
-			path = Routing;
+			path = Navigation;
 			sourceTree = "<group>";
 		};
 		CC40BEA72B5DA2E7004036F3 /* Kit */ = {
 			isa = PBXGroup;
 			children = (
+				CCB800C62B85F99C003F9AD2 /* Storage */,
 				CCB800B12B84ED4A003F9AD2 /* Networking */,
-				CC85ADAB2B71947100C91BFD /* KeychainWrapper */,
-				CC3F81FC2B5D5F6C006EDC95 /* UserDefaultsStorage.swift */,
 			);
 			path = Kit;
 			sourceTree = "<group>";
@@ -371,6 +392,52 @@
 				CCB800C22B84FDED003F9AD2 /* EndpointProvider.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		CCB800C62B85F99C003F9AD2 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				CC85ADAB2B71947100C91BFD /* KeychainWrapper */,
+				CC3F81FC2B5D5F6C006EDC95 /* UserDefaultsStorage.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		CCB800D12B86258C003F9AD2 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				CCB800CB2B861F45003F9AD2 /* IRouter.swift */,
+				CCB800C72B85FE20003F9AD2 /* Router.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		CCB800D22B862597003F9AD2 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				CCB800CF2B862193003F9AD2 /* CoordinatorFactory.swift */,
+				CCB800CD2B861FF3003F9AD2 /* AppCoordinator.swift */,
+				CCB800C92B861F1E003F9AD2 /* BaseCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		CCB800D32B8625A8003F9AD2 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				CC40BEA52B5DA2C4004036F3 /* IModule.swift */,
+				CCB800D92B865704003F9AD2 /* BaseModuleAssembly.swift */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		CCB800D42B86278B003F9AD2 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				CCB800D52B86279C003F9AD2 /* AuthorizationCoordinator.swift */,
+				CCB800D72B86283E003F9AD2 /* MainFlowCoordinator.swift */,
+			);
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -494,10 +561,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCB800CC2B861F45003F9AD2 /* IRouter.swift in Sources */,
 				CCB800C12B84FD56003F9AD2 /* RegisterRequest.swift in Sources */,
 				6D3D34CF2A0668560052AE68 /* OldFaceTrackingViewController.swift in Sources */,
 				CCB800B02B829F85003F9AD2 /* AuthModuleAssembly.swift in Sources */,
 				CC40BEB02B5F0D95004036F3 /* StreamSessionManager.swift in Sources */,
+				CCB800CE2B861FF3003F9AD2 /* AppCoordinator.swift in Sources */,
 				CCB800BB2B84F5E1003F9AD2 /* URLSessionDataTask+Cancelable.swift in Sources */,
 				CCB800B32B84ED6A003F9AD2 /* IRequest.swift in Sources */,
 				6D3D34D12A066FF20052AE68 /* FaceTrackerExtension.swift in Sources */,
@@ -505,11 +574,14 @@
 				CC85ADAD2B71948700C91BFD /* KeychainWrapper.swift in Sources */,
 				CC40BEA32B5DA011004036F3 /* DebugMenuModuleAssembly.swift in Sources */,
 				CCB800B92B84F1CB003F9AD2 /* JSONParsable.swift in Sources */,
+				CCB800D82B86283E003F9AD2 /* MainFlowCoordinator.swift in Sources */,
 				CC40BEAA2B5F08F4004036F3 /* FaceTrackingView.swift in Sources */,
 				CC3F81E42B4B286C006EDC95 /* DebugMenuCell.swift in Sources */,
 				CC40BEB22B5F10B6004036F3 /* FaceTrackingPresenter.swift in Sources */,
+				CCB800D62B86279C003F9AD2 /* AuthorizationCoordinator.swift in Sources */,
 				CCB800BD2B84F6EB003F9AD2 /* Cancelable.swift in Sources */,
 				CC85ADA82B71918C00C91BFD /* AuthService.swift in Sources */,
+				CCB800DA2B865704003F9AD2 /* BaseModuleAssembly.swift in Sources */,
 				CC40BEAD2B5F097A004036F3 /* FaceTrackingContract.swift in Sources */,
 				CC0C3A2B2B483E2B00C43AA5 /* DebugMenuViewController.swift in Sources */,
 				CC85ADAF2B7194A900C91BFD /* KeychainItemAccessibility.swift in Sources */,
@@ -523,9 +595,13 @@
 				CC85ADB42B719AF200C91BFD /* AuthViewController.swift in Sources */,
 				CCB800BF2B84F9F1003F9AD2 /* CoreRequest.swift in Sources */,
 				CCB800C52B85F227003F9AD2 /* SessionProvider.swift in Sources */,
+				CCB800D02B862193003F9AD2 /* CoordinatorFactory.swift in Sources */,
+				CCB800CA2B861F1E003F9AD2 /* BaseCoordinator.swift in Sources */,
 				CC3F81EB2B4B320F006EDC95 /* BodyTrackingViewController.swift in Sources */,
+				CCB800DC2B865784003F9AD2 /* ServicesAssembly.swift in Sources */,
 				CC85ADA52B71807900C91BFD /* StartViewController.swift in Sources */,
 				CCB800B72B84F188003F9AD2 /* IJSONRequest.swift in Sources */,
+				CCB800C82B85FE20003F9AD2 /* Router.swift in Sources */,
 				CC3F81FF2B5D6204006EDC95 /* ApiEndpointStorage.swift in Sources */,
 				CC3F81FD2B5D5F6C006EDC95 /* UserDefaultsStorage.swift in Sources */,
 				CCB800B52B84F0A4003F9AD2 /* RequestBuilder.swift in Sources */,
