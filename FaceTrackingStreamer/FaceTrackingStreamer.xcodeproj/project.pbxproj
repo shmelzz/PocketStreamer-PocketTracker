@@ -17,6 +17,11 @@
 		6D6AE7BA2A06907A00A418D6 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 6D6AE7B92A06907A00A418D6 /* Starscream */; };
 		B6EDBB401998C11725E54685 /* Pods_FaceTrackingStreamer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C90F849032981ACD2A74FE6 /* Pods_FaceTrackingStreamer.framework */; };
 		CC0C3A2B2B483E2B00C43AA5 /* DebugMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C3A2A2B483E2B00C43AA5 /* DebugMenuViewController.swift */; };
+		CC3718032B866D9A0069D978 /* ValidateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3718022B866D9A0069D978 /* ValidateRequest.swift */; };
+		CC3718052B86739A0069D978 /* ModulesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3718042B86739A0069D978 /* ModulesAssembly.swift */; };
+		CC3718082B867B160069D978 /* StartModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3718072B867B160069D978 /* StartModuleAssembly.swift */; };
+		CC37180A2B867F4E0069D978 /* IModuleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3718092B867F4E0069D978 /* IModuleOutput.swift */; };
+		CC37180C2B867F9D0069D978 /* CoordinatorAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC37180B2B867F9D0069D978 /* CoordinatorAction.swift */; };
 		CC3F81E42B4B286C006EDC95 /* DebugMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3F81E32B4B286C006EDC95 /* DebugMenuCell.swift */; };
 		CC3F81E72B4B2923006EDC95 /* FaceTrackingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3F81E62B4B2923006EDC95 /* FaceTrackingService.swift */; };
 		CC3F81EB2B4B320F006EDC95 /* BodyTrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3F81EA2B4B320F006EDC95 /* BodyTrackingViewController.swift */; };
@@ -76,6 +81,11 @@
 		7C90F849032981ACD2A74FE6 /* Pods_FaceTrackingStreamer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FaceTrackingStreamer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC9ACAF490F0A4FF8B030FC /* Pods-FaceTrackingStreamer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FaceTrackingStreamer.debug.xcconfig"; path = "Target Support Files/Pods-FaceTrackingStreamer/Pods-FaceTrackingStreamer.debug.xcconfig"; sourceTree = "<group>"; };
 		CC0C3A2A2B483E2B00C43AA5 /* DebugMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewController.swift; sourceTree = "<group>"; };
+		CC3718022B866D9A0069D978 /* ValidateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateRequest.swift; sourceTree = "<group>"; };
+		CC3718042B86739A0069D978 /* ModulesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesAssembly.swift; sourceTree = "<group>"; };
+		CC3718072B867B160069D978 /* StartModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartModuleAssembly.swift; sourceTree = "<group>"; };
+		CC3718092B867F4E0069D978 /* IModuleOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IModuleOutput.swift; sourceTree = "<group>"; };
+		CC37180B2B867F9D0069D978 /* CoordinatorAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorAction.swift; sourceTree = "<group>"; };
 		CC3F81E32B4B286C006EDC95 /* DebugMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuCell.swift; sourceTree = "<group>"; };
 		CC3F81E62B4B2923006EDC95 /* FaceTrackingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceTrackingService.swift; sourceTree = "<group>"; };
 		CC3F81EA2B4B320F006EDC95 /* BodyTrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyTrackingViewController.swift; sourceTree = "<group>"; };
@@ -201,6 +211,7 @@
 		CC0C3A262B4832E900C43AA5 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				CC3718062B867A110069D978 /* Start */,
 				CC85ADB22B719AE200C91BFD /* Auth */,
 				CC0C3A292B483E0D00C43AA5 /* Streaming */,
 				CC0C3A282B483DFE00C43AA5 /* Chat */,
@@ -256,6 +267,25 @@
 				CCB800DB2B865784003F9AD2 /* ServicesAssembly.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		CC3718012B866D880069D978 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CCB800C02B84FD56003F9AD2 /* RegisterRequest.swift */,
+				CC3718022B866D9A0069D978 /* ValidateRequest.swift */,
+				CC85ADB02B71960F00C91BFD /* LoginRequest.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CC3718062B867A110069D978 /* Start */ = {
+			isa = PBXGroup;
+			children = (
+				CC85ADA42B71807900C91BFD /* StartViewController.swift */,
+				CC3718072B867B160069D978 /* StartModuleAssembly.swift */,
+			);
+			path = Start;
 			sourceTree = "<group>";
 		};
 		CC3F81E22B4B2843006EDC95 /* Views */ = {
@@ -342,7 +372,6 @@
 			isa = PBXGroup;
 			children = (
 				CC40BEAF2B5F0D95004036F3 /* StreamSessionManager.swift */,
-				CC85ADA42B71807900C91BFD /* StartViewController.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -350,9 +379,8 @@
 		CC85ADA62B71917900C91BFD /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				CC3718012B866D880069D978 /* Models */,
 				CC85ADA72B71918C00C91BFD /* AuthService.swift */,
-				CC85ADB02B71960F00C91BFD /* LoginRequest.swift */,
-				CCB800C02B84FD56003F9AD2 /* RegisterRequest.swift */,
 				CCB800C42B85F227003F9AD2 /* SessionProvider.swift */,
 			);
 			path = Auth;
@@ -427,6 +455,8 @@
 			children = (
 				CC40BEA52B5DA2C4004036F3 /* IModule.swift */,
 				CCB800D92B865704003F9AD2 /* BaseModuleAssembly.swift */,
+				CC3718042B86739A0069D978 /* ModulesAssembly.swift */,
+				CC3718092B867F4E0069D978 /* IModuleOutput.swift */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -436,6 +466,7 @@
 			children = (
 				CCB800D52B86279C003F9AD2 /* AuthorizationCoordinator.swift */,
 				CCB800D72B86283E003F9AD2 /* MainFlowCoordinator.swift */,
+				CC37180B2B867F9D0069D978 /* CoordinatorAction.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -580,10 +611,12 @@
 				CC40BEB22B5F10B6004036F3 /* FaceTrackingPresenter.swift in Sources */,
 				CCB800D62B86279C003F9AD2 /* AuthorizationCoordinator.swift in Sources */,
 				CCB800BD2B84F6EB003F9AD2 /* Cancelable.swift in Sources */,
+				CC3718052B86739A0069D978 /* ModulesAssembly.swift in Sources */,
 				CC85ADA82B71918C00C91BFD /* AuthService.swift in Sources */,
 				CCB800DA2B865704003F9AD2 /* BaseModuleAssembly.swift in Sources */,
 				CC40BEAD2B5F097A004036F3 /* FaceTrackingContract.swift in Sources */,
 				CC0C3A2B2B483E2B00C43AA5 /* DebugMenuViewController.swift in Sources */,
+				CC3718032B866D9A0069D978 /* ValidateRequest.swift in Sources */,
 				CC85ADAF2B7194A900C91BFD /* KeychainItemAccessibility.swift in Sources */,
 				CC85ADB62B719C2A00C91BFD /* AuthPresenter.swift in Sources */,
 				CC40BEA62B5DA2C4004036F3 /* IModule.swift in Sources */,
@@ -593,11 +626,14 @@
 				CCB800AE2B8287D7003F9AD2 /* AuthStorage.swift in Sources */,
 				CC40BE9F2B5D9FEA004036F3 /* DebugMenuContract.swift in Sources */,
 				CC85ADB42B719AF200C91BFD /* AuthViewController.swift in Sources */,
+				CC37180C2B867F9D0069D978 /* CoordinatorAction.swift in Sources */,
 				CCB800BF2B84F9F1003F9AD2 /* CoreRequest.swift in Sources */,
 				CCB800C52B85F227003F9AD2 /* SessionProvider.swift in Sources */,
 				CCB800D02B862193003F9AD2 /* CoordinatorFactory.swift in Sources */,
 				CCB800CA2B861F1E003F9AD2 /* BaseCoordinator.swift in Sources */,
+				CC37180A2B867F4E0069D978 /* IModuleOutput.swift in Sources */,
 				CC3F81EB2B4B320F006EDC95 /* BodyTrackingViewController.swift in Sources */,
+				CC3718082B867B160069D978 /* StartModuleAssembly.swift in Sources */,
 				CCB800DC2B865784003F9AD2 /* ServicesAssembly.swift in Sources */,
 				CC85ADA52B71807900C91BFD /* StartViewController.swift in Sources */,
 				CCB800B72B84F188003F9AD2 /* IJSONRequest.swift in Sources */,

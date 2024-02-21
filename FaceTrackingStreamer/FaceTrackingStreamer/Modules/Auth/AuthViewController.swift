@@ -41,7 +41,7 @@ final class AuthViewController: UIViewController, UITextFieldDelegate {
         return UITapGestureRecognizer(target: self, action: #selector(onViewTapped))
     }()
     
-    weak var presenter: IAuthPresenter?
+    var presenter: IAuthPresenter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
