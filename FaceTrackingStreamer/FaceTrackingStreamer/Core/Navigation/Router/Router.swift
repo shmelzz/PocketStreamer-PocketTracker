@@ -27,26 +27,26 @@ final class Router: IRouter {
     
     // MARK: - IRouter
     
-    func present(_ module: IModule?) {
+    func present(_ module: any IModule) {
         present(module, animated: true)
     }
     
-    func present(_ module: IModule?, animated: Bool) {
-        guard let controller = module?.viewToPresent else { return }
+    func present(_ module: any IModule, animated: Bool) {
+        guard let controller = module.viewToPresent else { return }
         rootController?.present(controller, animated: animated, completion: nil)
     }
     
-    func push(_ module: IModule?)  {
+    func push(_ module: any IModule)  {
         push(module, animated: true)
     }
     
-    func push(_ module: IModule?, animated: Bool)  {
+    func push(_ module: any IModule, animated: Bool)  {
         push(module, animated: animated, completion: nil)
     }
     
-    func push(_ module: IModule?, animated: Bool, completion: CompletionBlock?) {
+    func push(_ module: any IModule, animated: Bool, completion: CompletionBlock?) {
         guard
-            let controller = module?.viewToPresent,
+            let controller = module.viewToPresent,
             !(controller is UINavigationController)
             else { assertionFailure("⚠️Deprecated push UINavigationController."); return }
         
@@ -74,12 +74,12 @@ final class Router: IRouter {
         rootController?.dismiss(animated: animated, completion: completion)
     }
     
-    func setRootModule(_ module: IModule?) {
+    func setRootModule(_ module: any IModule) {
         setRootModule(module, hideBar: false)
     }
     
-    func setRootModule(_ module: IModule?, hideBar: Bool) {
-        guard let controller = module?.viewToPresent else { return }
+    func setRootModule(_ module: any IModule, hideBar: Bool) {
+        guard let controller = module.viewToPresent else { return }
         rootController?.setViewControllers([controller], animated: false)
         rootController?.isNavigationBarHidden = hideBar
     }

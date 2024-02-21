@@ -59,6 +59,8 @@
 		CCB800D02B862193003F9AD2 /* CoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800CF2B862193003F9AD2 /* CoordinatorFactory.swift */; };
 		CCB800D62B86279C003F9AD2 /* AuthorizationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800D52B86279C003F9AD2 /* AuthorizationCoordinator.swift */; };
 		CCB800D82B86283E003F9AD2 /* MainFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800D72B86283E003F9AD2 /* MainFlowCoordinator.swift */; };
+		CCB800DA2B865704003F9AD2 /* BaseModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800D92B865704003F9AD2 /* BaseModuleAssembly.swift */; };
+		CCB800DC2B865784003F9AD2 /* ServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800DB2B865784003F9AD2 /* ServicesAssembly.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -116,6 +118,8 @@
 		CCB800CF2B862193003F9AD2 /* CoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFactory.swift; sourceTree = "<group>"; };
 		CCB800D52B86279C003F9AD2 /* AuthorizationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationCoordinator.swift; sourceTree = "<group>"; };
 		CCB800D72B86283E003F9AD2 /* MainFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowCoordinator.swift; sourceTree = "<group>"; };
+		CCB800D92B865704003F9AD2 /* BaseModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModuleAssembly.swift; sourceTree = "<group>"; };
+		CCB800DB2B865784003F9AD2 /* ServicesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssembly.swift; sourceTree = "<group>"; };
 		E1209DA5110D3EE75E6F4DDA /* Pods-FaceTrackingStreamer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FaceTrackingStreamer.release.xcconfig"; path = "Target Support Files/Pods-FaceTrackingStreamer/Pods-FaceTrackingStreamer.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -249,6 +253,7 @@
 			children = (
 				CC85ADA62B71917900C91BFD /* Auth */,
 				CC3F81E52B4B28F3006EDC95 /* FaceTracking */,
+				CCB800DB2B865784003F9AD2 /* ServicesAssembly.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -421,6 +426,7 @@
 			isa = PBXGroup;
 			children = (
 				CC40BEA52B5DA2C4004036F3 /* IModule.swift */,
+				CCB800D92B865704003F9AD2 /* BaseModuleAssembly.swift */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -575,6 +581,7 @@
 				CCB800D62B86279C003F9AD2 /* AuthorizationCoordinator.swift in Sources */,
 				CCB800BD2B84F6EB003F9AD2 /* Cancelable.swift in Sources */,
 				CC85ADA82B71918C00C91BFD /* AuthService.swift in Sources */,
+				CCB800DA2B865704003F9AD2 /* BaseModuleAssembly.swift in Sources */,
 				CC40BEAD2B5F097A004036F3 /* FaceTrackingContract.swift in Sources */,
 				CC0C3A2B2B483E2B00C43AA5 /* DebugMenuViewController.swift in Sources */,
 				CC85ADAF2B7194A900C91BFD /* KeychainItemAccessibility.swift in Sources */,
@@ -591,6 +598,7 @@
 				CCB800D02B862193003F9AD2 /* CoordinatorFactory.swift in Sources */,
 				CCB800CA2B861F1E003F9AD2 /* BaseCoordinator.swift in Sources */,
 				CC3F81EB2B4B320F006EDC95 /* BodyTrackingViewController.swift in Sources */,
+				CCB800DC2B865784003F9AD2 /* ServicesAssembly.swift in Sources */,
 				CC85ADA52B71807900C91BFD /* StartViewController.swift in Sources */,
 				CCB800B72B84F188003F9AD2 /* IJSONRequest.swift in Sources */,
 				CCB800C82B85FE20003F9AD2 /* Router.swift in Sources */,

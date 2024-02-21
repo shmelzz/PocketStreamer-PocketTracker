@@ -10,8 +10,8 @@ import Foundation
 typealias CompletionBlock = () -> Void
 
 protocol ICoordinatorFactory: AnyObject {
-    func makeAuthorizationCoordinator(router: IRouter) -> Coordinatable & AuthorizationCoordinatorOutput
-    func makeMainCoordinator(router: IRouter) -> Coordinatable & MainCoordinatorOutput
+    func makeAuthorizationCoordinator(router: any IRouter) -> Coordinatable & AuthorizationCoordinatorOutput
+    func makeMainCoordinator(router: any IRouter) -> Coordinatable & MainCoordinatorOutput
 }
 
 protocol MainCoordinatorOutput: AnyObject {
@@ -24,11 +24,11 @@ protocol AuthorizationCoordinatorOutput: AnyObject {
 
 final class CoordinatorFactory: ICoordinatorFactory {
 
-    func makeAuthorizationCoordinator(router: IRouter) -> AuthorizationCoordinatorOutput & Coordinatable {
+    func makeAuthorizationCoordinator(router: any IRouter) -> AuthorizationCoordinatorOutput & Coordinatable {
         return AuthorizationCoordinator()
     }
     
-    func makeMainCoordinator(router: IRouter) -> Coordinatable & MainCoordinatorOutput {
+    func makeMainCoordinator(router: any IRouter) -> Coordinatable & MainCoordinatorOutput {
         return MainFlowCoordinator()
     }
 }

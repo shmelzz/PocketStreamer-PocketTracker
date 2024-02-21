@@ -7,14 +7,14 @@
 
 import Foundation
 
-protocol IRouter: IModule {
+protocol IRouter {
     
-    func present(_ module: IModule?)
-    func present(_ module: IModule?, animated: Bool)
+    func present(_ module: any IModule)
+    func present(_ module: any IModule, animated: Bool)
     
-    func push(_ module: IModule?)
-    func push(_ module: IModule?, animated: Bool)
-    func push(_ module: IModule?, animated: Bool, completion: CompletionBlock?)
+    func push(_ module: any IModule)
+    func push(_ module: any IModule, animated: Bool)
+    func push(_ module: any IModule, animated: Bool, completion: CompletionBlock?)
     
     func popModule()
     func popModule(animated: Bool)
@@ -22,8 +22,8 @@ protocol IRouter: IModule {
     func dismissModule()
     func dismissModule(animated: Bool, completion: CompletionBlock?)
     
-    func setRootModule(_ module: IModule?)
-    func setRootModule(_ module: IModule?, hideBar: Bool)
+    func setRootModule(_ module: any IModule)
+    func setRootModule(_ module: any IModule, hideBar: Bool)
     
     func popToRootModule(animated: Bool)
 }
