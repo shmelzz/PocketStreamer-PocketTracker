@@ -51,6 +51,7 @@
 		CCB800BF2B84F9F1003F9AD2 /* CoreRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800BE2B84F9F1003F9AD2 /* CoreRequest.swift */; };
 		CCB800C12B84FD56003F9AD2 /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800C02B84FD56003F9AD2 /* RegisterRequest.swift */; };
 		CCB800C32B84FDED003F9AD2 /* EndpointProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800C22B84FDED003F9AD2 /* EndpointProvider.swift */; };
+		CCB800C52B85F227003F9AD2 /* SessionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800C42B85F227003F9AD2 /* SessionProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +101,7 @@
 		CCB800BE2B84F9F1003F9AD2 /* CoreRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreRequest.swift; sourceTree = "<group>"; };
 		CCB800C02B84FD56003F9AD2 /* RegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
 		CCB800C22B84FDED003F9AD2 /* EndpointProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointProvider.swift; sourceTree = "<group>"; };
+		CCB800C42B85F227003F9AD2 /* SessionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionProvider.swift; sourceTree = "<group>"; };
 		E1209DA5110D3EE75E6F4DDA /* Pods-FaceTrackingStreamer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FaceTrackingStreamer.release.xcconfig"; path = "Target Support Files/Pods-FaceTrackingStreamer/Pods-FaceTrackingStreamer.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -330,6 +332,7 @@
 				CC85ADA72B71918C00C91BFD /* AuthService.swift */,
 				CC85ADB02B71960F00C91BFD /* LoginRequest.swift */,
 				CCB800C02B84FD56003F9AD2 /* RegisterRequest.swift */,
+				CCB800C42B85F227003F9AD2 /* SessionProvider.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -519,6 +522,7 @@
 				CC40BE9F2B5D9FEA004036F3 /* DebugMenuContract.swift in Sources */,
 				CC85ADB42B719AF200C91BFD /* AuthViewController.swift in Sources */,
 				CCB800BF2B84F9F1003F9AD2 /* CoreRequest.swift in Sources */,
+				CCB800C52B85F227003F9AD2 /* SessionProvider.swift in Sources */,
 				CC3F81EB2B4B320F006EDC95 /* BodyTrackingViewController.swift in Sources */,
 				CC85ADA52B71807900C91BFD /* StartViewController.swift in Sources */,
 				CCB800B72B84F188003F9AD2 /* IJSONRequest.swift in Sources */,
