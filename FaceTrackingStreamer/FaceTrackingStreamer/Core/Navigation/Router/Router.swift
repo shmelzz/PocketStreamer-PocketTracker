@@ -45,10 +45,9 @@ final class Router: IRouter {
     }
     
     func push(_ module: any IModule, animated: Bool, completion: CompletionBlock?) {
-        guard
-            let controller = module.viewToPresent,
-            !(controller is UINavigationController)
-            else { assertionFailure("⚠️Deprecated push UINavigationController."); return }
+        guard let controller = module.viewToPresent,
+              !(controller is UINavigationController)
+        else { return }
         
         if let completion = completion {
             completions[controller] = completion
