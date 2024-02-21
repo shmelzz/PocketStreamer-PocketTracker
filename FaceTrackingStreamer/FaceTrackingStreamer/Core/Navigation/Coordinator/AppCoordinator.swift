@@ -7,22 +7,18 @@
 
 import Foundation
 
-protocol Coordinatable: AnyObject {
-    func start()
-}
-
-enum LaunchInstructor {
-    case authorization
+enum LaunchFlow {
+    case auth
     case main
         
-    static func setup() -> LaunchInstructor {
+    static func setup() -> LaunchFlow {
 //        switch (Session.isSeenOnboarding, Session.isAuthorized) {
 //        case (false, false), (true, false):
 //            return .authorization
 //        case (true, true):
 //            return .main
 //        }
-        return .authorization
+        return .auth
     }
 }
 
@@ -31,18 +27,18 @@ final class AppCoordinator: BaseCoordinator {
     private let coordinatorFactory: ICoordinatorFactory
     private let router : IRouter
     
-    fileprivate var instructor: LaunchInstructor {
-        return LaunchInstructor.setup()
-    }
+    private var flow: LaunchFlow = {
+        return LaunchFlow.setup()
+    }()
     
     init(router: IRouter, factory: ICoordinatorFactory) {
         self.router  = router
         self.coordinatorFactory = factory
     }
     
-    func start() {
-        switch instructor {
-        case .authorization:
+    override func startFlow() {
+        switch flow {
+        case .auth:
             startAuthorizationFlow()
         case .main:
             startMainFlow()
@@ -50,22 +46,23 @@ final class AppCoordinator: BaseCoordinator {
     }
     
     private func startAuthorizationFlow() {
-        let coordinator = coordinatorFactory.makeAuthorizationCoordinator(router: router)
-        coordinator.finishFlow = { [unowned self, unowned coordinator] in
-            self.removeDependency(coordinator)
-            self.start()
+        let coordinator = coordinatorFactory.buildAuthorizationCoordinator(router: router)
+        coordinator.onFinish = { [weak self] in
+            self?.removeDependency(coordinator)
+            self?.flow = .main
+            self?.startFlow()
         }
         addDependency(coordinator)
-        coordinator.start()
+        coordinator.startFlow()
     }
     
     private func startMainFlow() {
-        let coordinator = coordinatorFactory.makeMainCoordinator(router: router)
-        coordinator.finishFlow = { [unowned self, unowned coordinator] in
-            self.start()
-            self.removeDependency(coordinator)
+        let coordinator = coordinatorFactory.buildMainFlowCoordinator(router: router)
+        coordinator.onFinish = { [weak self, weak coordinator] in
+            self?.startFlow()
+            self?.removeDependency(coordinator)
         }
         addDependency(coordinator)
-        coordinator.start()
+        coordinator.startFlow()
     }
 }

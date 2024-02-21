@@ -1,0 +1,25 @@
+//
+//  IModuleOutput.swift
+//  FaceTrackingStreamer
+//
+//  Created by Elizaveta Shelemekh on 21.02.2024.
+//
+
+import Foundation
+
+protocol IModuleOutput: AnyObject {
+    func finish(_ action: CoordinatorAction)
+}
+
+class BaseModuleOutput: IModuleOutput {
+    
+    private let coordinator: ICoordinator
+    
+    init(coordinator: ICoordinator) {
+        self.coordinator = coordinator
+    }
+    
+    func finish(_ action: CoordinatorAction) {
+        coordinator.onNext(action)
+    }
+}

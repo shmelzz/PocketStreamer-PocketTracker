@@ -1,6 +1,6 @@
 import Foundation
 
-struct AuthModel {
+struct AuthModel: Encodable {
     let username: String
     let password: String
 }
@@ -8,6 +8,7 @@ struct AuthModel {
 protocol IAuthService {
     func login(with model: AuthModel, completion: @escaping (Result<LoginResponse, Error>) -> Void)
     func register(with model: AuthModel, completion: @escaping (Result<RegisterResponse, Error>) -> Void)
+    func validate(completion: @escaping (Result<ValidateResponse, Error>) -> Void)
 }
 
 final class AuthService: IAuthService {
@@ -40,6 +41,9 @@ final class AuthService: IAuthService {
         )
         requestManager.execute(request: request, completion: completion)
     }
+    
+    func validate(completion: @escaping (Result<ValidateResponse, Error>) -> Void) {
+        let request = ValidateRequest(endpoint: endpointProvider.endpoint())
+        requestManager.execute(request: request, completion: completion)
+    }
 }
-
-

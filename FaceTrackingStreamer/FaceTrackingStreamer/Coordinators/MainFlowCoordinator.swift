@@ -7,11 +7,23 @@
 
 import Foundation
 
-final class MainFlowCoordinator: BaseCoordinator, MainCoordinatorOutput, Coordinatable {
+final class MainFlowCoordinator: BaseCoordinator {
     
-    var finishFlow: CompletionBlock?
+    private let startModuleAssembly: IStartModuleAssembly
+    private let router: IRouter
     
-    func start() {
-        
+    var coordinatorCompletion: CompletionBlock?
+    
+    init(
+        startModuleAssembly: IStartModuleAssembly,
+        router: IRouter
+    ) {
+        self.router = router
+        self.startModuleAssembly = startModuleAssembly
+    }
+    
+    override func startFlow() {
+        let module = startModuleAssembly.assemble(for: self)
+        router.setRootModule(module, hideBar: true)
     }
 }
