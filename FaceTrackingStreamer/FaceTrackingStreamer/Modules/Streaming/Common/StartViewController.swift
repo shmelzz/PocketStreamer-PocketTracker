@@ -23,7 +23,7 @@ final class StartViewController: UIViewController {
     }
     
     private let apiStorage = ApiEndpointStorage(suiteName: "PocketTracker")
-    private let authStorage = AuthStorageDefaults(suiteName: "PocketTracker")
+    private let authStorage = SessionStorage(suiteName: "PocketTracker")
     
     @objc
     private func onFaceButton() {
