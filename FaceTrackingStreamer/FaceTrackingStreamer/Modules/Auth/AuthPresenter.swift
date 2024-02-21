@@ -1,24 +1,26 @@
 import Foundation
 
-final class AuthPresenter: IAuthPresenter {
+final class AuthPresenter: BaseModuleOutput, IAuthPresenter {
     
     // MARK: - DI
     
     private let authService: IAuthService
     
     init(
-        authService: IAuthService
+        authService: IAuthService,
+        coordinator: ICoordinator
     ) {
         self.authService = authService
+        super.init(coordinator: coordinator)
     }
     
     // MARK: - IAuthPresenter
     
     func onLoginButtonTapped(with model: AuthModel) {
-        authService.login(with: model) { result in
+        authService.login(with: model) { [weak self] result in
             switch result {
-            case .success(_):
-                break
+            case .success(let data):
+                self?.finish(.loginDidSuccessed)
             case .failure(_):
                 break
             }
@@ -26,10 +28,10 @@ final class AuthPresenter: IAuthPresenter {
     }
     
     func onRegisterButtonTapped(with model: AuthModel) {
-        authService.register(with: model) { result in
+        authService.register(with: model) { [weak self] result in
             switch result {
-            case .success(_):
-                break
+            case .success(let data):
+                print(data)
             case .failure(_):
                 break
             }

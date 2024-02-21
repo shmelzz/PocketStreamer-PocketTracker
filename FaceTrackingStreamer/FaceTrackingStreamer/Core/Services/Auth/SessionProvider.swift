@@ -14,6 +14,9 @@ protocol ISessionProvider: AnyObject {
     var sessionId: String { get }
 }
 
-//final class SessionProvider: ISessionProvider {
-//
-//}
+final class SessionProvider: ISessionProvider {
+    
+    var token: String = ""
+    
+    var sessionId: String = ""
+}

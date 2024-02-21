@@ -10,26 +10,32 @@ import Foundation
 typealias CompletionBlock = () -> Void
 
 protocol ICoordinatorFactory: AnyObject {
-    func makeAuthorizationCoordinator(router: any IRouter) -> Coordinatable & AuthorizationCoordinatorOutput
-    func makeMainCoordinator(router: any IRouter) -> Coordinatable & MainCoordinatorOutput
-}
-
-protocol MainCoordinatorOutput: AnyObject {
-    var finishFlow: CompletionBlock? { get set }
-}
-
-protocol AuthorizationCoordinatorOutput: AnyObject {
-    var finishFlow: CompletionBlock? { get set }
+    func buildAuthorizationCoordinator(router: any IRouter) -> ICoordinator
+    func buildMainFlowCoordinator(router: any IRouter) -> ICoordinator
 }
 
 final class CoordinatorFactory: ICoordinatorFactory {
-
-    func makeAuthorizationCoordinator(router: any IRouter) -> AuthorizationCoordinatorOutput & Coordinatable {
-        return AuthorizationCoordinator()
+    
+    private let modulesAssembly: IModulesAssembly
+    
+    init(modulesAssembly: IModulesAssembly) {
+        self.modulesAssembly = modulesAssembly
     }
     
-    func makeMainCoordinator(router: any IRouter) -> Coordinatable & MainCoordinatorOutput {
-        return MainFlowCoordinator()
+    // MARK: - ICoordinatorFactory
+    
+    func buildAuthorizationCoordinator(router: any IRouter) -> ICoordinator {
+        return AuthorizationCoordinator(
+            router: router,
+            authModuleAssembly: modulesAssembly.authModuleAssembly
+        )
+    }
+    
+    func buildMainFlowCoordinator(router: any IRouter) -> ICoordinator {
+        return MainFlowCoordinator(
+            startModuleAssembly: modulesAssembly.startModuleAssembly,
+            router: router
+        )
     }
 }
 

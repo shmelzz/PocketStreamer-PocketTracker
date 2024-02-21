@@ -1,6 +1,8 @@
 import Foundation
 
-struct RegisterResponse: Decodable, JSONParsable {}
+struct RegisterResponse: Decodable, JSONParsable {
+    let message: String
+}
 
 final class RegisterRequest: CoreRequest, IJSONRequest {
     
@@ -20,10 +22,16 @@ final class RegisterRequest: CoreRequest, IJSONRequest {
     typealias ResponseModel = RegisterResponse
     
     override func type() -> RequestType {
-        .GET
+        .POST
     }
     
     override func path() -> String {
         "/auth/register"
+    }
+    
+    override func httpBodyData() -> Data? {
+        let model = AuthModel(username: username, password: password)
+        let data = try? JSONEncoder().encode(model)
+        return data
     }
 }

@@ -36,6 +36,7 @@ final class RequestManager: IRequestManager {
         let urlRequest: URLRequest
         do {
             urlRequest = try requestBuilder.build(request: request)
+            print(urlRequest)
         } catch {
             completion(.failure(error))
             return DefaultCancelable()
@@ -80,6 +81,7 @@ final class RequestManager: IRequestManager {
     ) {
         do {
             let json = try JSON(data: data)
+            print(json)
             let model = try T.from(json)
             completion(.success(model))
         } catch {

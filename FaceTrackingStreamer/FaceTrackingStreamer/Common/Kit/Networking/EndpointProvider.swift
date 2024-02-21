@@ -13,6 +13,6 @@ protocol IEndpointProvider {
 
 final class EndpointProvider: IEndpointProvider {
     func endpoint() -> String {
-        return ""
+        return "84.201.133.103:8088"
     }
 }

@@ -22,10 +22,16 @@ final class LoginRequest: CoreRequest, IJSONRequest {
     typealias ResponseModel = LoginResponse
     
     override func type() -> RequestType {
-        .GET
+        .POST
     }
     
     override func path() -> String {
         "/auth/login"
+    }
+    
+    override func httpBodyData() -> Data? {
+        let model = AuthModel(username: username, password: password)
+        let data = try? JSONEncoder().encode(model)
+        return data
     }
 }
