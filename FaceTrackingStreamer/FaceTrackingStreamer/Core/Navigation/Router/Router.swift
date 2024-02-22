@@ -78,11 +78,9 @@ final class Router: IRouter {
     }
     
     func setRootModule(_ module: any IModule, hideBar: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            guard let controller = module.viewToPresent else { return }
-            self?.rootController?.setViewControllers([controller], animated: false)
-            self?.rootController?.isNavigationBarHidden = hideBar
-        }
+        guard let controller = module.viewToPresent else { return }
+        rootController?.setViewControllers([controller], animated: false)
+        rootController?.isNavigationBarHidden = hideBar
     }
     
     func popToRootModule(animated: Bool) {

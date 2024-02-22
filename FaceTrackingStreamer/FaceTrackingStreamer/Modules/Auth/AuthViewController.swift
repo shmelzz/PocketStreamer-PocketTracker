@@ -1,6 +1,6 @@
 import UIKit
 
-final class AuthViewController: UIViewController, UITextFieldDelegate {
+final class AuthViewController: UIViewController, IAuthView, UITextFieldDelegate {
     
     private lazy var logoImageView: UIImageView = {
         let image = UIImage(named: "AppIcon")

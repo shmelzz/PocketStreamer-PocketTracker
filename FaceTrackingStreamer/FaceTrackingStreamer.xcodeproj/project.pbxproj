@@ -19,9 +19,12 @@
 		CC0C3A2B2B483E2B00C43AA5 /* DebugMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C3A2A2B483E2B00C43AA5 /* DebugMenuViewController.swift */; };
 		CC3718032B866D9A0069D978 /* ValidateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3718022B866D9A0069D978 /* ValidateRequest.swift */; };
 		CC3718052B86739A0069D978 /* ModulesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3718042B86739A0069D978 /* ModulesAssembly.swift */; };
-		CC3718082B867B160069D978 /* StartModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3718072B867B160069D978 /* StartModuleAssembly.swift */; };
+		CC3718082B867B160069D978 /* StartStreamModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3718072B867B160069D978 /* StartStreamModuleAssembly.swift */; };
 		CC37180A2B867F4E0069D978 /* IModuleOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3718092B867F4E0069D978 /* IModuleOutput.swift */; };
 		CC37180C2B867F9D0069D978 /* CoordinatorAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC37180B2B867F9D0069D978 /* CoordinatorAction.swift */; };
+		CC3718102B874C2E0069D978 /* IWebSocketRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC37180F2B874C2E0069D978 /* IWebSocketRequest.swift */; };
+		CC3718122B874E6D0069D978 /* StartStreamContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3718112B874E6D0069D978 /* StartStreamContract.swift */; };
+		CC3718142B874E8C0069D978 /* StartStreamPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3718132B874E8C0069D978 /* StartStreamPresenter.swift */; };
 		CC3F81E42B4B286C006EDC95 /* DebugMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3F81E32B4B286C006EDC95 /* DebugMenuCell.swift */; };
 		CC3F81E72B4B2923006EDC95 /* FaceTrackingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3F81E62B4B2923006EDC95 /* FaceTrackingService.swift */; };
 		CC3F81EB2B4B320F006EDC95 /* BodyTrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3F81EA2B4B320F006EDC95 /* BodyTrackingViewController.swift */; };
@@ -36,7 +39,7 @@
 		CC40BEAD2B5F097A004036F3 /* FaceTrackingContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC40BEAC2B5F097A004036F3 /* FaceTrackingContract.swift */; };
 		CC40BEB02B5F0D95004036F3 /* StreamSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC40BEAF2B5F0D95004036F3 /* StreamSessionManager.swift */; };
 		CC40BEB22B5F10B6004036F3 /* FaceTrackingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC40BEB12B5F10B6004036F3 /* FaceTrackingPresenter.swift */; };
-		CC85ADA52B71807900C91BFD /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADA42B71807900C91BFD /* StartViewController.swift */; };
+		CC85ADA52B71807900C91BFD /* StartStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADA42B71807900C91BFD /* StartStreamViewController.swift */; };
 		CC85ADA82B71918C00C91BFD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADA72B71918C00C91BFD /* AuthService.swift */; };
 		CC85ADAA2B71931800C91BFD /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADA92B71931800C91BFD /* RequestManager.swift */; };
 		CC85ADAD2B71948700C91BFD /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADAC2B71948700C91BFD /* KeychainWrapper.swift */; };
@@ -83,9 +86,12 @@
 		CC0C3A2A2B483E2B00C43AA5 /* DebugMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewController.swift; sourceTree = "<group>"; };
 		CC3718022B866D9A0069D978 /* ValidateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateRequest.swift; sourceTree = "<group>"; };
 		CC3718042B86739A0069D978 /* ModulesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesAssembly.swift; sourceTree = "<group>"; };
-		CC3718072B867B160069D978 /* StartModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartModuleAssembly.swift; sourceTree = "<group>"; };
+		CC3718072B867B160069D978 /* StartStreamModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStreamModuleAssembly.swift; sourceTree = "<group>"; };
 		CC3718092B867F4E0069D978 /* IModuleOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IModuleOutput.swift; sourceTree = "<group>"; };
 		CC37180B2B867F9D0069D978 /* CoordinatorAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorAction.swift; sourceTree = "<group>"; };
+		CC37180F2B874C2E0069D978 /* IWebSocketRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IWebSocketRequest.swift; sourceTree = "<group>"; };
+		CC3718112B874E6D0069D978 /* StartStreamContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStreamContract.swift; sourceTree = "<group>"; };
+		CC3718132B874E8C0069D978 /* StartStreamPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStreamPresenter.swift; sourceTree = "<group>"; };
 		CC3F81E32B4B286C006EDC95 /* DebugMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuCell.swift; sourceTree = "<group>"; };
 		CC3F81E62B4B2923006EDC95 /* FaceTrackingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceTrackingService.swift; sourceTree = "<group>"; };
 		CC3F81EA2B4B320F006EDC95 /* BodyTrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyTrackingViewController.swift; sourceTree = "<group>"; };
@@ -100,7 +106,7 @@
 		CC40BEAC2B5F097A004036F3 /* FaceTrackingContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceTrackingContract.swift; sourceTree = "<group>"; };
 		CC40BEAF2B5F0D95004036F3 /* StreamSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamSessionManager.swift; sourceTree = "<group>"; };
 		CC40BEB12B5F10B6004036F3 /* FaceTrackingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceTrackingPresenter.swift; sourceTree = "<group>"; };
-		CC85ADA42B71807900C91BFD /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		CC85ADA42B71807900C91BFD /* StartStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStreamViewController.swift; sourceTree = "<group>"; };
 		CC85ADA72B71918C00C91BFD /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		CC85ADA92B71931800C91BFD /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
 		CC85ADAC2B71948700C91BFD /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
@@ -282,10 +288,31 @@
 		CC3718062B867A110069D978 /* Start */ = {
 			isa = PBXGroup;
 			children = (
-				CC85ADA42B71807900C91BFD /* StartViewController.swift */,
-				CC3718072B867B160069D978 /* StartModuleAssembly.swift */,
+				CC85ADA42B71807900C91BFD /* StartStreamViewController.swift */,
+				CC3718072B867B160069D978 /* StartStreamModuleAssembly.swift */,
+				CC3718112B874E6D0069D978 /* StartStreamContract.swift */,
+				CC3718132B874E8C0069D978 /* StartStreamPresenter.swift */,
 			);
 			path = Start;
+			sourceTree = "<group>";
+		};
+		CC37180D2B874C190069D978 /* HTTP */ = {
+			isa = PBXGroup;
+			children = (
+				CCB800B22B84ED6A003F9AD2 /* IRequest.swift */,
+				CCB800BE2B84F9F1003F9AD2 /* CoreRequest.swift */,
+				CCB800B62B84F188003F9AD2 /* IJSONRequest.swift */,
+				CCB800B82B84F1CB003F9AD2 /* JSONParsable.swift */,
+			);
+			path = HTTP;
+			sourceTree = "<group>";
+		};
+		CC37180E2B874C210069D978 /* WebSocket */ = {
+			isa = PBXGroup;
+			children = (
+				CC37180F2B874C2E0069D978 /* IWebSocketRequest.swift */,
+			);
+			path = WebSocket;
 			sourceTree = "<group>";
 		};
 		CC3F81E22B4B2843006EDC95 /* Views */ = {
@@ -409,14 +436,12 @@
 		CCB800B12B84ED4A003F9AD2 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				CC37180E2B874C210069D978 /* WebSocket */,
+				CC37180D2B874C190069D978 /* HTTP */,
 				CC85ADA92B71931800C91BFD /* RequestManager.swift */,
-				CCB800B22B84ED6A003F9AD2 /* IRequest.swift */,
 				CCB800B42B84F0A4003F9AD2 /* RequestBuilder.swift */,
-				CCB800B62B84F188003F9AD2 /* IJSONRequest.swift */,
-				CCB800B82B84F1CB003F9AD2 /* JSONParsable.swift */,
 				CCB800BA2B84F5E1003F9AD2 /* URLSessionDataTask+Cancelable.swift */,
 				CCB800BC2B84F6EB003F9AD2 /* Cancelable.swift */,
-				CCB800BE2B84F9F1003F9AD2 /* CoreRequest.swift */,
 				CCB800C22B84FDED003F9AD2 /* EndpointProvider.swift */,
 			);
 			path = Networking;
@@ -607,12 +632,15 @@
 				CCB800B92B84F1CB003F9AD2 /* JSONParsable.swift in Sources */,
 				CCB800D82B86283E003F9AD2 /* MainFlowCoordinator.swift in Sources */,
 				CC40BEAA2B5F08F4004036F3 /* FaceTrackingView.swift in Sources */,
+				CC3718142B874E8C0069D978 /* StartStreamPresenter.swift in Sources */,
+				CC3718122B874E6D0069D978 /* StartStreamContract.swift in Sources */,
 				CC3F81E42B4B286C006EDC95 /* DebugMenuCell.swift in Sources */,
 				CC40BEB22B5F10B6004036F3 /* FaceTrackingPresenter.swift in Sources */,
 				CCB800D62B86279C003F9AD2 /* AuthorizationCoordinator.swift in Sources */,
 				CCB800BD2B84F6EB003F9AD2 /* Cancelable.swift in Sources */,
 				CC3718052B86739A0069D978 /* ModulesAssembly.swift in Sources */,
 				CC85ADA82B71918C00C91BFD /* AuthService.swift in Sources */,
+				CC3718102B874C2E0069D978 /* IWebSocketRequest.swift in Sources */,
 				CCB800DA2B865704003F9AD2 /* BaseModuleAssembly.swift in Sources */,
 				CC40BEAD2B5F097A004036F3 /* FaceTrackingContract.swift in Sources */,
 				CC0C3A2B2B483E2B00C43AA5 /* DebugMenuViewController.swift in Sources */,
@@ -633,9 +661,9 @@
 				CCB800CA2B861F1E003F9AD2 /* BaseCoordinator.swift in Sources */,
 				CC37180A2B867F4E0069D978 /* IModuleOutput.swift in Sources */,
 				CC3F81EB2B4B320F006EDC95 /* BodyTrackingViewController.swift in Sources */,
-				CC3718082B867B160069D978 /* StartModuleAssembly.swift in Sources */,
+				CC3718082B867B160069D978 /* StartStreamModuleAssembly.swift in Sources */,
 				CCB800DC2B865784003F9AD2 /* ServicesAssembly.swift in Sources */,
-				CC85ADA52B71807900C91BFD /* StartViewController.swift in Sources */,
+				CC85ADA52B71807900C91BFD /* StartStreamViewController.swift in Sources */,
 				CCB800B72B84F188003F9AD2 /* IJSONRequest.swift in Sources */,
 				CCB800C82B85FE20003F9AD2 /* Router.swift in Sources */,
 				CC3F81FF2B5D6204006EDC95 /* ApiEndpointStorage.swift in Sources */,

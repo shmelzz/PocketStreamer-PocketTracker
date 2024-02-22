@@ -10,7 +10,7 @@ import Foundation
 protocol IModulesAssembly {
     var authModuleAssembly: IAuthModuleAssembly { get }
     
-    var startModuleAssembly: IStartModuleAssembly { get }
+    var startModuleAssembly: IStartStreamModuleAssembly { get }
 }
 
 final class ModulesAssembly: IModulesAssembly {
@@ -25,7 +25,7 @@ final class ModulesAssembly: IModulesAssembly {
         AuthModuleAssembly(servicesAssembly: servicesAssembly)
     }()
     
-    lazy var startModuleAssembly: IStartModuleAssembly = {
-        StartModuleAssembly(servicesAssembly: servicesAssembly)
+    lazy var startModuleAssembly: IStartStreamModuleAssembly = {
+        StartStreamModuleAssembly(servicesAssembly: servicesAssembly)
     }()
 }

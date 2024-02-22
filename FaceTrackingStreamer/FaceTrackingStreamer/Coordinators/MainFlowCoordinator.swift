@@ -9,13 +9,13 @@ import Foundation
 
 final class MainFlowCoordinator: BaseCoordinator {
     
-    private let startModuleAssembly: IStartModuleAssembly
+    private let startModuleAssembly: IStartStreamModuleAssembly
     private let router: IRouter
     
     var coordinatorCompletion: CompletionBlock?
     
     init(
-        startModuleAssembly: IStartModuleAssembly,
+        startModuleAssembly: IStartStreamModuleAssembly,
         router: IRouter
     ) {
         self.router = router

@@ -8,11 +8,12 @@
 import Foundation
 
 protocol IEndpointProvider {
-    func endpoint() -> String
+    func httpEndpoint() -> String
 }
 
 final class EndpointProvider: IEndpointProvider {
-    func endpoint() -> String {
+    
+    func httpEndpoint() -> String {
         return "84.201.133.103:8088"
     }
 }

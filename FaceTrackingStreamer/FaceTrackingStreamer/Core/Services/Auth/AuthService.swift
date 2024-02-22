@@ -28,7 +28,7 @@ final class AuthService: IAuthService {
         let request = LoginRequest(
             username: model.username,
             password: model.password,
-            endpoint: endpointProvider.endpoint()
+            endpoint: endpointProvider.httpEndpoint()
         )
         requestManager.execute(request: request, completion: completion)
     }
@@ -37,13 +37,13 @@ final class AuthService: IAuthService {
         let request = RegisterRequest(
             username: model.username,
             password: model.password,
-            endpoint: endpointProvider.endpoint()
+            endpoint: endpointProvider.httpEndpoint()
         )
         requestManager.execute(request: request, completion: completion)
     }
     
     func validate(completion: @escaping (Result<ValidateResponse, Error>) -> Void) {
-        let request = ValidateRequest(endpoint: endpointProvider.endpoint())
+        let request = ValidateRequest(endpoint: endpointProvider.httpEndpoint())
         requestManager.execute(request: request, completion: completion)
     }
 }

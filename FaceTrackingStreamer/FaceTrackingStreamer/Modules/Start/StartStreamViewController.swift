@@ -1,6 +1,6 @@
 import UIKit
 
-final class StartViewController: UIViewController {
+final class StartStreamViewController: UIViewController, IStartStreamView {
     
     private lazy var faceButton: UIButton = {
         let button = UIButton(configuration: .filled())
@@ -24,6 +24,8 @@ final class StartViewController: UIViewController {
     
     private let apiStorage = ApiEndpointStorage(suiteName: "PocketTracker")
     private let authStorage = SessionStorage(suiteName: "PocketTracker")
+    
+    weak var presenter: IStartStreamPresenter?
     
     @objc
     private func onFaceButton() {

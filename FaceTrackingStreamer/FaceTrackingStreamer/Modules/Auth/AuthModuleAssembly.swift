@@ -8,7 +8,11 @@ final class AuthModuleAssembly: BaseModuleAssembly, IAuthModuleAssembly {
     
     func assemble(for coordinator: ICoordinator) -> any IModule {
         let view = AuthViewController()
-        let presenter = AuthPresenter(authService: servicesAssembly.authService, coordinator: coordinator)
+        let presenter = AuthPresenter(
+            view: view,
+            authService: servicesAssembly.authService,
+            coordinator: coordinator
+        )
         view.presenter = presenter
         return Module(viewToPresent: view, viewOutput: presenter)
     }

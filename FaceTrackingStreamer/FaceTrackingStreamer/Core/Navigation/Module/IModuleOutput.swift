@@ -20,6 +20,8 @@ class BaseModuleOutput: IModuleOutput {
     }
     
     func finish(_ action: CoordinatorAction) {
-        coordinator.onNext(action)
+        DispatchQueue.main.async { [weak self] in
+            self?.coordinator.onNext(action)
+        }
     }
 }

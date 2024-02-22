@@ -4,12 +4,15 @@ final class AuthPresenter: BaseModuleOutput, IAuthPresenter {
     
     // MARK: - DI
     
+    private weak var view: IAuthView?
     private let authService: IAuthService
     
     init(
+        view: IAuthView,
         authService: IAuthService,
         coordinator: ICoordinator
     ) {
+        self.view = view
         self.authService = authService
         super.init(coordinator: coordinator)
     }

@@ -5,4 +5,4 @@ protocol IAuthPresenter: AnyObject {
     func onRegisterButtonTapped(with model: AuthModel)
 }
 
-protocol IAuthView { }
+protocol IAuthView: AnyObject { }
