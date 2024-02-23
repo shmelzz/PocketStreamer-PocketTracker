@@ -20,15 +20,16 @@ public class Movement : MonoBehaviour
             proxy.SetValues(new Dictionary<BlendShapeKey, float>
             {
                 {BlendShapeKey.CreateUnknown("JawOpen"), 1f},
+                {BlendShapeKey.CreateUnknown("TongueOut"), 1f},
             });
             Debug.Log("Space pressed");
-            GetComponent<Rigidbody>().velocity = new Vector3(0, 2, 0);
         }
         else if (Input.GetKeyDown(KeyCode.C))
         {
             proxy.SetValues(new Dictionary<BlendShapeKey, float>
             {
                 {BlendShapeKey.CreateUnknown("JawOpen"), 0f},
+                {BlendShapeKey.CreateUnknown("TongueOut"), 0f},
             });
             Debug.Log("C pressed");
         }
