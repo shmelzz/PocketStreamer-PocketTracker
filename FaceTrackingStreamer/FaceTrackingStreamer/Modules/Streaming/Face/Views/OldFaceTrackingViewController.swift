@@ -19,7 +19,8 @@ final class OldFaceTrackingViewController: UIViewController {
     private lazy var presenter = DebugMenuPresenter(
         endpointStorage: endpointStorage,
         authStorage: authStorage,
-        view: vc
+        view: vc,
+        co
     )
 
     private lazy var connectButton: UIButton = {

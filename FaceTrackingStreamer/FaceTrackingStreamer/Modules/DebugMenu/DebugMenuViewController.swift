@@ -66,7 +66,7 @@ final class DebugMenuViewController: UIViewController, IDebugMenuView, UITextFie
         return field
     }()
     
-    weak var presenter: IDebugMenuPresenter?
+    var presenter: IDebugMenuPresenter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
