@@ -1,0 +1,191 @@
+definitions:
+  model.GetSessionResponse:
+    properties:
+      sessionid:
+        type: string
+    type: object
+  model.UserInfoResponse:
+    properties:
+      username:
+        type: string
+    type: object
+  model.UserLoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  model.UserLoginResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  model.UserRegisterResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  model.WaitForTrackerRequest:
+    properties:
+      sessionid:
+        type: string
+    type: object
+  model.WaitForTrackerResponse:
+    properties:
+      token:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /findcomposer:
+    post:
+      consumes:
+      - application/json
+      description: Find composer from waiting list
+      parameters:
+      - description: Authentication
+        in: header
+        name: Authentication
+        required: true
+        type: string
+      - description: Session Id
+        in: body
+        name: sessionid
+        required: true
+        schema:
+          $ref: '#/definitions/model.WaitForTrackerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ok
+        "404":
+          description: Not Found
+      summary: Find composer
+      tags:
+      - session
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Log in with username and password
+      parameters:
+      - description: Login Credentials
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserLoginResponse'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+      summary: User login
+      tags:
+      - auth
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user with a username and password
+      parameters:
+      - description: User Info
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserRegisterResponse'
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Register new user
+      tags:
+      - auth
+  /session:
+    get:
+      consumes:
+      - application/json
+      description: Generate new session id and return it
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.GetSessionResponse'
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Get new generated session id
+      tags:
+      - session
+  /validate:
+    post:
+      consumes:
+      - application/json
+      description: Check if the JWT token is valid
+      parameters:
+      - description: Authentication
+        in: header
+        name: Authentication
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserInfoResponse'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      summary: Validate JWT token
+      tags:
+      - auth
+  /waitfortracker:
+    post:
+      consumes:
+      - application/json
+      description: Wait for tracker to connect
+      parameters:
+      - description: Session Id
+        in: body
+        name: sessionid
+        required: true
+        schema:
+          $ref: '#/definitions/model.WaitForTrackerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WaitForTrackerResponse'
+        "404":
+          description: Not Found
+      summary: Wait for tracker to connect
+      tags:
+      - session
+swagger: "2.0"

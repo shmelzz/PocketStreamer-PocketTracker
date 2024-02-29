@@ -17,7 +17,7 @@ type App struct {
 
 // NewApp creates and configures your application.
 func NewApp(cfg *config.Config) *App {
-	handlers := handlers.NewFeatureHandler(services.NewBroadcastService())
+	handlers := handlers.NewFeatureHandler(services.NewBroadcastService(), cfg.UserAuthAddress)
 	router.InitRoutes(handlers)
 	// Set up the router and routes.
 
