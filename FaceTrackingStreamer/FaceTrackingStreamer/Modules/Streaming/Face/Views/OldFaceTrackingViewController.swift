@@ -147,6 +147,8 @@ final class OldFaceTrackingViewController: UIViewController {
     
     private func setupWebSocketConnection(url: String) {
         var request = URLRequest(url: URL(string: url)!)
+        request.setValue(authStorage.get()?.token, forHTTPHeaderField: "Authentication")
+        request.setValue(authStorage.get()?.sessionId, forHTTPHeaderField: "SessionId")
         request.timeoutInterval = 10
         websocket = WebSocket(request: request)
         websocket.delegate = self
