@@ -122,6 +122,7 @@ namespace VRM
             // Apply
             if (LeftEye.Transform != null && RightEye.Transform != null)
             {
+                Debug.Log("Applyed eyes");
                 // 目に値を適用する
                 LeftEye.Transform.rotation = LeftEye.InitialWorldMatrix.ExtractRotation() * Matrix4x4.identity.YawPitchRotation(leftYaw, pitch);
                 RightEye.Transform.rotation = RightEye.InitialWorldMatrix.ExtractRotation() * Matrix4x4.identity.YawPitchRotation(rightYaw, pitch);

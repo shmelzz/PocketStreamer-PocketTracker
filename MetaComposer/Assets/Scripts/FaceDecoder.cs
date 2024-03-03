@@ -1,7 +1,8 @@
 namespace MetaComposer.Assets
 {
-    public class FaceDecoder
+    public class FaceA
+
     {
-        
+
     }
 }

@@ -1,8 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using MetaComposer.Assets;
+using UnityEditor;
 using UnityEngine;
 using VRM;
-
+using UnityRandom = UnityEngine.Random;
 public class Movement : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -15,23 +20,13 @@ public class Movement : MonoBehaviour
     void Update()
     {
         var proxy = GetComponent<VRMBlendShapeProxy>();
+        // Extract the names of the properties and store them in a string array
+
         if (Input.GetKeyDown("space"))
         {
-            proxy.SetValues(new Dictionary<BlendShapeKey, float>
-            {
-                {BlendShapeKey.CreateUnknown("JawOpen"), 1f},
-                {BlendShapeKey.CreateUnknown("TongueOut"), 1f},
-            });
+            var data = FaceTrackingData.GenerateRandomFaceTrackingData();
+            proxy.SetValues(FaceBlendShapeValueSetter.ToBlendShapeDictionary(data));
             Debug.Log("Space pressed");
-        }
-        else if (Input.GetKeyDown(KeyCode.C))
-        {
-            proxy.SetValues(new Dictionary<BlendShapeKey, float>
-            {
-                {BlendShapeKey.CreateUnknown("JawOpen"), 0f},
-                {BlendShapeKey.CreateUnknown("TongueOut"), 0f},
-            });
-            Debug.Log("C pressed");
         }
     }
 }
