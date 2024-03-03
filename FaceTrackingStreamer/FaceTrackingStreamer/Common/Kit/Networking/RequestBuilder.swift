@@ -5,7 +5,8 @@ enum RequestBuilderError: Error {
 }
 
 protocol IRequestBuilder: AnyObject {
-    func build(request: IRequest) throws -> URLRequest
+    func buildHTTP(request: IRequest) throws -> URLRequest
+    // func buildWebSocket(request: IWebSocketRequest) throws -> URLRequest
 }
 
 final class RequestBuilder: IRequestBuilder {
@@ -16,8 +17,9 @@ final class RequestBuilder: IRequestBuilder {
         self.sessionProvider = sessionProvider
     }
     
-    func build(request: IRequest) throws -> URLRequest {
+    func buildHTTP(request: IRequest) throws -> URLRequest {
         let fullPath = "http://" + request.domain() + request.path()
+        print(fullPath)
         
         guard let url = URL(string: fullPath) else {
             throw RequestBuilderError.error
@@ -27,7 +29,7 @@ final class RequestBuilder: IRequestBuilder {
         
         switch request.authorizationType() {
         case .token:
-            httpHeaderFields["Authorization"] = sessionProvider.token
+            httpHeaderFields["Authentication"] = sessionProvider.token
         case .session:
             break
         case .none:

@@ -35,7 +35,7 @@ final class RequestManager: IRequestManager {
     ) -> Cancelable  {
         let urlRequest: URLRequest
         do {
-            urlRequest = try requestBuilder.build(request: request)
+            urlRequest = try requestBuilder.buildHTTP(request: request)
             print(urlRequest)
         } catch {
             completion(.failure(error))

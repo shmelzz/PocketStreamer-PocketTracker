@@ -29,7 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let urlSession = URLSession(configuration: .default)
         
         let requestManager = RequestManager(requestBuilder: requestBuilder, urlSession: urlSession)
-        let endpointProvider = EndpointProvider()
+        let endpointProvider = EndpointProvider(apiEndpointStorage: ApiEndpointStorage(suiteName: "PocketTracker"))
         
         let servicesAssembly = ServicesAssembly(requestManager: requestManager, endpointProvider: endpointProvider)
         

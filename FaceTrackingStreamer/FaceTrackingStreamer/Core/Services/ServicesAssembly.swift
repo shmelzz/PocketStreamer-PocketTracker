@@ -8,7 +8,12 @@
 import Foundation
 
 protocol IServicesAssembly: AnyObject {
+    
     var authService: IAuthService { get }
+    
+    var endpointStorage: IApiEndpointStorage { get }
+    
+    var sessionStorage: ISessionStorage { get }
 }
 
 final class ServicesAssembly: IServicesAssembly {
@@ -26,5 +31,13 @@ final class ServicesAssembly: IServicesAssembly {
             requestManager: requestManager,
             endpointProvider: endpointProvider
         )
+    }()
+    
+    lazy var endpointStorage: IApiEndpointStorage = {
+        ApiEndpointStorage(suiteName: "PocketTracker")
+    }()
+    
+    lazy var sessionStorage: ISessionStorage = {
+        SessionStorage(suiteName: "PocketTracker")
     }()
 }

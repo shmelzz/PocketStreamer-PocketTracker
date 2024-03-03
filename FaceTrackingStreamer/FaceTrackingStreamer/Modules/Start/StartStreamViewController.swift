@@ -1,6 +1,6 @@
 import UIKit
 
-final class StartViewController: UIViewController {
+final class StartStreamViewController: UIViewController, IStartStreamView, UIGestureRecognizerDelegate {
     
     private lazy var faceButton: UIButton = {
         let button = UIButton(configuration: .filled())
@@ -16,28 +16,40 @@ final class StartViewController: UIViewController {
         return button
     }()
     
+    private let longTapGestureRecognizer: UILongPressGestureRecognizer = {
+        let recognizer = UILongPressGestureRecognizer()
+        recognizer.minimumPressDuration = TimeInterval(1)
+        return recognizer
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupView()
+        
+        view.isUserInteractionEnabled = true
+        faceButton.addGestureRecognizer(longTapGestureRecognizer)
+        
+        longTapGestureRecognizer.addTarget(self, action: #selector(onLongPress))
+        longTapGestureRecognizer.delegate = self
     }
     
-    private let apiStorage = ApiEndpointStorage(suiteName: "PocketTracker")
-    private let authStorage = SessionStorage(suiteName: "PocketTracker")
+    var presenter: IStartStreamPresenter?
     
     @objc
     private func onFaceButton() {
-        let faceTrackingVC = OldFaceTrackingViewController(endpointStorage: apiStorage, authStorage: authStorage)
-        
-        navigationController?.pushViewController(
-            faceTrackingVC,
-            animated: true
-        )
+        presenter?.onFaceTapped()
     }
     
     @objc
     private func onBodyButton() {
         navigationController?.pushViewController(BodyTrackingViewController(), animated: true)
+        presenter?.onBodyTapped()
+    }
+    
+    @objc
+    private func onLongPress() {
+        presenter?.onLongPress()
     }
     
     // MARK: View setup
@@ -58,6 +70,10 @@ final class StartViewController: UIViewController {
             bodyButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             bodyButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
+    }
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        true
     }
 }
 

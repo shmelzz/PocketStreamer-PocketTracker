@@ -3,7 +3,7 @@ import ARKit
 import Network
 import Starscream
 
-final class OldFaceTrackingViewController: UIViewController {
+final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     
     private let endpointStorage: IApiEndpointStorage
     private let authStorage: ISessionStorage
@@ -19,9 +19,12 @@ final class OldFaceTrackingViewController: UIViewController {
     private lazy var presenter = DebugMenuPresenter(
         endpointStorage: endpointStorage,
         authStorage: authStorage,
-        view: vc
+        view: vc,
+        coordinator: coordinator
     )
-
+    
+    private var coordinator: ICoordinator
+    
     private lazy var connectButton: UIButton = {
         let button = UIButton(configuration: .filled())
         button.setTitle("Connect", for: .normal)
@@ -40,13 +43,15 @@ final class OldFaceTrackingViewController: UIViewController {
     
     init(
         endpointStorage: IApiEndpointStorage,
-        authStorage: ISessionStorage
+        authStorage: ISessionStorage,
+        coordinator: ICoordinator
     ) {
         self.endpointStorage = endpointStorage
         self.authStorage = authStorage
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -184,7 +189,7 @@ extension OldFaceTrackingViewController: WebSocketDelegate {
     func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
         switch event {
         case .connected(let headers):
-            connectButton.backgroundColor = .green
+            connectButton.tintColor = .systemGreen
             print("WebSocket connected")
             isWebsocketConnected = true
             guard let jsonData = try? JSONSerialization.data(withJSONObject: ["leftEye":[1.2], "rightEye":[2.3], "geometry":[1]], options: []) else {
@@ -196,7 +201,7 @@ extension OldFaceTrackingViewController: WebSocketDelegate {
             }
             websocket.write(data: jsonData)
         case .disconnected(let reason, let code):
-            connectButton.backgroundColor = .gray
+            connectButton.tintColor = .systemRed
             print("WebSocket disconnected: \(reason)")
             isWebsocketConnected = false
         case .text(let text):
@@ -212,9 +217,24 @@ extension OldFaceTrackingViewController: WebSocketDelegate {
         case .reconnectSuggested(_):
             break
         case .cancelled:
-            connectButton.backgroundColor = .red
+            connectButton.tintColor = .systemRed
             print("WebSocket cancelled")
         case .error(let error):
+            let alert = UIAlertController(
+                title: "Error",
+                message: error?.localizedDescription ?? "Unknown error",
+                preferredStyle: .alert
+            )
+            
+            let alertOKAction = UIAlertAction(
+                title:"OK", 
+                style: .default,
+                handler: { [weak self] _ in
+                    self?.dismiss(animated: true)
+            })
+            
+            alert.addAction(alertOKAction)
+            present(alert, animated: true)
             print("WebSocket error: \(error?.localizedDescription ?? "Unknown error")")
         case .peerClosed:
             print()

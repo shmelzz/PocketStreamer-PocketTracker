@@ -66,7 +66,7 @@ final class DebugMenuViewController: UIViewController, IDebugMenuView, UITextFie
         return field
     }()
     
-    weak var presenter: IDebugMenuPresenter?
+    var presenter: IDebugMenuPresenter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -215,6 +215,7 @@ final class DebugMenuViewController: UIViewController, IDebugMenuView, UITextFie
             sessionIdTextInput.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             sessionIdTextInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
+        sessionIdTextInput.delegate = self
         
         view.addSubview(jwtTokenTextInput)
         jwtTokenTextInput.translatesAutoresizingMaskIntoConstraints = false
@@ -223,6 +224,7 @@ final class DebugMenuViewController: UIViewController, IDebugMenuView, UITextFie
             jwtTokenTextInput.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             jwtTokenTextInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
+        jwtTokenTextInput.delegate = self
         
         view.addSubview(saveButton)
         saveButton.translatesAutoresizingMaskIntoConstraints = false

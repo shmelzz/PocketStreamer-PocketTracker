@@ -1,21 +1,23 @@
 import Foundation
 
-final class DebugMenuPresenter: IDebugMenuPresenter {
+final class DebugMenuPresenter: BaseModuleOutput, IDebugMenuPresenter {
     
     // MARK: - DI
     
     private let endpointStorage: IApiEndpointStorage
     private let authStorage: ISessionStorage
-    private let view: IDebugMenuView
+    private weak var view: IDebugMenuView?
     
     init(
         endpointStorage: IApiEndpointStorage,
         authStorage: ISessionStorage,
-        view: IDebugMenuView
+        view: IDebugMenuView,
+        coordinator: ICoordinator
     ) {
         self.endpointStorage = endpointStorage
         self.authStorage = authStorage
         self.view = view
+        super.init(coordinator: coordinator)
     }
     
     // MARK: IDebugMenuPresenter
@@ -30,6 +32,6 @@ final class DebugMenuPresenter: IDebugMenuPresenter {
         let authModel = authStorage.get()
         let viewModel = DebugMenuModel(environments: endpointsModel, authData: authModel)
         
-        view.setView(with: viewModel)
+        view?.setView(with: viewModel)
     }
 }
