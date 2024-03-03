@@ -1,4 +1,4 @@
-name: Pocket Center Production deploy to yc
+name: Docker Build and Push PocketCenter
 
 on:
   push:
@@ -7,7 +7,8 @@ on:
 
 env:
   REGISTRY: cr.yandex/crpsa7b6pi9hgku83m9q
-  IMAGE_NAME: pocket-center
+  FACEBODY_IMAGE_NAME: facebody
+  USERAUTH_IMAGE_NAME: userauth
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}${{ github.sha }}
 
 jobs:
@@ -17,7 +18,13 @@ jobs:
       contents: read
       packages: write
       id-token: write
-
+    strategy:
+      matrix:
+        service:
+          [
+            { name: FaceBodyFeatureService, tag: facebody },
+            { name: UserAuthSessionService, tag: userauth },
+          ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -40,10 +47,10 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           provenance: false
-          file: PocketCenter/build/run.Dockerfile
-          context: PocketCenter
+          file: PocketCenter/${{ matrix.service.name }}/build/run.Dockerfile
+          context: PocketCenter/${{ matrix.service.name }}
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
+          tags: ${{ env.REGISTRY }}/${{ matrix.service.tag }}:${{ env.BRANCH_NAME }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -56,7 +63,8 @@ jobs:
         id: deploy-coi
         uses: yc-actions/yc-coi-deploy@v2
         env:
-          IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
+          FACEBODY_IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.FACEBODY_IMAGE_NAME }}:${{ env.BRANCH_NAME }}
+          USERAUTH_IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.USERAUTH_IMAGE_NAME }}:${{ env.BRANCH_NAME }}
           YC_VM_USERNAME: ${{ vars.YC_VM_USERNAME }}
           YC_VM_SSH: ${{ vars.YC_VM_SSH }}
         with:
@@ -66,7 +74,7 @@ jobs:
           vm-service-account-id: ${{ secrets.YC_SERVICE_ACCOUNT_ID }}
           vm-cores: 2
           vm-memory: 2Gb
-          vm-core-fraction: 100
+          vm-core-fraction: 50
           vm-subnet-id: ${{ secrets.YC_SUBNET_ID }}
           user-data-path: "./.github/workflows/yandex-cloud/user-data.yaml"
           docker-compose-path: "./.github/workflows/yandex-cloud/docker-compose.yc.yaml"

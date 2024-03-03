@@ -1,34 +1,39 @@
 version: '3.7'
 
 services:
-  facebody:
+  # locaiton service
+  auth_build:
+    image: location_build:develop
     build:
-      context: "./FaceBodyFeatureService"
-      dockerfile: "build/run.Dockerfile"
-    ports:
-      - "4545:4545" # Map the default port from the container to the host
-    environment:
-      - SERVER_ADDRESS=0.0.0.0
-      - SERVER_PORT=4545
-    restart: always
+      context: "./location-service"
+      dockerfile: ".docker/build.Dockerfile"
+
   auth_service:
     build:
-      context: "./UserAuthSessionService"
-      dockerfile: "build/run.Dockerfile"
+      context: "./location-service"
+      dockerfile: ".docker/location.Dockerfile"
     restart: unless-stopped
     depends_on:
+      auth_build:
+        condition: service_completed_successfully
       user_db:
         condition: service_healthy
+    volumes:
+      - './location-service/migrations/location/:/app/migrations/location'
     expose:
       - "9091"
       - "8088"
     ports:
       - "8088:8088"
     environment:
+      DEBUG: "false"
       DSN: "postgres://usr:authpwd@user_db:5432/auth?sslmode=disable"
-      MIGRATIONS_DIR: "file://migrations/auth"
-      SERVER_ADDRESS: "0.0.0.0"
-      SERVER_PORT: "8088"
+      MIGRATIONS_DIR: "file://migrations/location"
+      SERVE_ADDRESS: ":8088"
+      BASE_PATH: "/api/v1"
+      SWAGGER_ADDRESS: "localhost:8088"
+      PROM_ADDRESS: ":9091"
+      OTEL_ADDRESS: "taxi-jaeger:4317"
 
   user_db:
     image: postgres
