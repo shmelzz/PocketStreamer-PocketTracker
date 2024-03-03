@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37562b39ff933b245ac2f35d87edbcd6, type: 3}
   m_Name: BlendShape.TongueOut
   m_EditorClassIdentifier: 
-  m_prefab: {fileID: 0}
+  m_prefab: {fileID: 7886675903197903256, guid: dd20dde6156744661985b9d76296b341, type: 3}
   BlendShapeName: TongueOut
   Preset: 0
   Values:

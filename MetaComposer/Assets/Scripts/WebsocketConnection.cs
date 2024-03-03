@@ -3,11 +3,14 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;  // Required for ConcurrentQueue
 using System.Collections.Generic;
+using System.Drawing;
 using MetaComposer.Assets;
 using NativeWebSocket;
 using Newtonsoft.Json;
+using TMPro;
 using UniGLTF;
 using UnityEngine;
+using UnityEngine.UI;
 using VRM;
 
 
@@ -16,6 +19,13 @@ public class WebSocketConnection : MonoBehaviour
     WebSocket websocket;
     private ConcurrentQueue<Action> actions = new ConcurrentQueue<Action>();  // Create a thread-safe queue for actions
 
+    public TMP_InputField ipInputField;
+
+    public TMP_InputField JWTInputField;
+
+    public TMP_InputField sessionInputField;
+
+    public Button connectButton;
     private VRMBlendShapeProxy Proxy = null;
 
     [SerializeField]
@@ -64,29 +74,39 @@ public class WebSocketConnection : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
+        connectButton.onClick.AddListener(StartWebSocket);
+    }
+
+    async void StartWebSocket()
+    {
         Debug.Log("Start");
-        Dictionary<string, string> headers = new Dictionary<string, string>();
+        Dictionary<string, string> headers = new Dictionary<string, string>
+        {
+            // Add the Authentication header
+            { "Authentication", JWTInputField.text },
 
-        // Add the Authentication header
-        headers.Add("Authentication", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlZGR5enhjdiIsImV4cCI6MTcwOTQyNTU2Nn0.OFoxKg6LvMtp7TwRGs4QgLyyB_wVDsMfqPfdfBiP7Fc");
-
-        // Add the SessionId header
-        headers.Add("SessionId", "6dcca1cb-6bb7-44f5-a5c2-ff5c6680782e");
-        websocket = new WebSocket("ws://84.201.133.103:4545/composed", headers);
+            // Add the SessionId header
+            { "SessionId", sessionInputField.text }
+        };
+        websocket = new WebSocket(ipInputField.text, headers);
+        TextMeshProUGUI textMeshPro = connectButton.GetComponentInChildren<TextMeshProUGUI>();
 
         websocket.OnOpen += () =>
         {
             Debug.Log("Connection open!");
+            textMeshPro.color = UnityEngine.Color.green;
         };
 
         websocket.OnError += (e) =>
         {
             Debug.Log("Error! " + e);
+            textMeshPro.color = UnityEngine.Color.red;
         };
 
         websocket.OnClose += (e) =>
         {
             Debug.Log("Connection closed!");
+            textMeshPro.color = UnityEngine.Color.red;
         };
 
         Proxy = GetComponent<VRMBlendShapeProxy>();
@@ -152,6 +172,10 @@ public class WebSocketConnection : MonoBehaviour
     void Update()
     {
 #if !UNITY_WEBGL || UNITY_EDITOR
+        if (websocket == null)
+        {
+            return;
+        }
         websocket.DispatchMessageQueue();
         // Dequeue and perform the actions on the main thread
         while (actions.Count > 0)
@@ -162,7 +186,6 @@ public class WebSocketConnection : MonoBehaviour
             }
         }
 #endif
-        ApplyRotations(0, 0);
     }
 
     async void SendWebSocketMessage()
