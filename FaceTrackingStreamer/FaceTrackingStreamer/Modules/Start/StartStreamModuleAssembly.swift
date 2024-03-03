@@ -7,16 +7,19 @@
 
 import Foundation
 
-protocol IStartModuleAssembly {
+protocol IStartStreamModuleAssembly {
     func assemble(for coordinator: ICoordinator) -> any IModule
 }
 
-final class StartModuleAssembly: BaseModuleAssembly, IStartModuleAssembly {
+final class StartStreamModuleAssembly: BaseModuleAssembly, IStartStreamModuleAssembly {
     
     func assemble(for coordinator: ICoordinator) -> any IModule {
-        let view = StartViewController()
-        let presenter = AuthPresenter(authService: servicesAssembly.authService, coordinator: coordinator)
-//        view.presenter = presenter
+        let view = StartStreamViewController()
+        let presenter = StartStreamPresenter(
+            view: view,
+            coordinator: coordinator
+        )
+        view.presenter = presenter
         return Module(viewToPresent: view, viewOutput: presenter)
     }
 }

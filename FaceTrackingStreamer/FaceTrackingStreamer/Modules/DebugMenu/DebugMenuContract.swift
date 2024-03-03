@@ -10,6 +10,6 @@ protocol IDebugMenuPresenter: AnyObject {
     func onSaveButtonTappped(with model: DebugMenuModel)
 }
 
-protocol IDebugMenuView {
+protocol IDebugMenuView: AnyObject {
     func setView(with model: DebugMenuModel)
 }

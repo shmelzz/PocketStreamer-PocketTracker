@@ -10,8 +10,7 @@ final class FaceTrackingViewController: UIViewController, IFaceTrackingView {
     }()
     
     // MARK: - DI
-    
-    
+    var presenter: IFaceTrackingPresenter?
     
     // MARK: - Init
     
