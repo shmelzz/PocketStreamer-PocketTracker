@@ -25,21 +25,17 @@ final class StartStreamViewController: UIViewController, IStartStreamView {
     private let apiStorage = ApiEndpointStorage(suiteName: "PocketTracker")
     private let authStorage = SessionStorage(suiteName: "PocketTracker")
     
-    weak var presenter: IStartStreamPresenter?
+    var presenter: IStartStreamPresenter?
     
     @objc
     private func onFaceButton() {
-        let faceTrackingVC = OldFaceTrackingViewController(endpointStorage: apiStorage, authStorage: authStorage)
-        
-        navigationController?.pushViewController(
-            faceTrackingVC,
-            animated: true
-        )
+        presenter?.onFaceTapped()
     }
     
     @objc
     private func onBodyButton() {
         navigationController?.pushViewController(BodyTrackingViewController(), animated: true)
+        presenter?.onBodyTapped()
     }
     
     // MARK: View setup

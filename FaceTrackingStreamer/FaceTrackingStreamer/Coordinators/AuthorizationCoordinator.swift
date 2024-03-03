@@ -11,13 +11,16 @@ final class AuthorizationCoordinator: BaseCoordinator {
     
     private let router: IRouter
     private let authModuleAssembly: IAuthModuleAssembly
+    private let debugMenuModuleAssembly: IDebugMenuModuleAssembly
     
     init(
         router: IRouter,
-        authModuleAssembly: IAuthModuleAssembly
+        authModuleAssembly: IAuthModuleAssembly,
+        debugMenuModuleAssembly: IDebugMenuModuleAssembly
     ) {
         self.router = router
         self.authModuleAssembly = authModuleAssembly
+        self.debugMenuModuleAssembly = debugMenuModuleAssembly
     }
     
     override func startFlow() {
@@ -29,6 +32,11 @@ final class AuthorizationCoordinator: BaseCoordinator {
         switch action {
         case .loginDidSuccessed:
             onFinish?()
+        case .onLongPress:
+            let module = debugMenuModuleAssembly.assemble(for: self)
+            router.present(module, animated: true)
+        default:
+            break
         }
     }
 }

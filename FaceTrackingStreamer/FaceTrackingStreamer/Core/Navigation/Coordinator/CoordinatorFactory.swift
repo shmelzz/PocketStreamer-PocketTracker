@@ -27,13 +27,15 @@ final class CoordinatorFactory: ICoordinatorFactory {
     func buildAuthorizationCoordinator(router: any IRouter) -> ICoordinator {
         return AuthorizationCoordinator(
             router: router,
-            authModuleAssembly: modulesAssembly.authModuleAssembly
+            authModuleAssembly: modulesAssembly.authModuleAssembly,
+            debugMenuModuleAssembly: modulesAssembly.debugMenuModuleAssembly
         )
     }
     
     func buildMainFlowCoordinator(router: any IRouter) -> ICoordinator {
         return MainFlowCoordinator(
             startModuleAssembly: modulesAssembly.startModuleAssembly,
+            faceTrackingModuleAssembly: modulesAssembly.faceTrackingModuleAssembly,
             router: router
         )
     }

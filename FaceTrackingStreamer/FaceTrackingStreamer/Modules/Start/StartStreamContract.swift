@@ -7,9 +7,9 @@
 
 import Foundation
 
-protocol IStartStreamPresenter: AnyObject {
+protocol IStartStreamPresenter {
     func onFaceTapped()
     func onBodyTapped()
 }
 
-protocol IStartStreamView { }
+protocol IStartStreamView: AnyObject { }

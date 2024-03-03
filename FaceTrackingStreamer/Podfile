@@ -8,7 +8,7 @@ target 'FaceTrackingStreamer' do
   # Pods
   
   pod 'SwiftLint'
-  pod 'GoogleWebRTC', '~> 1.1'
+  # pod 'GoogleWebRTC', '~> 1.1'
   pod 'SwiftyJSON', '~> 4.0'
 
 end

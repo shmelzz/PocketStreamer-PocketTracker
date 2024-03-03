@@ -7,11 +7,12 @@
 
 import Foundation
 
-protocol IFaceTrackingView {
+protocol IFaceTrackingView: AnyObject {
     
 }
 
 protocol IFaceTrackingPresenter {
     func onViewDidLoad()
+    
 }
 

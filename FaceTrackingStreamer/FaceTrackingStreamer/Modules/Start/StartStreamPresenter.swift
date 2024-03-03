@@ -9,7 +9,7 @@ import Foundation
 
 final class StartStreamPresenter: BaseModuleOutput, IStartStreamPresenter {
     
-    private let view: IStartStreamView
+    private weak var view: IStartStreamView?
     
     init(
         view: IStartStreamView,
@@ -22,10 +22,10 @@ final class StartStreamPresenter: BaseModuleOutput, IStartStreamPresenter {
     // MARK: - IStartStreamPresenter
     
     func onFaceTapped() {
-        
+        finish(.startModuleOnFaceTapped)
     }
     
     func onBodyTapped() {
-        
+        finish(.startModuleOnBodyTapped)
     }
 }

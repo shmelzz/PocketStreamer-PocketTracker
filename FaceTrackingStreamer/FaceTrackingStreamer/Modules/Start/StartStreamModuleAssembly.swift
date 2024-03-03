@@ -15,7 +15,10 @@ final class StartStreamModuleAssembly: BaseModuleAssembly, IStartStreamModuleAss
     
     func assemble(for coordinator: ICoordinator) -> any IModule {
         let view = StartStreamViewController()
-        let presenter = StartStreamPresenter(view: view, coordinator: coordinator)
+        let presenter = StartStreamPresenter(
+            view: view,
+            coordinator: coordinator
+        )
         view.presenter = presenter
         return Module(viewToPresent: view, viewOutput: presenter)
     }

@@ -11,6 +11,7 @@ final class AuthModuleAssembly: BaseModuleAssembly, IAuthModuleAssembly {
         let presenter = AuthPresenter(
             view: view,
             authService: servicesAssembly.authService,
+            sessionStorage: servicesAssembly.sessionStorage,
             coordinator: coordinator
         )
         view.presenter = presenter

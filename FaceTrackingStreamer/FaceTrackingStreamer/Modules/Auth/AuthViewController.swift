@@ -1,6 +1,6 @@
 import UIKit
 
-final class AuthViewController: UIViewController, IAuthView, UITextFieldDelegate {
+final class AuthViewController: UIViewController, IAuthView, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
     private lazy var logoImageView: UIImageView = {
         let image = UIImage(named: "AppIcon")
@@ -41,14 +41,28 @@ final class AuthViewController: UIViewController, IAuthView, UITextFieldDelegate
         return UITapGestureRecognizer(target: self, action: #selector(onViewTapped))
     }()
     
+    private let longTapGestureRecognizer: UILongPressGestureRecognizer = {
+        let recognizer = UILongPressGestureRecognizer()
+        recognizer.minimumPressDuration = TimeInterval(1)
+        recognizer.addTarget(self, action: #selector(onLongPress))
+        return recognizer
+    }()
+    
     var presenter: IAuthPresenter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        view.isUserInteractionEnabled = true
         
         view.addGestureRecognizer(tapGestureRecognizer)
+        view.addGestureRecognizer(longTapGestureRecognizer)
+
         tapGestureRecognizer.cancelsTouchesInView = false
+        longTapGestureRecognizer.delegate = self
+        tapGestureRecognizer.delegate = self
+        
+        longTapGestureRecognizer.addTarget(self, action: #selector(onLongPress))
     }
     
     private func setupView() {
@@ -125,5 +139,10 @@ final class AuthViewController: UIViewController, IAuthView, UITextFieldDelegate
     @objc
     private func onViewTapped() {
         view.endEditing(true)
+    }
+    
+    @objc
+    private func onLongPress() {
+        presenter?.onLongPress()
     }
 }

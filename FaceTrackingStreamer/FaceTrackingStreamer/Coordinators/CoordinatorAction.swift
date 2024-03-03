@@ -9,4 +9,9 @@ import Foundation
 
 enum CoordinatorAction {
     case loginDidSuccessed
+    
+    case startModuleOnFaceTapped
+    case startModuleOnBodyTapped
+    
+    case onLongPress
 }
