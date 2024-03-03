@@ -36,6 +36,7 @@ final class CoordinatorFactory: ICoordinatorFactory {
         return MainFlowCoordinator(
             startModuleAssembly: modulesAssembly.startModuleAssembly,
             faceTrackingModuleAssembly: modulesAssembly.faceTrackingModuleAssembly,
+            debugMenuModuleAssembly: modulesAssembly.debugMenuModuleAssembly,
             router: router
         )
     }

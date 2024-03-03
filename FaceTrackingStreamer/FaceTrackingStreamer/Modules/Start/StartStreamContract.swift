@@ -10,6 +10,7 @@ import Foundation
 protocol IStartStreamPresenter {
     func onFaceTapped()
     func onBodyTapped()
+    func onLongPress()
 }
 
 protocol IStartStreamView: AnyObject { }

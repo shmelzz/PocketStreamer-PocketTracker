@@ -11,6 +11,7 @@ final class MainFlowCoordinator: BaseCoordinator {
     
     private let startModuleAssembly: IStartStreamModuleAssembly
     private let faceTrackingModuleAssembly: IFaceTrackingModuleAssembly
+    private let debugMenuModuleAssembly: IDebugMenuModuleAssembly
     private let router: IRouter
     
     var coordinatorCompletion: CompletionBlock?
@@ -18,16 +19,18 @@ final class MainFlowCoordinator: BaseCoordinator {
     init(
         startModuleAssembly: IStartStreamModuleAssembly,
         faceTrackingModuleAssembly: IFaceTrackingModuleAssembly,
+        debugMenuModuleAssembly: IDebugMenuModuleAssembly,
         router: IRouter
     ) {
         self.router = router
         self.startModuleAssembly = startModuleAssembly
         self.faceTrackingModuleAssembly = faceTrackingModuleAssembly
+        self.debugMenuModuleAssembly = debugMenuModuleAssembly
     }
     
     override func startFlow() {
         let module = startModuleAssembly.assemble(for: self)
-        router.setRootModule(module, hideBar: true)
+        router.setRootModule(module, hideBar: false)
     }
     
     override func onNext(_ action: CoordinatorAction) {
@@ -37,6 +40,9 @@ final class MainFlowCoordinator: BaseCoordinator {
             router.push(module, animated: true)
         case .startModuleOnBodyTapped:
             break
+        case .onLongPress:
+            let module = debugMenuModuleAssembly.assemble(for: self)
+            router.present(module, animated: true)
         default:
             break
         }

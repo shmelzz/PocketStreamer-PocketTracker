@@ -63,6 +63,7 @@ final class AuthViewController: UIViewController, IAuthView, UITextFieldDelegate
         tapGestureRecognizer.delegate = self
         
         longTapGestureRecognizer.addTarget(self, action: #selector(onLongPress))
+        longTapGestureRecognizer.delaysTouchesBegan = true
     }
     
     private func setupView() {
@@ -144,5 +145,9 @@ final class AuthViewController: UIViewController, IAuthView, UITextFieldDelegate
     @objc
     private func onLongPress() {
         presenter?.onLongPress()
+    }
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        true
     }
 }
