@@ -19,6 +19,7 @@ final class RequestBuilder: IRequestBuilder {
     
     func buildHTTP(request: IRequest) throws -> URLRequest {
         let fullPath = "http://" + request.domain() + request.path()
+        print(fullPath)
         
         guard let url = URL(string: fullPath) else {
             throw RequestBuilderError.error
