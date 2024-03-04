@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;  // Required for ConcurrentQueue
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using MetaComposer.Assets;
 using NativeWebSocket;
@@ -10,6 +11,7 @@ using Newtonsoft.Json;
 using TMPro;
 using UniGLTF;
 using UnityEngine;
+using UnityEngine.Assertions.Comparers;
 using UnityEngine.UI;
 using VRM;
 
@@ -28,53 +30,57 @@ public class WebSocketConnection : MonoBehaviour
     public Button connectButton;
     private VRMBlendShapeProxy Proxy = null;
 
-    [SerializeField]
+    [Range(0.0f, 1.0f)]
     public OffsetOnTransform LeftEye;
 
-    [SerializeField]
+    [Range(0.0f, 1.0f)]
     public OffsetOnTransform RightEye;
 
-    [SerializeField]
-    public double EyeLookDownLeft { get; set; }
+    // [Range(0.0f, 1.0f)]
+    // public double EyeLookDownLeft;
 
-    [SerializeField]
-    public double EyeLookDownRight { get; set; }
+    // [Range(0.0f, 1.0f)]
+    // public double EyeLookDownRight;
 
-    [SerializeField]
-    public double EyeLookInLeft { get; set; }
+    // [Range(0.0f, 1.0f)]
+    // public double EyeLookInLeft;
 
-    [SerializeField]
-    public double EyeLookInRight { get; set; }
+    // [Range(0.0f, 1.0f)]
+    // public double EyeLookInRight;
 
-    [SerializeField]
-    public double EyeLookOutLeft { get; set; }
+    // [Range(0.0f, 1.0f)]
+    // public double EyeLookOutLeft;
 
-    [SerializeField]
-    public double EyeLookOutRight { get; set; }
+    // [Range(0.0f, 1.0f)]
+    // public double EyeLookOutRight;
 
-    [SerializeField]
-    public double EyeLookUpLeft { get; set; }
+    // [Range(0.0f, 1.0f)]
+    // public double EyeLookUpLeft;
 
-    [SerializeField]
-    public double EyeLookUpRight { get; set; }
+    // [Range(0.0f, 1.0f)]
+    // public double EyeLookUpRight;
 
 
-    [SerializeField, Header("Degree Mapping")]
-    public CurveMapper HorizontalOuter = new CurveMapper(90.0f, 10.0f);
+    [Range(0.0f, 90.0f)]
+    public float HorizontalOuter = 45.0f;
 
-    [SerializeField]
-    public CurveMapper HorizontalInner = new CurveMapper(90.0f, 10.0f);
+    [Range(0.0f, 90.0f)]
+    public float HorizontalInner = 45.0f;
 
-    [SerializeField]
-    public CurveMapper VerticalDown = new CurveMapper(90.0f, 10.0f);
+    [Range(0.0f, 90.0f)]
+    public float VerticalDown = 45.0f;
 
-    [SerializeField]
-    public CurveMapper VerticalUp = new CurveMapper(90.0f, 10.0f);
+    [Range(0.0f, 90.0f)]
+    public float VerticalUp = 45.0f;
 
     // Start is called before the first frame update
     async void Start()
     {
         connectButton.onClick.AddListener(StartWebSocket);
+        VerticalUp = 20f;
+        VerticalDown = 20f;
+        HorizontalInner = 18f;
+        HorizontalOuter = 18f;
     }
 
     async void StartWebSocket()
@@ -127,6 +133,7 @@ public class WebSocketConnection : MonoBehaviour
                 }
                 // Extract the names of the properties and store them in a string array
                 Proxy.SetValues(FaceBlendShapeValueSetter.ToBlendShapeDictionary(faceData));
+                ApplyEyeRotations(faceData);
             });
         };
 
@@ -134,40 +141,31 @@ public class WebSocketConnection : MonoBehaviour
         await websocket.Connect();
     }
 
-    void ApplyRotations(float yaw, float pitch)
+    void ApplyEyeRotations(FaceTrackingData data = null)
     {
-        // TODO: Need add up down inner outer parser. 
-        // horizontal
-        float leftYaw, rightYaw;
-        if (yaw < 0)
-        {
-            leftYaw = -HorizontalOuter.Map(-yaw);
-            rightYaw = -HorizontalInner.Map(-yaw);
-        }
-        else
-        {
-            rightYaw = HorizontalOuter.Map(yaw);
-            leftYaw = HorizontalInner.Map(yaw);
-        }
-
-        // vertical
-        if (pitch < 0)
-        {
-            pitch = -VerticalDown.Map(-pitch);
-        }
-        else
-        {
-            pitch = VerticalUp.Map(pitch);
-        }
-
-
         // Apply
         if (LeftEye.Transform != null && RightEye.Transform != null)
         {
-            LeftEye.Transform.rotation = LeftEye.InitialWorldMatrix.ExtractRotation() * Matrix4x4.identity.YawPitchRotation(leftYaw, pitch);
-            RightEye.Transform.rotation = RightEye.InitialWorldMatrix.ExtractRotation() * Matrix4x4.identity.YawPitchRotation(rightYaw, pitch);
+            float leftPitch = data.ToEyePitchDegree(VerticalDown, VerticalUp).Item1;
+            float leftYaw = data.ToEyeYawDegree(HorizontalInner, HorizontalOuter).Item1;
+
+            float rightPitch = data.ToEyePitchDegree(VerticalDown, VerticalUp).Item2;
+            float rightYaw = data.ToEyeYawDegree(HorizontalInner, HorizontalOuter).Item2;
+
+            // Create a Quaternion from the pitch and yaw values
+            Quaternion leftRotation = Quaternion.Euler(leftPitch, leftYaw, 0);
+
+            Quaternion rightRotation = Quaternion.Euler(rightPitch, rightYaw, 0);
+
+            // Apply the rotation to the eye's transform
+            LeftEye.Transform.localRotation = leftRotation;
+            RightEye.Transform.localRotation = rightRotation;
+
         }
     }
+
+
+
 
     void Update()
     {

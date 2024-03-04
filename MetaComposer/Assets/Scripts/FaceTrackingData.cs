@@ -1,4 +1,6 @@
+using System;
 using Newtonsoft.Json;
+using UnityEngine;
 using UnityRandom = UnityEngine.Random;
 
 namespace MetaComposer.Assets
@@ -224,6 +226,25 @@ namespace MetaComposer.Assets
             };
 
             return faceTrackingData;
+        }
+
+        // Up -> 1, Down -> -1
+        public (float, float) ToEyePitchDegree(float downDegree, float upDegree)
+        {
+
+            var leftPitch = Convert.ToSingle(EyeLookUpLeft * upDegree - EyeLookDownLeft * downDegree);
+            var rightPitch = Convert.ToSingle(EyeLookUpRight * upDegree - EyeLookDownRight * downDegree);
+            return (-leftPitch, -rightPitch);
+        }
+
+        // Outer -> 1, Inner -> -1
+        public (float, float) ToEyeYawDegree(float innerDegree, float outerDegree)
+        {
+            var leftYaw = Convert.ToSingle(EyeLookOutLeft * outerDegree - EyeLookInLeft * innerDegree);
+            var rightYaw = Convert.ToSingle(EyeLookInRight * innerDegree - EyeLookOutRight * outerDegree);
+            Debug.Log(leftYaw);
+
+            return (leftYaw, rightYaw);
         }
     }
 }
