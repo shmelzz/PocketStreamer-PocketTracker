@@ -1,0 +1,35 @@
+info:
+  contact: {}
+paths:
+  /google/login:
+    get:
+      consumes:
+      - application/json
+      description: Login, get url to login in google account
+      parameters:
+      - description: Authentication
+        in: header
+        name: Authentication
+        required: true
+        type: string
+      - description: SessionId
+        in: header
+        name: SessionId
+        required: true
+        type: string
+      - description: StreamId
+        in: header
+        name: StreamId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ok
+        "404":
+          description: Not Found
+      summary: Login use oath
+      tags:
+      - login
+swagger: "2.0"
