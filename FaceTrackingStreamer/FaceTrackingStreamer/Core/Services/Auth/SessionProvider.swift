@@ -9,23 +9,31 @@ import Foundation
 
 protocol ISessionProvider: AnyObject {
     
-    var token: String { get set }
+    var token: String? { get set }
     
-    var sessionId: String { get set }
+    var sessionId: String? { get set }
+    
+    func reset()
 }
 
 final class SessionProvider: ISessionProvider {
     
-    private let authStorage: ISessionStorage
+    private let sessionStorage: ISessionStorage
     
-    init(authStorage: ISessionStorage) {
-        self.authStorage = authStorage
-        let data = authStorage.get()
+    init(sessionStorage: ISessionStorage) {
+        self.sessionStorage = sessionStorage
+        let data = sessionStorage.get()
         self.token = data?.token ?? ""
         self.sessionId = data?.sessionId ?? ""
     }
     
-    var token: String
+    var token: String?
     
-    var sessionId: String
+    var sessionId: String?
+    
+    func reset() {
+        token = nil
+        sessionId = nil
+        sessionStorage.set(nil)
+    }
 }

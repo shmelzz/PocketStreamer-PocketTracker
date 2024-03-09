@@ -37,4 +37,9 @@ final class ConnectPresenter: BaseModuleOutput, IConnectPresenter {
         sessionProvider.sessionId = result
         finish(.connectModuleSuccess)
     }
+    
+    func onLogoutTapped() {
+        sessionProvider.reset()
+        finish(.connectModuleOnLogout)
+    }
 }

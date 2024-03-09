@@ -32,7 +32,6 @@ final class MainFlowCoordinator: BaseCoordinator {
     }
     
     override func startFlow() {
-//        let module = startModuleAssembly.assemble(for: self)
         let module = connectModuleAssembly.assemble(for: self)
         router.setRootModule(module, hideBar: false)
     }
@@ -50,6 +49,8 @@ final class MainFlowCoordinator: BaseCoordinator {
         case .connectModuleSuccess:
             let module = startModuleAssembly.assemble(for: self)
             router.push(module, animated: true)
+        case .connectModuleOnLogout:
+            onFinish?()
         default:
             break
         }

@@ -11,4 +11,18 @@ protocol IBodyTrackingModuleAssembly {
     func assemble(for coordinator: ICoordinator) -> any IModule
 }
 
-
+final class BodyTrackingModuleAssembly: BaseModuleAssembly, IBodyTrackingModuleAssembly {
+    
+    func assemble(for coordinator: ICoordinator) -> any IModule {
+        let view = BodyTrackingViewController(
+        )
+        
+        let presenter = BodyTrackingPresenter(
+            view: view,
+            coordinator: coordinator
+        )
+        
+        view.presenter = presenter
+        return Module(viewToPresent: view, viewOutput: presenter)
+    }
+}

@@ -3,7 +3,7 @@ import RealityKit
 import ARKit
 import Combine
 
-final class BodyTrackingViewController: UIViewController, ARSessionDelegate {
+final class BodyTrackingViewController: UIViewController, IBodyTrackingView, ARSessionDelegate {
     
     private let arView: ARView
     
@@ -11,6 +11,8 @@ final class BodyTrackingViewController: UIViewController, ARSessionDelegate {
     var character: BodyTrackedEntity?
     let characterOffset: SIMD3<Float> = [-1.0, 0, 0] // Offset the character by one meter to the left
     let characterAnchor = AnchorEntity()
+    
+    var presenter: IBodyTrackingPresenter?
     
     init() {
         self.arView = ARView(frame: .zero)

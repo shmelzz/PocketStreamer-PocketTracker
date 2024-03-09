@@ -44,6 +44,6 @@ final class ServicesAssembly: IServicesAssembly {
     }()
     
     lazy var sessionProvider: ISessionProvider = {
-        SessionProvider(authStorage: sessionStorage)
+        SessionProvider(sessionStorage: sessionStorage)
     }()
 }

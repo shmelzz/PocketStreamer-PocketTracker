@@ -11,6 +11,7 @@ enum CoordinatorAction {
     case loginDidSuccessed
     
     case connectModuleSuccess
+    case connectModuleOnLogout
     
     case startModuleOnFaceTapped
     case startModuleOnBodyTapped
