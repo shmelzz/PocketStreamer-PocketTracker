@@ -10,6 +10,7 @@ services:
     environment:
       - SERVER_ADDRESS=0.0.0.0
       - SERVER_PORT=4545
+      - USER_AUTH_ADDRESS=http://auth_service:8088
     restart: always
   auth_service:
     build:
@@ -29,6 +30,18 @@ services:
       MIGRATIONS_DIR: "file://migrations/auth"
       SERVER_ADDRESS: "0.0.0.0"
       SERVER_PORT: "8088"
+
+  pocketaction:
+    build:
+      context: "./PocketActionService"
+      dockerfile: "build/run.Dockerfile"
+    ports:
+      - "9091:9091" # Map the default port from the container to the host
+    environment:
+      - SERVER_ADDRESS=0.0.0.0
+      - SERVER_PORT=9091
+      - USER_AUTH_ADDRESS=http://auth_service:8088
+    restart: always
 
   user_db:
     image: postgres

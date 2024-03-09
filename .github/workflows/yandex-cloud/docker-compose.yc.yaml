@@ -1,6 +1,7 @@
 version: '3.7'
 
 services:
+## Face/BodyFeatureTrackingService
   facebody:
     image: {{ env.FACEBODY_IMAGE_TAG }}
     ports:
@@ -10,6 +11,8 @@ services:
       - SERVER_PORT=4545
       - USER_AUTH_ADDRESS=http://auth_service:8088
     restart: always
+
+## UserAuthSession service    
   auth_service:
     image: {{ env.USERAUTH_IMAGE_TAG }}
     restart: unless-stopped
@@ -26,6 +29,18 @@ services:
       MIGRATIONS_DIR: "file://migrations/auth"
       SERVER_ADDRESS: "0.0.0.0"
       SERVER_PORT: "8088"
+
+  ## Pocket action service
+  pocketaction:
+    image: {{ env.POCKETACTION_IMAGE_TAG }}
+    ports:
+      - "0.0.0.0:9091:9091" # Map the default port from the container to the host
+    environment:
+      - SERVER_ADDRESS=0.0.0.0
+      - SERVER_PORT=9091
+      - USER_AUTH_ADDRESS=http://auth_service:8088
+      - APP_ENV="production"
+    restart: always     
 
   user_db:
     image: postgres

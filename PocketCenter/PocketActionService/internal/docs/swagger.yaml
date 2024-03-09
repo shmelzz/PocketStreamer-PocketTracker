@@ -1,0 +1,44 @@
+definitions:
+  model.PocketAction:
+    properties:
+      payload:
+        type: string
+      type:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /pocketaction:
+    post:
+      consumes:
+      - application/json
+      description: Trigger Action, send to Composer use websocket
+      parameters:
+      - description: Authentication
+        in: header
+        name: Authentication
+        required: true
+        type: string
+      - description: SessionId
+        in: header
+        name: SessionId
+        required: true
+        type: string
+      - description: PocketAction request
+        in: body
+        name: action
+        required: true
+        schema:
+          $ref: '#/definitions/model.PocketAction'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ok
+        "404":
+          description: Not Found
+      summary: Trigger PocketAction
+      tags:
+      - session
+swagger: "2.0"
