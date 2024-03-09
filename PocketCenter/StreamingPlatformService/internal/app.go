@@ -29,9 +29,10 @@ func NewApp(cfg *config.Config) *App {
 		zap.ReplaceGlobals(zap.Must(zap.NewProduction()))
 	}
 	// Set up the router and routes.
+	pocketActionService := service.NewPocketActionService(cfg.PocketActionAddress)
 	youtubeService := ytbot.NewYoutubeService(*cfg)
 	broadcastService := service.NewBroadcastService()
-	googleOathHandler := handlers.NewGoogleOAuthHandler(cfg.UserAuthAddress, youtubeService, broadcastService)
+	googleOathHandler := handlers.NewGoogleOAuthHandler(cfg.UserAuthAddress, youtubeService, broadcastService, pocketActionService)
 
 	engine := router.InitRoutes(googleOathHandler)
 	return &App{

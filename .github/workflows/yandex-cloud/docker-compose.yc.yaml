@@ -51,6 +51,7 @@ services:
       - SERVER_PORT=7070
       - USER_AUTH_ADDRESS=http://auth_service:8088
       - APP_ENV="production"
+      - POCKETACTION_ADDRESS=http://pocketaction:9091
     restart: always 
 
   user_db:

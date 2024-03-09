@@ -10,17 +10,17 @@ type GoogleSecret struct {
 }
 
 type Config struct {
-	ServerAddress   string
-	Port            string
-	UserAuthAddress string
-	GoogleSecret    GoogleSecret
-	AppEnv          string
+	ServerAddress       string
+	Port                string
+	UserAuthAddress     string
+	GoogleSecret        GoogleSecret
+	AppEnv              string
+	PocketActionAddress string
 }
 
 func loadGoogleSecrets() (*GoogleSecret, error) {
 	oathRedirectUrl := os.Getenv("GOOGLE_REDIRECT_URL")
 	clientSecret := os.Getenv("GOOGLE_CLIENT_SECRET")
-
 	return &GoogleSecret{
 		OathRedirectUrl: oathRedirectUrl,
 		ClientSecret:    clientSecret,
@@ -28,6 +28,7 @@ func loadGoogleSecrets() (*GoogleSecret, error) {
 }
 
 func LoadConfig() (*Config, error) {
+	pocketActionAddress := os.Getenv("POCKETACTION_ADDRESS")
 	serverAddress := os.Getenv("SERVER_ADDRESS")
 	port := os.Getenv("SERVER_PORT")
 	env := os.Getenv("APP_ENV")
@@ -41,10 +42,11 @@ func LoadConfig() (*Config, error) {
 	googleSecret, err := loadGoogleSecrets()
 
 	return &Config{
-		ServerAddress:   serverAddress,
-		Port:            port,
-		UserAuthAddress: userAuthAddress,
-		GoogleSecret:    *googleSecret,
-		AppEnv:          env,
+		ServerAddress:       serverAddress,
+		Port:                port,
+		UserAuthAddress:     userAuthAddress,
+		GoogleSecret:        *googleSecret,
+		AppEnv:              env,
+		PocketActionAddress: pocketActionAddress,
 	}, err
 }

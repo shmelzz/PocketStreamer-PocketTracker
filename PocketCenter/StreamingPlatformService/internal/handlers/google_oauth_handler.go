@@ -18,17 +18,20 @@ type GoogleOAuthHandler struct {
 	userAuthAddress  string
 	youtubeService   *ytbot.YoutubeService
 	broadcastService *service.BroadcastService
+	actionService    *service.PocketActionService
 }
 
 func NewGoogleOAuthHandler(
 	userAuthAddress string,
 	youtubeService *ytbot.YoutubeService,
 	broadcastService *service.BroadcastService,
+	actionService *service.PocketActionService,
 ) *GoogleOAuthHandler {
 	return &GoogleOAuthHandler{
 		userAuthAddress:  userAuthAddress,
 		youtubeService:   youtubeService,
 		broadcastService: broadcastService,
+		actionService:    actionService,
 	}
 }
 
@@ -152,7 +155,7 @@ func (g *GoogleOAuthHandler) HandleReceiver(c *gin.Context) {
 			for {
 				select {
 				case msg := <-messagesCh:
-					fmt.Println(msg.Message)
+					go g.actionService.ProcessChat(token, sessionId, msg)
 					jsonBytes, _ := json.Marshal(msg)
 					g.broadcastService.Broadcast(jsonBytes, sessionId) // Use your Broadcast function here to broadcast the received message
 				}
