@@ -22,6 +22,18 @@ final class AuthPresenter: BaseModuleOutput, IAuthPresenter {
     
     // MARK: - IAuthPresenter
     
+    func onViewReady() {
+        authService.validate() { [weak self] result in
+            switch result {
+            case .success(let data):
+                print(data)
+                self?.finish(.loginDidSuccessed)
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
     func onLoginButtonTapped(with model: AuthModel) {
         authService.login(with: model) { [weak self] result in
             switch result {

@@ -1,20 +1,24 @@
 PODS:
+  - CameraManager (5.1.3)
   - SwiftLint (0.52.1)
   - SwiftyJSON (4.3.0)
 
 DEPENDENCIES:
+  - CameraManager (~> 5.1)
   - SwiftLint
   - SwiftyJSON (~> 4.0)
 
 SPEC REPOS:
   trunk:
+    - CameraManager
     - SwiftLint
     - SwiftyJSON
 
 SPEC CHECKSUMS:
+  CameraManager: 73936a52093081ba5e44914e8120ab511360f5d4
   SwiftLint: 437c13044ba689c96b37c66f7c646f46efba7176
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: 63ae9fb5ecb2c9465e59078240fc6f4c08061bae
+PODFILE CHECKSUM: b30460c96d16d134a878ec89f4fd199c8d0ce3fb
 
 COCOAPODS: 1.12.1

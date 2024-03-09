@@ -34,6 +34,7 @@ final class CoordinatorFactory: ICoordinatorFactory {
     
     func buildMainFlowCoordinator(router: any IRouter) -> ICoordinator {
         return MainFlowCoordinator(
+            connectModuleAssembly: modulesAssembly.connectModuleAssembly,
             startModuleAssembly: modulesAssembly.startModuleAssembly,
             faceTrackingModuleAssembly: modulesAssembly.faceTrackingModuleAssembly,
             debugMenuModuleAssembly: modulesAssembly.debugMenuModuleAssembly,

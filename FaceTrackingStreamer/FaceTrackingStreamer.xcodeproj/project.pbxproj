@@ -51,6 +51,10 @@
 		CC85ADB42B719AF200C91BFD /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADB32B719AF200C91BFD /* AuthViewController.swift */; };
 		CC85ADB62B719C2A00C91BFD /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADB52B719C2A00C91BFD /* AuthPresenter.swift */; };
 		CC85ADB82B719C4500C91BFD /* AuthContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADB72B719C4500C91BFD /* AuthContract.swift */; };
+		CCB26B852B9C55A700B7B9A0 /* ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26B842B9C55A700B7B9A0 /* ConnectViewController.swift */; };
+		CCB26B872B9C560500B7B9A0 /* ConnectContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26B862B9C560500B7B9A0 /* ConnectContract.swift */; };
+		CCB26B892B9C562A00B7B9A0 /* ConnectPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26B882B9C562A00B7B9A0 /* ConnectPresenter.swift */; };
+		CCB26B8B2B9C563500B7B9A0 /* ConnectModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26B8A2B9C563400B7B9A0 /* ConnectModuleAssembly.swift */; };
 		CCB800AE2B8287D7003F9AD2 /* AuthStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800AD2B8287D7003F9AD2 /* AuthStorage.swift */; };
 		CCB800B02B829F85003F9AD2 /* AuthModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800AF2B829F85003F9AD2 /* AuthModuleAssembly.swift */; };
 		CCB800B32B84ED6A003F9AD2 /* IRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800B22B84ED6A003F9AD2 /* IRequest.swift */; };
@@ -121,6 +125,10 @@
 		CC85ADB32B719AF200C91BFD /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		CC85ADB52B719C2A00C91BFD /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
 		CC85ADB72B719C4500C91BFD /* AuthContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthContract.swift; sourceTree = "<group>"; };
+		CCB26B842B9C55A700B7B9A0 /* ConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectViewController.swift; sourceTree = "<group>"; };
+		CCB26B862B9C560500B7B9A0 /* ConnectContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectContract.swift; sourceTree = "<group>"; };
+		CCB26B882B9C562A00B7B9A0 /* ConnectPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectPresenter.swift; sourceTree = "<group>"; };
+		CCB26B8A2B9C563400B7B9A0 /* ConnectModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectModuleAssembly.swift; sourceTree = "<group>"; };
 		CCB800AD2B8287D7003F9AD2 /* AuthStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStorage.swift; sourceTree = "<group>"; };
 		CCB800AF2B829F85003F9AD2 /* AuthModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModuleAssembly.swift; sourceTree = "<group>"; };
 		CCB800B22B84ED6A003F9AD2 /* IRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequest.swift; sourceTree = "<group>"; };
@@ -223,6 +231,7 @@
 		CC0C3A262B4832E900C43AA5 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				CCB26B832B9C558700B7B9A0 /* Connect */,
 				CC3718062B867A110069D978 /* Start */,
 				CC85ADB22B719AE200C91BFD /* Auth */,
 				CC0C3A292B483E0D00C43AA5 /* Streaming */,
@@ -442,6 +451,17 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		CCB26B832B9C558700B7B9A0 /* Connect */ = {
+			isa = PBXGroup;
+			children = (
+				CCB26B842B9C55A700B7B9A0 /* ConnectViewController.swift */,
+				CCB26B862B9C560500B7B9A0 /* ConnectContract.swift */,
+				CCB26B882B9C562A00B7B9A0 /* ConnectPresenter.swift */,
+				CCB26B8A2B9C563400B7B9A0 /* ConnectModuleAssembly.swift */,
+			);
+			path = Connect;
+			sourceTree = "<group>";
+		};
 		CCB800B12B84ED4A003F9AD2 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
@@ -630,6 +650,7 @@
 				CCB800C12B84FD56003F9AD2 /* RegisterRequest.swift in Sources */,
 				6D3D34CF2A0668560052AE68 /* OldFaceTrackingViewController.swift in Sources */,
 				CCB800B02B829F85003F9AD2 /* AuthModuleAssembly.swift in Sources */,
+				CCB26B8B2B9C563500B7B9A0 /* ConnectModuleAssembly.swift in Sources */,
 				CC40BEB02B5F0D95004036F3 /* StreamSessionManager.swift in Sources */,
 				CCB800CE2B861FF3003F9AD2 /* AppCoordinator.swift in Sources */,
 				CCB800BB2B84F5E1003F9AD2 /* URLSessionDataTask+Cancelable.swift in Sources */,
@@ -641,6 +662,7 @@
 				CCB800B92B84F1CB003F9AD2 /* JSONParsable.swift in Sources */,
 				CCB800D82B86283E003F9AD2 /* MainFlowCoordinator.swift in Sources */,
 				CC40BEAA2B5F08F4004036F3 /* FaceTrackingViewController.swift in Sources */,
+				CCB26B852B9C55A700B7B9A0 /* ConnectViewController.swift in Sources */,
 				CC3718142B874E8C0069D978 /* StartStreamPresenter.swift in Sources */,
 				CC3718122B874E6D0069D978 /* StartStreamContract.swift in Sources */,
 				CC3F81E42B4B286C006EDC95 /* DebugMenuCell.swift in Sources */,
@@ -667,12 +689,14 @@
 				CC37180C2B867F9D0069D978 /* CoordinatorAction.swift in Sources */,
 				CCB800BF2B84F9F1003F9AD2 /* CoreRequest.swift in Sources */,
 				CCB800C52B85F227003F9AD2 /* SessionProvider.swift in Sources */,
+				CCB26B872B9C560500B7B9A0 /* ConnectContract.swift in Sources */,
 				CCB800D02B862193003F9AD2 /* CoordinatorFactory.swift in Sources */,
 				CCB800CA2B861F1E003F9AD2 /* BaseCoordinator.swift in Sources */,
 				CC37180A2B867F4E0069D978 /* IModuleOutput.swift in Sources */,
 				CC3F81EB2B4B320F006EDC95 /* BodyTrackingViewController.swift in Sources */,
 				CC3718082B867B160069D978 /* StartStreamModuleAssembly.swift in Sources */,
 				CCB800DC2B865784003F9AD2 /* ServicesAssembly.swift in Sources */,
+				CCB26B892B9C562A00B7B9A0 /* ConnectPresenter.swift in Sources */,
 				CC85ADA52B71807900C91BFD /* StartStreamViewController.swift in Sources */,
 				CCB800B72B84F188003F9AD2 /* IJSONRequest.swift in Sources */,
 				CCB800C82B85FE20003F9AD2 /* Router.swift in Sources */,
