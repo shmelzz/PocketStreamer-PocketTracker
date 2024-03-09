@@ -41,6 +41,17 @@ services:
       - USER_AUTH_ADDRESS=http://auth_service:8088
       - APP_ENV="production"
     restart: always     
+  
+  streaming: 
+    image: {{ env.STREAMING_IMAGE_TAG }}
+    ports:
+      -"0.0.0.0:7070:7070"
+    environment:
+      - SERVER_ADDRESS=0.0.0.0
+      - SERVER_PORT=7070
+      - USER_AUTH_ADDRESS=http://auth_service:8088
+      - APP_ENV="production"
+    restart: always 
 
   user_db:
     image: postgres
