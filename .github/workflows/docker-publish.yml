@@ -30,7 +30,7 @@ jobs:
             { name: FaceBodyFeatureService, tag: facebody },
             { name: UserAuthSessionService, tag: userauth },
             { name: PocketActionService, tag: pocketaction },
-            { name: StreamingPlatformService, tag: streaming}
+            { name: StreamingPlatformService, tag: streaming }
           ]
     steps:
       - name: Checkout repository

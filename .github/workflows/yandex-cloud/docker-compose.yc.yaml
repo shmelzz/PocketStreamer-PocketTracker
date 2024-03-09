@@ -45,7 +45,7 @@ services:
   streaming: 
     image: {{ env.STREAMING_IMAGE_TAG }}
     ports:
-      -"0.0.0.0:7070:7070"
+      - "0.0.0.0:7070:7070"
     environment:
       - SERVER_ADDRESS=0.0.0.0
       - SERVER_PORT=7070
