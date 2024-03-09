@@ -14,6 +14,8 @@ protocol IServicesAssembly: AnyObject {
     var endpointStorage: IApiEndpointStorage { get }
     
     var sessionStorage: ISessionStorage { get }
+    
+    var sessionProvider: ISessionProvider { get }
 }
 
 final class ServicesAssembly: IServicesAssembly {
@@ -39,5 +41,9 @@ final class ServicesAssembly: IServicesAssembly {
     
     lazy var sessionStorage: ISessionStorage = {
         SessionStorage(suiteName: "PocketTracker")
+    }()
+    
+    lazy var sessionProvider: ISessionProvider = {
+        SessionProvider(authStorage: sessionStorage)
     }()
 }

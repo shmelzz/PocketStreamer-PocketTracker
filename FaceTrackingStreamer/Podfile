@@ -10,5 +10,6 @@ target 'FaceTrackingStreamer' do
   pod 'SwiftLint'
   # pod 'GoogleWebRTC', '~> 1.1'
   pod 'SwiftyJSON', '~> 4.0'
+  pod 'CameraManager', '~> 5.1'
 
 end

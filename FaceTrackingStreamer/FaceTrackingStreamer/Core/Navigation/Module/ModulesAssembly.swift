@@ -17,6 +17,8 @@ protocol IModulesAssembly {
 //    var bodyTrackingModuleAssembly: IBodyTrackingModuleAssembly { get }
     
     var debugMenuModuleAssembly: IDebugMenuModuleAssembly { get }
+    
+    var connectModuleAssembly: IConnectModuleAssembly { get }
 }
 
 final class ModulesAssembly: IModulesAssembly {
@@ -41,5 +43,9 @@ final class ModulesAssembly: IModulesAssembly {
     
     lazy var debugMenuModuleAssembly: IDebugMenuModuleAssembly = {
         DebugMenuModuleAssembly(servicesAssembly: servicesAssembly)
+    }()
+    
+    lazy var connectModuleAssembly: IConnectModuleAssembly = {
+        ConnectModuleAssembly(servicesAssembly: servicesAssembly)
     }()
 }

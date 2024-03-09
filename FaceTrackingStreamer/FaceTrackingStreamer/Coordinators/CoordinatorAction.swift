@@ -10,6 +10,8 @@ import Foundation
 enum CoordinatorAction {
     case loginDidSuccessed
     
+    case connectModuleSuccess
+    
     case startModuleOnFaceTapped
     case startModuleOnBodyTapped
     

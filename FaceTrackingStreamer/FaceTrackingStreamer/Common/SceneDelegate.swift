@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeCoordinator(rootController: UINavigationController) -> ICoordinator {
-        let sessionProvider = SessionProvider()
+        let sessionProvider = SessionProvider(authStorage: SessionStorage(suiteName: "PocketTracker"))
         let requestBuilder = RequestBuilder(sessionProvider: sessionProvider)
         let urlSession = URLSession(configuration: .default)
         
