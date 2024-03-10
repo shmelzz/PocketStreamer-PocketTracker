@@ -8,7 +8,7 @@
 import Foundation
 
 protocol IFindComposerService {
-    func find(completion: @escaping (Result<ComposerResponse, Error>) -> Void)
+    func find(completion: @escaping (Result<EmptyResponse, Error>) -> Void)
 }
 
 final class FindComposerService: IFindComposerService {
@@ -27,9 +27,9 @@ final class FindComposerService: IFindComposerService {
         self.sessionProvider = sessionProvider
     }
     
-    func find(completion: @escaping (Result<ComposerResponse, Error>) -> Void) {
+    func find(completion: @escaping (Result<EmptyResponse, Error>) -> Void) {
         let request = ComposerRequest(
-            sessionId: sessionProvider.token ?? "",
+            sessionId: sessionProvider.sessionId ?? "",
             endpoint: endpointProvider.authEndpoint()
         )
         requestManager.execute(request: request, completion: completion)

@@ -52,22 +52,22 @@ final class RequestBuilder: IRequestBuilder {
             throw RequestBuilderError.error
         }
         
-        var httpHeaderFields = request.httpHeaderFields()
-        
-        switch request.authorizationType() {
-        case .token:
-            httpHeaderFields["Authentication"] = sessionProvider.token
-        case .session:
-            break
-        case .none:
-            break
-        }
-        
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = request.type().rawValue
-        urlRequest.httpBody = request.httpBodyData()
-        urlRequest.allHTTPHeaderFields = httpHeaderFields
-        
+//        var httpHeaderFields = request.httpHeaderFields()
+//        
+//        switch request.authorizationType() {
+//        case .token:
+//            httpHeaderFields["Authentication"] = sessionProvider.token
+//        case .session:
+//            break
+//        case .none:
+//            break
+//        }
+//        
+       var urlRequest = URLRequest(url: url)
+//        urlRequest.httpMethod = request.type().rawValue
+////        urlRequest.httpBody = request.httpBodyData()
+//        urlRequest.allHTTPHeaderFields = httpHeaderFields
+//        
         return urlRequest
     }
 }

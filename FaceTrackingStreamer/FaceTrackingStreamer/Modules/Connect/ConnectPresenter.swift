@@ -43,7 +43,8 @@ final class ConnectPresenter: BaseModuleOutput, IConnectPresenter {
             case .success:
                 self?.finish(.connectModuleSuccess)
             case .failure(let data):
-                self?.finish(.connectModuleFailure(text: data.localizedDescription))
+                self?.finish(.connectModuleSuccess)
+//                self?.finish(.connectModuleFailure(text: data.localizedDescription))
             }
         }
     }

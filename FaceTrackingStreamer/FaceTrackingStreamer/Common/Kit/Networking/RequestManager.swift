@@ -4,7 +4,11 @@ import SwiftyJSON
 protocol IResponse: Decodable {}
 
 enum NetworkError: Error {
-    case failureStatus
+    case failureStatus(_ message: ErrorMessage?)
+}
+
+struct ErrorMessage: Decodable, Error {
+    let error: String?
 }
 
 protocol IRequestManager: AnyObject {
@@ -61,14 +65,14 @@ final class RequestManager: IRequestManager {
     ) -> Cancelable  {
         
         let task = urlSession.dataTask(with: urlRequest) { data, response, error in
-            if let data = data {
+            if let response = response as? HTTPURLResponse,
+               response.statusCode < 200 || response.statusCode >= 300 {
+                let message = try? JSONDecoder().decode(ErrorMessage.self, from: data ?? Data())
+                completion(.failure(NetworkError.failureStatus(message)))
+            } else if let data = data {
                 completion(.success(data))
             } else if let error = error {
                 completion(.failure(error))
-            } else if let response = response as? HTTPURLResponse,
-                      response.statusCode < 200,
-                      response.statusCode >= 300 {
-                completion(.failure(NetworkError.failureStatus))
             }
         }
         
@@ -77,7 +81,7 @@ final class RequestManager: IRequestManager {
     }
     
     private func parse<T: JSONParsable>(
-        data: Data, 
+        data: Data,
         completion: @escaping (Result<T, Error>) -> Void
     ) {
         do {

@@ -11,7 +11,8 @@ struct ComposerRequestModel: Encodable {
     let sessionid: String
 }
 
-struct ComposerResponse: Decodable, JSONParsable {}
+struct EmptyResponse: Decodable, JSONParsable {
+}
 
 final class ComposerRequest: CoreRequest, IJSONRequest {
     
@@ -25,14 +26,14 @@ final class ComposerRequest: CoreRequest, IJSONRequest {
         super.init(endpoint: endpoint)
     }
     
-    typealias ResponseModel = ComposerResponse
+    typealias ResponseModel = EmptyResponse
     
     override func type() -> RequestType {
         .POST
     }
     
     override func path() -> String {
-        "/findcomposer"
+        "/auth/findcomposer"
     }
     
     override func httpBodyData() -> Data? {
