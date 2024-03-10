@@ -55,7 +55,7 @@ func (s *UserAuthService) LoginUser(ctx context.Context, username, password stri
 		return "", errors.New("invalid credentials")
 	}
 
-	expirationTime := time.Now().Add(1 * time.Hour)
+	expirationTime := time.Now().Add(48 * time.Hour)
 	claims := &Claims{
 		Username: username,
 		StandardClaims: jwt.StandardClaims{
