@@ -51,8 +51,8 @@ func (s *SessionService) WaitForTracker(ctx context.Context, sessionId string) (
 	ch := make(chan model.WaitForTrackerResponse)
 	s.waitingComposers[sessionId] = ch
 
-	timeout := time.Duration(30)
-	timeoutCtx, cancel := context.WithTimeout(ctx, timeout*time.Second)
+	timeout := time.Minute * 10
+	timeoutCtx, cancel := context.WithTimeout(ctx, timeout)
 	defer cancel()
 
 	for {
@@ -63,7 +63,7 @@ func (s *SessionService) WaitForTracker(ctx context.Context, sessionId string) (
 		case <-timeoutCtx.Done():
 			// Handle the cancellation case
 			s.deleteSessionId(ctx, sessionId)
-			return model.WaitForTrackerResponse{}, fmt.Errorf("request was cancelled after 5 second timemout ")
+			return model.WaitForTrackerResponse{}, fmt.Errorf("request was cancelled after 10 minute timemout ")
 		case <-ctx.Done():
 			// Handle the cancellation case
 			s.deleteSessionId(ctx, sessionId)
