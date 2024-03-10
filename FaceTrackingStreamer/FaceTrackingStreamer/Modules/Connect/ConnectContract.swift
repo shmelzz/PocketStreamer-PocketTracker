@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Foundation
-
 protocol IConnectPresenter {
     func onConnectTapped()
     func onConnectSuccess(with result: String)

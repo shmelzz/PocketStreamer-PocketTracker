@@ -12,6 +12,7 @@ final class AuthModuleAssembly: BaseModuleAssembly, IAuthModuleAssembly {
             view: view,
             authService: servicesAssembly.authService,
             sessionStorage: servicesAssembly.sessionStorage,
+            sessionProvider: servicesAssembly.sessionProvider,
             coordinator: coordinator
         )
         view.presenter = presenter
