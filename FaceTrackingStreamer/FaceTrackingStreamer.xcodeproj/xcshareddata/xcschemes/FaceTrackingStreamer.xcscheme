@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6D3D34B62A06683D0052AE68"
-               BuildableName = "FaceTrackingStreamer.app"
-               BlueprintName = "FaceTrackingStreamer"
+               BuildableName = "Pocket Streamer.app"
+               BlueprintName = "Pocket Streamer"
                ReferencedContainer = "container:FaceTrackingStreamer.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,8 +44,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6D3D34B62A06683D0052AE68"
-            BuildableName = "FaceTrackingStreamer.app"
-            BlueprintName = "FaceTrackingStreamer"
+            BuildableName = "Pocket Streamer.app"
+            BlueprintName = "Pocket Streamer"
             ReferencedContainer = "container:FaceTrackingStreamer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -61,8 +61,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6D3D34B62A06683D0052AE68"
-            BuildableName = "FaceTrackingStreamer.app"
-            BlueprintName = "FaceTrackingStreamer"
+            BuildableName = "Pocket Streamer.app"
+            BlueprintName = "Pocket Streamer"
             ReferencedContainer = "container:FaceTrackingStreamer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

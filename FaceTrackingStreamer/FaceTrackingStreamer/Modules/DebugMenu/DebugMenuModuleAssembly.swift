@@ -11,6 +11,7 @@ final class DebugMenuModuleAssembly: BaseModuleAssembly, IDebugMenuModuleAssembl
         let presenter = DebugMenuPresenter(
             endpointStorage: servicesAssembly.endpointStorage,
             authStorage: servicesAssembly.sessionStorage,
+            sessionProvider: servicesAssembly.sessionProvider,
             view: view,
             coordinator: coordinator
         )

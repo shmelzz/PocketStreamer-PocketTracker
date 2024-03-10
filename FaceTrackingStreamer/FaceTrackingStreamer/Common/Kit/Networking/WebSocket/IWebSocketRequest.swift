@@ -15,5 +15,7 @@ protocol IWebSocketRequest {
     
     func authorizationType() -> AuthorizationType
     
+    func needSessionId() -> Bool
+    
     func headerFields() -> [String:String]
 }

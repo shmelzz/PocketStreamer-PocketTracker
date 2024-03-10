@@ -22,6 +22,14 @@ final class ConnectViewController: UIViewController, IConnectView, UIGestureReco
         return button
     }()
     
+    private lazy var logoutButton: UIButton = {
+        var config = UIButton.Configuration.plain()
+        config.image = UIImage(systemName: "rectangle.portrait.and.arrow.right")
+        let button = UIButton(configuration: config)
+        button.addTarget(self, action: #selector(onLogoutButton), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var scanView: UIView = {
         let view = UIView()
         view.isUserInteractionEnabled = true
@@ -82,9 +90,16 @@ final class ConnectViewController: UIViewController, IConnectView, UIGestureReco
         presenter?.onLongPress()
     }
     
+    @objc
+    private func onLogoutButton() {
+        presenter?.onLogoutTapped()
+    }
+    
     // MARK: View setup
     
     private func setupView() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: logoutButton)
+        
         view.addSubview(connectButton)
         connectButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

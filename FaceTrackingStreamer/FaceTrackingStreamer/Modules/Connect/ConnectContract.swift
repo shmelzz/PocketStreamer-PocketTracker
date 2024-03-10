@@ -7,11 +7,10 @@
 
 import Foundation
 
-import Foundation
-
 protocol IConnectPresenter {
     func onConnectTapped()
     func onConnectSuccess(with result: String)
+    func onLogoutTapped()
     func onLongPress()
 }
 

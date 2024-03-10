@@ -28,4 +28,3 @@ final class FaceTrackingModuleAssembly: BaseModuleAssembly, IFaceTrackingModuleA
         return Module(viewToPresent: view, viewOutput: presenter)
     }
 }
-

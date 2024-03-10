@@ -19,6 +19,8 @@ protocol IModulesAssembly {
     var debugMenuModuleAssembly: IDebugMenuModuleAssembly { get }
     
     var connectModuleAssembly: IConnectModuleAssembly { get }
+    
+    var selectPlatformModuleAssembly: ISelectPlatformModuleAssembly { get }
 }
 
 final class ModulesAssembly: IModulesAssembly {
@@ -47,5 +49,9 @@ final class ModulesAssembly: IModulesAssembly {
     
     lazy var connectModuleAssembly: IConnectModuleAssembly = {
         ConnectModuleAssembly(servicesAssembly: servicesAssembly)
+    }()
+    
+    lazy var selectPlatformModuleAssembly: ISelectPlatformModuleAssembly = {
+        SelectPlatformModuleAssembly(servicesAssembly: servicesAssembly)
     }()
 }

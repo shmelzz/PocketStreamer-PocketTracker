@@ -18,6 +18,7 @@ final class ConnectModuleAssembly: BaseModuleAssembly, IConnectModuleAssembly {
         let presenter = ConnectPresenter(
             view: view,
             sessionProvider: servicesAssembly.sessionProvider,
+            findComposerService: servicesAssembly.findComposerService,
             coordinator: coordinator
         )
         view.presenter = presenter

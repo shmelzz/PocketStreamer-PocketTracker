@@ -16,6 +16,10 @@ protocol IServicesAssembly: AnyObject {
     var sessionStorage: ISessionStorage { get }
     
     var sessionProvider: ISessionProvider { get }
+    
+    var findComposerService: IFindComposerService { get }
+    
+    var actionsService: IActionsService { get }
 }
 
 final class ServicesAssembly: IServicesAssembly {
@@ -44,6 +48,22 @@ final class ServicesAssembly: IServicesAssembly {
     }()
     
     lazy var sessionProvider: ISessionProvider = {
-        SessionProvider(authStorage: sessionStorage)
+        SessionProvider(sessionStorage: sessionStorage)
+    }()
+    
+    lazy var findComposerService: IFindComposerService = {
+        FindComposerService(
+            requestManager: requestManager,
+            endpointProvider: endpointProvider,
+            sessionProvider: sessionProvider
+        )
+    }()
+    
+    lazy var actionsService: IActionsService = {
+        ActionsService(
+            requestManager: requestManager,
+            endpointProvider: endpointProvider,
+            sessionProvider: sessionProvider
+        )
     }()
 }

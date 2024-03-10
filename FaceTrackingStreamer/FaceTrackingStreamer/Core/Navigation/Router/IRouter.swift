@@ -26,4 +26,6 @@ protocol IRouter {
     func setRootModule(_ module: any IModule, hideBar: Bool)
     
     func popToRootModule(animated: Bool)
+    
+    func presentAlert(with text: String)
 }

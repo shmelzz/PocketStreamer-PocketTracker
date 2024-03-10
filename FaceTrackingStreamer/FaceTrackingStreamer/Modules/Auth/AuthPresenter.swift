@@ -7,16 +7,19 @@ final class AuthPresenter: BaseModuleOutput, IAuthPresenter {
     private weak var view: IAuthView?
     private let authService: IAuthService
     private let sessionStorage: ISessionStorage
+    private let sessionProvider: ISessionProvider
     
     init(
         view: IAuthView,
         authService: IAuthService,
         sessionStorage: ISessionStorage,
+        sessionProvider: ISessionProvider,
         coordinator: ICoordinator
     ) {
         self.view = view
         self.authService = authService
         self.sessionStorage = sessionStorage
+        self.sessionProvider = sessionProvider
         super.init(coordinator: coordinator)
     }
     
@@ -39,6 +42,7 @@ final class AuthPresenter: BaseModuleOutput, IAuthPresenter {
             switch result {
             case .success(let data):
                 self?.sessionStorage.set(AuthData(sessionId: "1", token: data.token))
+                self?.sessionProvider.token = data.token
                 self?.finish(.loginDidSuccessed)
             case .failure(_):
                 break

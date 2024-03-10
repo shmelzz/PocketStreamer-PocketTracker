@@ -20,6 +20,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     private lazy var presenter = DebugMenuPresenter(
         endpointStorage: endpointStorage,
         authStorage: authStorage,
+        sessionProvider: sessionProvider,
         view: vc,
         coordinator: coordinator
     )
@@ -66,10 +67,6 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         setupView()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        // connectButtonTapped()
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.sceneView.session.pause()
@@ -111,14 +108,6 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         let address = "ws://\(urlAddress):\(port)/facetracking"
         
         self.setupWebSocketConnection(url: address)
-    }
-    
-    @objc
-    private func connectButtonTapped() {
-        // let endpointModel = endpointStorage.get()
-        vc.presenter = presenter
-        // presentWebSocketConfigAlert(with: endpointModel)
-        present(vc, animated: true)
     }
     
     private func setupSceneView() {
