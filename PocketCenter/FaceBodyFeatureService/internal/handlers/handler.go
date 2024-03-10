@@ -68,7 +68,11 @@ func (f *FeatureHandler) HandleFaceTracking(w http.ResponseWriter, r *http.Reque
 				continue
 			}
 
-			f.broadcastService.Broadcast(message, session)
+			err = f.broadcastService.Broadcast(message, session)
+			if err != nil {
+				log.Printf(err.Error())
+				return
+			}
 		}
 	}()
 }
