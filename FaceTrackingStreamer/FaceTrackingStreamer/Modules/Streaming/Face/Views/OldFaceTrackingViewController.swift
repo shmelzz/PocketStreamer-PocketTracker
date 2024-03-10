@@ -7,6 +7,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     
     private let endpointStorage: IApiEndpointStorage
     private let authStorage: ISessionStorage
+    private let sessionProvider: ISessionProvider
     
     private var websocket: WebSocket!
     
@@ -19,6 +20,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     private lazy var presenter = DebugMenuPresenter(
         endpointStorage: endpointStorage,
         authStorage: authStorage,
+        sessionProvider: sessionProvider,
         view: vc,
         coordinator: coordinator
     )
@@ -44,10 +46,12 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     init(
         endpointStorage: IApiEndpointStorage,
         authStorage: ISessionStorage,
+        sessionProvider: ISessionProvider,
         coordinator: ICoordinator
     ) {
         self.endpointStorage = endpointStorage
         self.authStorage = authStorage
+        self.sessionProvider = sessionProvider
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
@@ -61,10 +65,6 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         setupSceneView()
         setupARFaceTracking()
         setupView()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        // connectButtonTapped()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -110,14 +110,6 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         self.setupWebSocketConnection(url: address)
     }
     
-    @objc
-    private func connectButtonTapped() {
-        // let endpointModel = endpointStorage.get()
-        vc.presenter = presenter
-        // presentWebSocketConfigAlert(with: endpointModel)
-        present(vc, animated: true)
-    }
-    
     private func setupSceneView() {
         sceneView = ARSCNView(frame: view.bounds)
         sceneView.delegate = self
@@ -152,8 +144,10 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     
     private func setupWebSocketConnection(url: String) {
         var request = URLRequest(url: URL(string: url)!)
-        request.setValue(authStorage.get()?.token, forHTTPHeaderField: "Authentication")
-        request.setValue(authStorage.get()?.sessionId, forHTTPHeaderField: "SessionId")
+        request.setValue(sessionProvider.token, forHTTPHeaderField: "Authentication")
+        print(sessionProvider.token)
+        print(sessionProvider.sessionId)
+        request.setValue(sessionProvider.sessionId, forHTTPHeaderField: "SessionId")
         request.timeoutInterval = 10
         websocket = WebSocket(request: request)
         websocket.delegate = self

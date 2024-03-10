@@ -64,6 +64,8 @@ final class AuthViewController: UIViewController, IAuthView, UITextFieldDelegate
         
         longTapGestureRecognizer.addTarget(self, action: #selector(onLongPress))
         longTapGestureRecognizer.delaysTouchesBegan = true
+        
+        presenter?.onViewReady()
     }
     
     private func setupView() {

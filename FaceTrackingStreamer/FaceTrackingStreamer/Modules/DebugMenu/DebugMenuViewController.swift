@@ -47,6 +47,11 @@ final class DebugMenuViewController: UIViewController, IDebugMenuView, UITextFie
         return view
     }()
     
+    private lazy var mockControl: UISegmentedControl = {
+        let view = UISegmentedControl(items: ["use mocks", "use real data"])
+        return view
+    }()
+    
     private lazy var saveButton: UIButton = {
         let button = UIButton(configuration: .filled())
         button.setTitle("Save", for: .normal)
@@ -73,6 +78,9 @@ final class DebugMenuViewController: UIViewController, IDebugMenuView, UITextFie
         view.backgroundColor = .systemBackground
         setupView()
         presenter?.onViewReady()
+        
+        prodPortTextInput.isHidden = true
+        testPortTextInput.isHidden = true
     }
     
     // MARK: - IDebugMenuView
@@ -225,6 +233,14 @@ final class DebugMenuViewController: UIViewController, IDebugMenuView, UITextFie
             jwtTokenTextInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
         jwtTokenTextInput.delegate = self
+        
+        view.addSubview(mockControl)
+        mockControl.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            mockControl.topAnchor.constraint(equalTo: jwtTokenTextInput.bottomAnchor, constant: 26),
+            mockControl.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            mockControl.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
+        ])
         
         view.addSubview(saveButton)
         saveButton.translatesAutoresizingMaskIntoConstraints = false

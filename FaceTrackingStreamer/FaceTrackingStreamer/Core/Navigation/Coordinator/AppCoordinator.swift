@@ -58,9 +58,10 @@ final class AppCoordinator: BaseCoordinator {
     
     private func startMainFlow() {
         let coordinator = coordinatorFactory.buildMainFlowCoordinator(router: router)
-        coordinator.onFinish = { [weak self, weak coordinator] in
-            self?.startFlow()
+        coordinator.onFinish = { [weak self] in
             self?.removeDependency(coordinator)
+            self?.flow = .auth
+            self?.startFlow()
         }
         addDependency(coordinator)
         coordinator.startFlow()
