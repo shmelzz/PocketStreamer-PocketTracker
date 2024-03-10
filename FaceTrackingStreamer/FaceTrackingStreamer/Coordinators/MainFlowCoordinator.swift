@@ -51,6 +51,8 @@ final class MainFlowCoordinator: BaseCoordinator {
             router.push(module, animated: true)
         case .connectModuleOnLogout:
             onFinish?()
+        case let .connectModuleFailure(text):
+            router.presentAlert(with: text ?? "")
         default:
             break
         }

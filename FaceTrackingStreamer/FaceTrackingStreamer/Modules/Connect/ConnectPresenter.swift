@@ -12,14 +12,17 @@ final class ConnectPresenter: BaseModuleOutput, IConnectPresenter {
     private weak var view: IConnectView?
     
     private let sessionProvider: ISessionProvider
+    private let findComposerService: IFindComposerService
     
     init(
         view: IConnectView,
         sessionProvider: ISessionProvider,
+        findComposerService: IFindComposerService,
         coordinator: ICoordinator
     ) {
         self.view = view
         self.sessionProvider = sessionProvider
+        self.findComposerService = findComposerService
         super.init(coordinator: coordinator)
     }
     
@@ -35,7 +38,14 @@ final class ConnectPresenter: BaseModuleOutput, IConnectPresenter {
     
     func onConnectSuccess(with result: String) {
         sessionProvider.sessionId = result
-        finish(.connectModuleSuccess)
+        findComposerService.find { [weak self] result in
+            switch result {
+            case .success:
+                self?.finish(.connectModuleSuccess)
+            case .failure(let data):
+                self?.finish(.connectModuleFailure(text: data.localizedDescription))
+            }
+        }
     }
     
     func onLogoutTapped() {

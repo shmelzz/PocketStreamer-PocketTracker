@@ -91,6 +91,24 @@ final class Router: IRouter {
         }
     }
     
+    func presentAlert(with text: String) {
+        let alert = UIAlertController(
+            title: "Info",
+            message: text,
+            preferredStyle: .alert
+        )
+        
+        let alertOKAction = UIAlertAction(
+            title:"OK",
+            style: .default,
+            handler: { [weak self] _ in
+                self?.rootController?.dismiss(animated: true)
+        })
+        
+        alert.addAction(alertOKAction)
+        rootController?.present(alert, animated: true)
+    }
+    
     private func runCompletion(for controller: UIViewController) {
         guard let completion = completions[controller] else { return }
         completion()

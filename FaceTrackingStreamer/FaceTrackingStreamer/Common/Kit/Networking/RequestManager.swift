@@ -45,6 +45,7 @@ final class RequestManager: IRequestManager {
         return execute(urlRequest: urlRequest) { [weak self] result in
             switch result {
             case let .success(data):
+                print(data)
                 self?.parse(data: data, completion: completion)
             case let .failure(error):
                 completion(.failure(error))

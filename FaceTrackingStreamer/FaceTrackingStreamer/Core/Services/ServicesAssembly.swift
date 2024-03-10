@@ -16,6 +16,8 @@ protocol IServicesAssembly: AnyObject {
     var sessionStorage: ISessionStorage { get }
     
     var sessionProvider: ISessionProvider { get }
+    
+    var findComposerService: IFindComposerService { get }
 }
 
 final class ServicesAssembly: IServicesAssembly {
@@ -45,5 +47,13 @@ final class ServicesAssembly: IServicesAssembly {
     
     lazy var sessionProvider: ISessionProvider = {
         SessionProvider(sessionStorage: sessionStorage)
+    }()
+    
+    lazy var findComposerService: IFindComposerService = {
+        FindComposerService(
+            requestManager: requestManager,
+            endpointProvider: endpointProvider,
+            sessionProvider: sessionProvider
+        )
     }()
 }
