@@ -17,6 +17,7 @@ final class FaceTrackingModuleAssembly: BaseModuleAssembly, IFaceTrackingModuleA
         let view = OldFaceTrackingViewController(
             endpointStorage: servicesAssembly.endpointStorage,
             authStorage: servicesAssembly.sessionStorage,
+            sessionProvider: servicesAssembly.sessionProvider,
             coordinator: coordinator
         )
         let presenter = FaceTrackingPresenter(
@@ -27,4 +28,3 @@ final class FaceTrackingModuleAssembly: BaseModuleAssembly, IFaceTrackingModuleA
         return Module(viewToPresent: view, viewOutput: presenter)
     }
 }
-

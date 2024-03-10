@@ -1,18 +1,24 @@
+//
+//  ConnectModuleAssembly.swift
+//  FaceTrackingStreamer
+//
+//  Created by Elizaveta Shelemekh on 09.03.2024.
+//
+
 import Foundation
 
-protocol IAuthModuleAssembly {
+protocol IConnectModuleAssembly {
     func assemble(for coordinator: ICoordinator) -> any IModule
 }
 
-final class AuthModuleAssembly: BaseModuleAssembly, IAuthModuleAssembly {
+final class ConnectModuleAssembly: BaseModuleAssembly, IConnectModuleAssembly {
     
     func assemble(for coordinator: ICoordinator) -> any IModule {
-        let view = AuthViewController()
-        let presenter = AuthPresenter(
+        let view = ConnectViewController()
+        let presenter = ConnectPresenter(
             view: view,
-            authService: servicesAssembly.authService,
-            sessionStorage: servicesAssembly.sessionStorage,
             sessionProvider: servicesAssembly.sessionProvider,
+            findComposerService: servicesAssembly.findComposerService,
             coordinator: coordinator
         )
         view.presenter = presenter

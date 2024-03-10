@@ -51,7 +51,30 @@
 		CC85ADB42B719AF200C91BFD /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADB32B719AF200C91BFD /* AuthViewController.swift */; };
 		CC85ADB62B719C2A00C91BFD /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADB52B719C2A00C91BFD /* AuthPresenter.swift */; };
 		CC85ADB82B719C4500C91BFD /* AuthContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADB72B719C4500C91BFD /* AuthContract.swift */; };
-		CCB800AE2B8287D7003F9AD2 /* AuthStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800AD2B8287D7003F9AD2 /* AuthStorage.swift */; };
+		CCB26B852B9C55A700B7B9A0 /* ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26B842B9C55A700B7B9A0 /* ConnectViewController.swift */; };
+		CCB26B872B9C560500B7B9A0 /* ConnectContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26B862B9C560500B7B9A0 /* ConnectContract.swift */; };
+		CCB26B892B9C562A00B7B9A0 /* ConnectPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26B882B9C562A00B7B9A0 /* ConnectPresenter.swift */; };
+		CCB26B8B2B9C563500B7B9A0 /* ConnectModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26B8A2B9C563400B7B9A0 /* ConnectModuleAssembly.swift */; };
+		CCB26B8D2B9C6C4C00B7B9A0 /* BodyTrackingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26B8C2B9C6C4C00B7B9A0 /* BodyTrackingPresenter.swift */; };
+		CCB26B8F2B9C6C5800B7B9A0 /* BodyTrackingContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26B8E2B9C6C5800B7B9A0 /* BodyTrackingContract.swift */; };
+		CCB26B912B9DC1F800B7B9A0 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26B902B9DC1F800B7B9A0 /* ChatView.swift */; };
+		CCB26B932B9DC22100B7B9A0 /* ChatPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26B922B9DC22100B7B9A0 /* ChatPresenter.swift */; };
+		CCB26B952B9DC22D00B7B9A0 /* ChatContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26B942B9DC22D00B7B9A0 /* ChatContract.swift */; };
+		CCB26B972B9DC25D00B7B9A0 /* ChatModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26B962B9DC25D00B7B9A0 /* ChatModuleAssembly.swift */; };
+		CCB26B9A2B9DC37700B7B9A0 /* ComposerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26B992B9DC37700B7B9A0 /* ComposerRequest.swift */; };
+		CCB26B9C2B9DC84300B7B9A0 /* FindComposerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26B9B2B9DC84300B7B9A0 /* FindComposerService.swift */; };
+		CCB26B9E2B9DDBE300B7B9A0 /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26B9D2B9DDBE300B7B9A0 /* ChatService.swift */; };
+		CCB26BA22B9DEC3300B7B9A0 /* SelectPlatformViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BA12B9DEC3300B7B9A0 /* SelectPlatformViewController.swift */; };
+		CCB26BA42B9DEC4700B7B9A0 /* SelectPlatformPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BA32B9DEC4700B7B9A0 /* SelectPlatformPresenter.swift */; };
+		CCB26BA62B9DEC5300B7B9A0 /* SelectPlatformContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BA52B9DEC5300B7B9A0 /* SelectPlatformContract.swift */; };
+		CCB26BA82B9DEC5E00B7B9A0 /* SelectPlatformModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BA72B9DEC5E00B7B9A0 /* SelectPlatformModuleAssembly.swift */; };
+		CCB26BAB2B9DF48100B7B9A0 /* ActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BAA2B9DF48100B7B9A0 /* ActionsView.swift */; };
+		CCB26BAD2B9DF49100B7B9A0 /* ActionsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BAC2B9DF49100B7B9A0 /* ActionsPresenter.swift */; };
+		CCB26BAF2B9DF49D00B7B9A0 /* ActionsContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BAE2B9DF49D00B7B9A0 /* ActionsContract.swift */; };
+		CCB26BB12B9DF4AD00B7B9A0 /* ActionsModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BB02B9DF4AD00B7B9A0 /* ActionsModuleAssembly.swift */; };
+		CCB26BB42B9DF84300B7B9A0 /* ActionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BB32B9DF84300B7B9A0 /* ActionsService.swift */; };
+		CCB26BB62B9DFA2700B7B9A0 /* ActionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BB52B9DFA2700B7B9A0 /* ActionRequest.swift */; };
+		CCB800AE2B8287D7003F9AD2 /* SessionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800AD2B8287D7003F9AD2 /* SessionStorage.swift */; };
 		CCB800B02B829F85003F9AD2 /* AuthModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800AF2B829F85003F9AD2 /* AuthModuleAssembly.swift */; };
 		CCB800B32B84ED6A003F9AD2 /* IRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800B22B84ED6A003F9AD2 /* IRequest.swift */; };
 		CCB800B52B84F0A4003F9AD2 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800B42B84F0A4003F9AD2 /* RequestBuilder.swift */; };
@@ -75,7 +98,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6D3D34B72A06683D0052AE68 /* FaceTrackingStreamer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FaceTrackingStreamer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D3D34B72A06683D0052AE68 /* Pocket Streamer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pocket Streamer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D3D34BA2A06683D0052AE68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D3D34BC2A06683D0052AE68 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		6D3D34C32A06683E0052AE68 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -121,7 +144,30 @@
 		CC85ADB32B719AF200C91BFD /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		CC85ADB52B719C2A00C91BFD /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
 		CC85ADB72B719C4500C91BFD /* AuthContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthContract.swift; sourceTree = "<group>"; };
-		CCB800AD2B8287D7003F9AD2 /* AuthStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStorage.swift; sourceTree = "<group>"; };
+		CCB26B842B9C55A700B7B9A0 /* ConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectViewController.swift; sourceTree = "<group>"; };
+		CCB26B862B9C560500B7B9A0 /* ConnectContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectContract.swift; sourceTree = "<group>"; };
+		CCB26B882B9C562A00B7B9A0 /* ConnectPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectPresenter.swift; sourceTree = "<group>"; };
+		CCB26B8A2B9C563400B7B9A0 /* ConnectModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectModuleAssembly.swift; sourceTree = "<group>"; };
+		CCB26B8C2B9C6C4C00B7B9A0 /* BodyTrackingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyTrackingPresenter.swift; sourceTree = "<group>"; };
+		CCB26B8E2B9C6C5800B7B9A0 /* BodyTrackingContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyTrackingContract.swift; sourceTree = "<group>"; };
+		CCB26B902B9DC1F800B7B9A0 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		CCB26B922B9DC22100B7B9A0 /* ChatPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPresenter.swift; sourceTree = "<group>"; };
+		CCB26B942B9DC22D00B7B9A0 /* ChatContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContract.swift; sourceTree = "<group>"; };
+		CCB26B962B9DC25D00B7B9A0 /* ChatModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModuleAssembly.swift; sourceTree = "<group>"; };
+		CCB26B992B9DC37700B7B9A0 /* ComposerRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerRequest.swift; sourceTree = "<group>"; };
+		CCB26B9B2B9DC84300B7B9A0 /* FindComposerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindComposerService.swift; sourceTree = "<group>"; };
+		CCB26B9D2B9DDBE300B7B9A0 /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
+		CCB26BA12B9DEC3300B7B9A0 /* SelectPlatformViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPlatformViewController.swift; sourceTree = "<group>"; };
+		CCB26BA32B9DEC4700B7B9A0 /* SelectPlatformPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPlatformPresenter.swift; sourceTree = "<group>"; };
+		CCB26BA52B9DEC5300B7B9A0 /* SelectPlatformContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPlatformContract.swift; sourceTree = "<group>"; };
+		CCB26BA72B9DEC5E00B7B9A0 /* SelectPlatformModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPlatformModuleAssembly.swift; sourceTree = "<group>"; };
+		CCB26BAA2B9DF48100B7B9A0 /* ActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsView.swift; sourceTree = "<group>"; };
+		CCB26BAC2B9DF49100B7B9A0 /* ActionsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsPresenter.swift; sourceTree = "<group>"; };
+		CCB26BAE2B9DF49D00B7B9A0 /* ActionsContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsContract.swift; sourceTree = "<group>"; };
+		CCB26BB02B9DF4AD00B7B9A0 /* ActionsModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsModuleAssembly.swift; sourceTree = "<group>"; };
+		CCB26BB32B9DF84300B7B9A0 /* ActionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsService.swift; sourceTree = "<group>"; };
+		CCB26BB52B9DFA2700B7B9A0 /* ActionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionRequest.swift; sourceTree = "<group>"; };
+		CCB800AD2B8287D7003F9AD2 /* SessionStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStorage.swift; sourceTree = "<group>"; };
 		CCB800AF2B829F85003F9AD2 /* AuthModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModuleAssembly.swift; sourceTree = "<group>"; };
 		CCB800B22B84ED6A003F9AD2 /* IRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequest.swift; sourceTree = "<group>"; };
 		CCB800B42B84F0A4003F9AD2 /* RequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
@@ -172,7 +218,7 @@
 		6D3D34B82A06683D0052AE68 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6D3D34B72A06683D0052AE68 /* FaceTrackingStreamer.app */,
+				6D3D34B72A06683D0052AE68 /* Pocket Streamer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -223,6 +269,9 @@
 		CC0C3A262B4832E900C43AA5 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				CCB26BA92B9DF46C00B7B9A0 /* Actions */,
+				CCB26BA02B9DEC0900B7B9A0 /* SelectPlatform */,
+				CCB26B832B9C558700B7B9A0 /* Connect */,
 				CC3718062B867A110069D978 /* Start */,
 				CC85ADB22B719AE200C91BFD /* Auth */,
 				CC0C3A292B483E0D00C43AA5 /* Streaming */,
@@ -247,6 +296,10 @@
 		CC0C3A282B483DFE00C43AA5 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				CCB26B902B9DC1F800B7B9A0 /* ChatView.swift */,
+				CCB26B922B9DC22100B7B9A0 /* ChatPresenter.swift */,
+				CCB26B942B9DC22D00B7B9A0 /* ChatContract.swift */,
+				CCB26B962B9DC25D00B7B9A0 /* ChatModuleAssembly.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -274,6 +327,9 @@
 		CC0C3A2D2B483E5500C43AA5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				CCB26BB22B9DF5A400B7B9A0 /* Actions */,
+				CCB26B9F2B9DDBEC00B7B9A0 /* Chat */,
+				CCB26B982B9DC36700B7B9A0 /* Composer */,
 				CC85ADA62B71917900C91BFD /* Auth */,
 				CC3F81E52B4B28F3006EDC95 /* FaceTracking */,
 				CCB800DB2B865784003F9AD2 /* ServicesAssembly.swift */,
@@ -342,6 +398,8 @@
 			children = (
 				CC3F81EA2B4B320F006EDC95 /* BodyTrackingViewController.swift */,
 				CC2E62E82B95061900CCDCED /* BodyTrackingModuleAssembly.swift */,
+				CCB26B8C2B9C6C4C00B7B9A0 /* BodyTrackingPresenter.swift */,
+				CCB26B8E2B9C6C5800B7B9A0 /* BodyTrackingContract.swift */,
 			);
 			path = Body;
 			sourceTree = "<group>";
@@ -370,7 +428,7 @@
 			isa = PBXGroup;
 			children = (
 				CC3F81FE2B5D6204006EDC95 /* ApiEndpointStorage.swift */,
-				CCB800AD2B8287D7003F9AD2 /* AuthStorage.swift */,
+				CCB800AD2B8287D7003F9AD2 /* SessionStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -442,6 +500,65 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		CCB26B832B9C558700B7B9A0 /* Connect */ = {
+			isa = PBXGroup;
+			children = (
+				CCB26B842B9C55A700B7B9A0 /* ConnectViewController.swift */,
+				CCB26B862B9C560500B7B9A0 /* ConnectContract.swift */,
+				CCB26B882B9C562A00B7B9A0 /* ConnectPresenter.swift */,
+				CCB26B8A2B9C563400B7B9A0 /* ConnectModuleAssembly.swift */,
+			);
+			path = Connect;
+			sourceTree = "<group>";
+		};
+		CCB26B982B9DC36700B7B9A0 /* Composer */ = {
+			isa = PBXGroup;
+			children = (
+				CCB26B992B9DC37700B7B9A0 /* ComposerRequest.swift */,
+				CCB26B9B2B9DC84300B7B9A0 /* FindComposerService.swift */,
+			);
+			path = Composer;
+			sourceTree = "<group>";
+		};
+		CCB26B9F2B9DDBEC00B7B9A0 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				CCB26B9D2B9DDBE300B7B9A0 /* ChatService.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		CCB26BA02B9DEC0900B7B9A0 /* SelectPlatform */ = {
+			isa = PBXGroup;
+			children = (
+				CCB26BA12B9DEC3300B7B9A0 /* SelectPlatformViewController.swift */,
+				CCB26BA32B9DEC4700B7B9A0 /* SelectPlatformPresenter.swift */,
+				CCB26BA52B9DEC5300B7B9A0 /* SelectPlatformContract.swift */,
+				CCB26BA72B9DEC5E00B7B9A0 /* SelectPlatformModuleAssembly.swift */,
+			);
+			path = SelectPlatform;
+			sourceTree = "<group>";
+		};
+		CCB26BA92B9DF46C00B7B9A0 /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				CCB26BAA2B9DF48100B7B9A0 /* ActionsView.swift */,
+				CCB26BAC2B9DF49100B7B9A0 /* ActionsPresenter.swift */,
+				CCB26BAE2B9DF49D00B7B9A0 /* ActionsContract.swift */,
+				CCB26BB02B9DF4AD00B7B9A0 /* ActionsModuleAssembly.swift */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
+		CCB26BB22B9DF5A400B7B9A0 /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				CCB26BB52B9DFA2700B7B9A0 /* ActionRequest.swift */,
+				CCB26BB32B9DF84300B7B9A0 /* ActionsService.swift */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
 		CCB800B12B84ED4A003F9AD2 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
@@ -508,9 +625,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6D3D34B62A06683D0052AE68 /* FaceTrackingStreamer */ = {
+		6D3D34B62A06683D0052AE68 /* Pocket Streamer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6D3D34CB2A06683E0052AE68 /* Build configuration list for PBXNativeTarget "FaceTrackingStreamer" */;
+			buildConfigurationList = 6D3D34CB2A06683E0052AE68 /* Build configuration list for PBXNativeTarget "Pocket Streamer" */;
 			buildPhases = (
 				9869F6C01401BAE586529B61 /* [CP] Check Pods Manifest.lock */,
 				6D3D34B32A06683D0052AE68 /* Sources */,
@@ -522,12 +639,12 @@
 			);
 			dependencies = (
 			);
-			name = FaceTrackingStreamer;
+			name = "Pocket Streamer";
 			packageProductDependencies = (
 				6D6AE7B92A06907A00A418D6 /* Starscream */,
 			);
 			productName = FaceTrackingStreamer;
-			productReference = 6D3D34B72A06683D0052AE68 /* FaceTrackingStreamer.app */;
+			productReference = 6D3D34B72A06683D0052AE68 /* Pocket Streamer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -561,7 +678,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6D3D34B62A06683D0052AE68 /* FaceTrackingStreamer */,
+				6D3D34B62A06683D0052AE68 /* Pocket Streamer */,
 			);
 		};
 /* End PBXProject section */
@@ -630,17 +747,26 @@
 				CCB800C12B84FD56003F9AD2 /* RegisterRequest.swift in Sources */,
 				6D3D34CF2A0668560052AE68 /* OldFaceTrackingViewController.swift in Sources */,
 				CCB800B02B829F85003F9AD2 /* AuthModuleAssembly.swift in Sources */,
+				CCB26BAD2B9DF49100B7B9A0 /* ActionsPresenter.swift in Sources */,
+				CCB26B912B9DC1F800B7B9A0 /* ChatView.swift in Sources */,
+				CCB26B8B2B9C563500B7B9A0 /* ConnectModuleAssembly.swift in Sources */,
 				CC40BEB02B5F0D95004036F3 /* StreamSessionManager.swift in Sources */,
 				CCB800CE2B861FF3003F9AD2 /* AppCoordinator.swift in Sources */,
 				CCB800BB2B84F5E1003F9AD2 /* URLSessionDataTask+Cancelable.swift in Sources */,
 				CCB800B32B84ED6A003F9AD2 /* IRequest.swift in Sources */,
+				CCB26BAB2B9DF48100B7B9A0 /* ActionsView.swift in Sources */,
 				6D3D34D12A066FF20052AE68 /* FaceTrackerExtension.swift in Sources */,
 				CC85ADB82B719C4500C91BFD /* AuthContract.swift in Sources */,
 				CC85ADAD2B71948700C91BFD /* KeychainWrapper.swift in Sources */,
+				CCB26B9E2B9DDBE300B7B9A0 /* ChatService.swift in Sources */,
 				CC40BEA32B5DA011004036F3 /* DebugMenuModuleAssembly.swift in Sources */,
 				CCB800B92B84F1CB003F9AD2 /* JSONParsable.swift in Sources */,
+				CCB26BA82B9DEC5E00B7B9A0 /* SelectPlatformModuleAssembly.swift in Sources */,
 				CCB800D82B86283E003F9AD2 /* MainFlowCoordinator.swift in Sources */,
 				CC40BEAA2B5F08F4004036F3 /* FaceTrackingViewController.swift in Sources */,
+				CCB26B852B9C55A700B7B9A0 /* ConnectViewController.swift in Sources */,
+				CCB26B932B9DC22100B7B9A0 /* ChatPresenter.swift in Sources */,
+				CCB26BAF2B9DF49D00B7B9A0 /* ActionsContract.swift in Sources */,
 				CC3718142B874E8C0069D978 /* StartStreamPresenter.swift in Sources */,
 				CC3718122B874E6D0069D978 /* StartStreamContract.swift in Sources */,
 				CC3F81E42B4B286C006EDC95 /* DebugMenuCell.swift in Sources */,
@@ -650,39 +776,53 @@
 				CC3718052B86739A0069D978 /* ModulesAssembly.swift in Sources */,
 				CC85ADA82B71918C00C91BFD /* AuthService.swift in Sources */,
 				CC3718102B874C2E0069D978 /* IWebSocketRequest.swift in Sources */,
+				CCB26BA42B9DEC4700B7B9A0 /* SelectPlatformPresenter.swift in Sources */,
+				CCB26B9C2B9DC84300B7B9A0 /* FindComposerService.swift in Sources */,
 				CCB800DA2B865704003F9AD2 /* BaseModuleAssembly.swift in Sources */,
 				CC40BEAD2B5F097A004036F3 /* FaceTrackingContract.swift in Sources */,
 				CC0C3A2B2B483E2B00C43AA5 /* DebugMenuViewController.swift in Sources */,
+				CCB26B952B9DC22D00B7B9A0 /* ChatContract.swift in Sources */,
 				CC3718032B866D9A0069D978 /* ValidateRequest.swift in Sources */,
 				CC85ADAF2B7194A900C91BFD /* KeychainItemAccessibility.swift in Sources */,
 				CC85ADB62B719C2A00C91BFD /* AuthPresenter.swift in Sources */,
 				CC40BEA62B5DA2C4004036F3 /* IModule.swift in Sources */,
 				6D3D34BB2A06683D0052AE68 /* AppDelegate.swift in Sources */,
 				CC3F81E72B4B2923006EDC95 /* FaceTrackingService.swift in Sources */,
+				CCB26B972B9DC25D00B7B9A0 /* ChatModuleAssembly.swift in Sources */,
 				CC85ADB12B71960F00C91BFD /* LoginRequest.swift in Sources */,
 				CC2E62E52B94FFF200CCDCED /* FaceTrackingModuleAssembly.swift in Sources */,
-				CCB800AE2B8287D7003F9AD2 /* AuthStorage.swift in Sources */,
+				CCB800AE2B8287D7003F9AD2 /* SessionStorage.swift in Sources */,
 				CC40BE9F2B5D9FEA004036F3 /* DebugMenuContract.swift in Sources */,
 				CC85ADB42B719AF200C91BFD /* AuthViewController.swift in Sources */,
 				CC37180C2B867F9D0069D978 /* CoordinatorAction.swift in Sources */,
 				CCB800BF2B84F9F1003F9AD2 /* CoreRequest.swift in Sources */,
 				CCB800C52B85F227003F9AD2 /* SessionProvider.swift in Sources */,
+				CCB26B872B9C560500B7B9A0 /* ConnectContract.swift in Sources */,
 				CCB800D02B862193003F9AD2 /* CoordinatorFactory.swift in Sources */,
 				CCB800CA2B861F1E003F9AD2 /* BaseCoordinator.swift in Sources */,
 				CC37180A2B867F4E0069D978 /* IModuleOutput.swift in Sources */,
+				CCB26B8D2B9C6C4C00B7B9A0 /* BodyTrackingPresenter.swift in Sources */,
 				CC3F81EB2B4B320F006EDC95 /* BodyTrackingViewController.swift in Sources */,
 				CC3718082B867B160069D978 /* StartStreamModuleAssembly.swift in Sources */,
+				CCB26BB12B9DF4AD00B7B9A0 /* ActionsModuleAssembly.swift in Sources */,
 				CCB800DC2B865784003F9AD2 /* ServicesAssembly.swift in Sources */,
+				CCB26B892B9C562A00B7B9A0 /* ConnectPresenter.swift in Sources */,
+				CCB26BA22B9DEC3300B7B9A0 /* SelectPlatformViewController.swift in Sources */,
+				CCB26BB62B9DFA2700B7B9A0 /* ActionRequest.swift in Sources */,
+				CCB26BB42B9DF84300B7B9A0 /* ActionsService.swift in Sources */,
 				CC85ADA52B71807900C91BFD /* StartStreamViewController.swift in Sources */,
+				CCB26B9A2B9DC37700B7B9A0 /* ComposerRequest.swift in Sources */,
 				CCB800B72B84F188003F9AD2 /* IJSONRequest.swift in Sources */,
 				CCB800C82B85FE20003F9AD2 /* Router.swift in Sources */,
 				CC3F81FF2B5D6204006EDC95 /* ApiEndpointStorage.swift in Sources */,
 				CC2E62E92B95061900CCDCED /* BodyTrackingModuleAssembly.swift in Sources */,
 				CC3F81FD2B5D5F6C006EDC95 /* UserDefaultsStorage.swift in Sources */,
+				CCB26BA62B9DEC5300B7B9A0 /* SelectPlatformContract.swift in Sources */,
 				CCB800B52B84F0A4003F9AD2 /* RequestBuilder.swift in Sources */,
 				CC85ADAA2B71931800C91BFD /* RequestManager.swift in Sources */,
 				6D3D34BD2A06683D0052AE68 /* SceneDelegate.swift in Sources */,
 				CC40BEA12B5D9FFC004036F3 /* DebugMenuPresenter.swift in Sources */,
+				CCB26B8F2B9C6C5800B7B9A0 /* BodyTrackingContract.swift in Sources */,
 				CCB800C32B84FDED003F9AD2 /* EndpointProvider.swift in Sources */,
 				CC2E62E72B9504A000CCDCED /* BaseViewController.swift in Sources */,
 			);
@@ -830,6 +970,8 @@
 				INFOPLIST_FILE = FaceTrackingStreamer/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Use your camera to track face";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Use network to transfer face tracking data";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "For testing";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "For QR-code scanning";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
@@ -864,6 +1006,8 @@
 				INFOPLIST_FILE = FaceTrackingStreamer/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Use your camera to track face";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Use network to transfer face tracking data";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "For testing";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "For QR-code scanning";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
@@ -896,7 +1040,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6D3D34CB2A06683E0052AE68 /* Build configuration list for PBXNativeTarget "FaceTrackingStreamer" */ = {
+		6D3D34CB2A06683E0052AE68 /* Build configuration list for PBXNativeTarget "Pocket Streamer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6D3D34CC2A06683E0052AE68 /* Debug */,

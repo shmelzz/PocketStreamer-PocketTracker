@@ -12,10 +12,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
         window.makeKeyAndVisible()
         
-        //        let endpointStorage = ApiEndpointStorage(suiteName: "PocketTracker")
-        //        let faceTrackingVC = OldFaceTrackingViewController(endpointStorage: endpointStorage)
-//        let navVc = UINavigationController(rootViewController: StartViewController())
-        
         let rootVC = UINavigationController()
         window.rootViewController = rootVC
         
@@ -24,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeCoordinator(rootController: UINavigationController) -> ICoordinator {
-        let sessionProvider = SessionProvider()
+        let sessionProvider = SessionProvider(sessionStorage: SessionStorage(suiteName: "PocketTracker"))
         let requestBuilder = RequestBuilder(sessionProvider: sessionProvider)
         let urlSession = URLSession(configuration: .default)
         
