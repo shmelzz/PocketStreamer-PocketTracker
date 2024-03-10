@@ -9,6 +9,7 @@ env:
   REGISTRY: cr.yandex/crpsa7b6pi9hgku83m9q
   FACEBODY_IMAGE_NAME: facebody
   USERAUTH_IMAGE_NAME: userauth
+  POCKETACTION_IMAGE_NAME: pocketaction
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}${{ github.sha }}
 
 jobs:
@@ -24,6 +25,7 @@ jobs:
           [
             { name: FaceBodyFeatureService, tag: facebody },
             { name: UserAuthSessionService, tag: userauth },
+            { name: PocketActionService, tag: pocketaction }
           ]
     steps:
       - name: Checkout repository
@@ -65,6 +67,7 @@ jobs:
         env:
           FACEBODY_IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.FACEBODY_IMAGE_NAME }}:${{ env.BRANCH_NAME }}
           USERAUTH_IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.USERAUTH_IMAGE_NAME }}:${{ env.BRANCH_NAME }}
+          POCKETACTION_IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.POCKETACTION_IMAGE_NAME }}:${{ env.BRANCH_NAME }}
           YC_VM_USERNAME: ${{ vars.YC_VM_USERNAME }}
           YC_VM_SSH: ${{ vars.YC_VM_SSH }}
         with:
