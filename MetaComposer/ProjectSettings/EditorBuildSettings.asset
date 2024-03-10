@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TestScene.unity
     guid: 6f014fa380b8b45dcb326144410730e8
+  - enabled: 1
+    path: Assets/Scenes/QR.unity
+    guid: cf40ae794d545471bba553bbf9214685
   m_configObjects: {}

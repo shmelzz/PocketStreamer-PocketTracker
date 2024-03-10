@@ -5,6 +5,7 @@ using System.Collections.Concurrent;  // Required for ConcurrentQueue
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using JetBrains.Annotations;
 using MetaComposer.Assets;
 using NativeWebSocket;
 using Newtonsoft.Json;
@@ -94,24 +95,26 @@ public class WebSocketConnection : MonoBehaviour
             // Add the SessionId header
             { "SessionId", sessionInputField.text }
         };
-        websocket = new WebSocket(ipInputField.text, headers);
+        string path = (ipInputField.text + ":4545/compose​d").Replace("\u200B", "");
+        Debug.Log(path);
+        websocket = new WebSocket(path, headers);
         TextMeshProUGUI textMeshPro = connectButton.GetComponentInChildren<TextMeshProUGUI>();
 
         websocket.OnOpen += () =>
         {
-            Debug.Log("Connection open!");
+            Debug.Log("Face/Body Connection open!");
             textMeshPro.color = UnityEngine.Color.green;
         };
 
         websocket.OnError += (e) =>
         {
-            Debug.Log("Error! " + e);
+            Debug.Log("Face/Body Error! " + e);
             textMeshPro.color = UnityEngine.Color.red;
         };
 
         websocket.OnClose += (e) =>
         {
-            Debug.Log("Connection closed!");
+            Debug.Log("Face/Body Connection closed!");
             textMeshPro.color = UnityEngine.Color.red;
         };
 
