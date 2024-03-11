@@ -20,6 +20,8 @@ protocol IServicesAssembly: AnyObject {
     var findComposerService: IFindComposerService { get }
     
     var actionsService: IActionsService { get }
+    
+    var chatService: IChatService { get }
 }
 
 final class ServicesAssembly: IServicesAssembly {
@@ -64,6 +66,13 @@ final class ServicesAssembly: IServicesAssembly {
             requestManager: requestManager,
             endpointProvider: endpointProvider,
             sessionProvider: sessionProvider
+        )
+    }()
+    
+    lazy var chatService: IChatService = {
+        ChatService(
+            endpointProvider: endpointProvider,
+            requestBuilder: RequestBuilder(sessionProvider: sessionProvider)
         )
     }()
 }

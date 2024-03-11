@@ -24,6 +24,6 @@ final class SelectPlatformPresenter: BaseModuleOutput, ISelectPlatformPresenter 
     }
     
     func onLongPress() {
-        
+        finish(.onLongPress)
     }
 }
