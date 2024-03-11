@@ -24,7 +24,7 @@ final class ActionRequest: CoreRequest, IJSONRequest {
         sessionId: String,
         endpoint: String
     ) {
-        self.payload = type
+        self.payload = payload
         self.actionType = type
         self.sessionId = sessionId
         super.init(endpoint: endpoint)

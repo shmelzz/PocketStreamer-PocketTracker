@@ -27,9 +27,9 @@ final class ActionsPresenter: BaseModuleOutput, IActionsPresenter {
         actionsService.send(action: actionModel) { [weak self] result in
             switch result {
             case .success(let success):
-                break
+                print(success)
             case .failure(let failure):
-                break
+                print(failure.localizedDescription)
             }
         }
     }

@@ -8,6 +8,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     private let endpointStorage: IApiEndpointStorage
     private let authStorage: ISessionStorage
     private let sessionProvider: ISessionProvider
+    private let actionsService: IActionsService
     
     private var websocket: WebSocket!
     
@@ -41,17 +42,37 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         return button
     }()
     
+//    private lazy var actionsCameraView: UIButton = {
+//        let button = UIButton(configuration: .filled())
+//        button.setTitle("Scene settings", for: .normal)
+//        button.addTarget(self, action: #selector(onActionsTapped), for: .touchUpInside)
+//        return button
+//    }()
+    
+    private lazy var actionsCameraView: ActionsView = {
+        let view = ActionsView()
+        let presenter = ActionsPresenter(
+            actionsService: actionsService,
+            view: view,
+            coordinator: coordinator
+        )
+        view.presenter = presenter
+        return view
+    }()
+    
     // MARK: Init
     
     init(
         endpointStorage: IApiEndpointStorage,
         authStorage: ISessionStorage,
         sessionProvider: ISessionProvider,
+        actionsService: IActionsService,
         coordinator: ICoordinator
     ) {
         self.endpointStorage = endpointStorage
         self.authStorage = authStorage
         self.sessionProvider = sessionProvider
+        self.actionsService = actionsService
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
@@ -88,6 +109,15 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
             settingsButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             settingsButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24)
         ])
+        
+        view.addSubview(actionsCameraView)
+        actionsCameraView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            actionsCameraView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+            actionsCameraView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+            actionsCameraView.widthAnchor.constraint(equalToConstant: 150),
+            actionsCameraView.heightAnchor.constraint(equalToConstant: 150)
+        ])
     }
     
     @objc
@@ -97,15 +127,19 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     }
     
     @objc
+    private func onActionsTapped() {
+    
+    }
+    
+    @objc
     private func onConnectTapped() {
         guard let envs = endpointStorage.get() else { return }
         let endpoint = envs.environments.first(where: { $0.isSelected })
         
-        guard let urlAddress = endpoint?.endpoint.endpoint,
-              let port = endpoint?.endpoint.port
+        guard let urlAddress = endpoint?.endpoint.endpoint
         else { return }
         
-        let address = "ws://\(urlAddress):\(port)/facetracking"
+        let address = "ws://\(urlAddress):4545/facetracking"
         
         self.setupWebSocketConnection(url: address)
     }
@@ -129,7 +163,6 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         faceNode = SCNNode(geometry: faceGeometry)
         faceNode.geometry?.firstMaterial?.fillMode = .lines
     }
-    
     
     private func setupARFaceTracking() {
         guard ARFaceTrackingConfiguration.isSupported else {
