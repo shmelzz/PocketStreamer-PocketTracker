@@ -12,6 +12,7 @@ struct ComposerRequestModel: Encodable {
 }
 
 struct EmptyResponse: Decodable, JSONParsable {
+    
 }
 
 final class ComposerRequest: CoreRequest, IJSONRequest {

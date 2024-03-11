@@ -7,13 +7,14 @@ enum RequestBuilderError: Error {
 protocol IRequestBuilder: AnyObject {
     func buildHTTP(request: IRequest) throws -> URLRequest
     func buildWebSocket(request: IWebSocketRequest) throws -> URLRequest
+    func setSessionProvider(_ provider: ISessionProvider)
 }
 
 final class RequestBuilder: IRequestBuilder {
     
-    private let sessionProvider: ISessionProvider
+    private var sessionProvider: ISessionProvider?
     
-    init(sessionProvider: ISessionProvider) {
+    init(sessionProvider: ISessionProvider? = nil) {
         self.sessionProvider = sessionProvider
     }
     
@@ -29,7 +30,7 @@ final class RequestBuilder: IRequestBuilder {
         
         switch request.authorizationType() {
         case .token:
-            httpHeaderFields["Authentication"] = sessionProvider.token
+            httpHeaderFields["Authentication"] = sessionProvider?.token ?? ""
         case .session:
             break
         case .none:
@@ -69,5 +70,9 @@ final class RequestBuilder: IRequestBuilder {
 //        urlRequest.allHTTPHeaderFields = httpHeaderFields
 //        
         return urlRequest
+    }
+    
+    func setSessionProvider(_ provider: ISessionProvider) {
+        self.sessionProvider = provider
     }
 }

@@ -22,7 +22,7 @@ final class BodyTrackingModuleAssembly: BaseModuleAssembly, IBodyTrackingModuleA
             coordinator: coordinator
         )
         
-         // view.presenter = presenter
+        view.presenter = presenter
         return Module(viewToPresent: view, viewOutput: presenter)
     }
 }

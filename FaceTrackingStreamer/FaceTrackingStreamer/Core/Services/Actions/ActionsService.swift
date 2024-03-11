@@ -37,4 +37,3 @@ final class ActionsService: IActionsService {
         requestManager.execute(request: request, completion: completion)
     }
 }
-

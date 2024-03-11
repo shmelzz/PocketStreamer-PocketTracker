@@ -8,13 +8,14 @@
 import Foundation
 
 protocol IModulesAssembly {
+    
     var authModuleAssembly: IAuthModuleAssembly { get }
     
     var startModuleAssembly: IStartStreamModuleAssembly { get }
     
     var faceTrackingModuleAssembly: IFaceTrackingModuleAssembly { get }
     
-//    var bodyTrackingModuleAssembly: IBodyTrackingModuleAssembly { get }
+    var bodyTrackingModuleAssembly: IBodyTrackingModuleAssembly { get }
     
     var debugMenuModuleAssembly: IDebugMenuModuleAssembly { get }
     
@@ -41,6 +42,10 @@ final class ModulesAssembly: IModulesAssembly {
     
     lazy var faceTrackingModuleAssembly: IFaceTrackingModuleAssembly = {
         FaceTrackingModuleAssembly(servicesAssembly: servicesAssembly)
+    }()
+    
+    lazy var bodyTrackingModuleAssembly: IBodyTrackingModuleAssembly = {
+        BodyTrackingModuleAssembly(servicesAssembly: servicesAssembly)
     }()
     
     lazy var debugMenuModuleAssembly: IDebugMenuModuleAssembly = {

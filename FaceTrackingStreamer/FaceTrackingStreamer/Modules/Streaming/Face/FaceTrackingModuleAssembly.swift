@@ -18,6 +18,7 @@ final class FaceTrackingModuleAssembly: BaseModuleAssembly, IFaceTrackingModuleA
             endpointStorage: servicesAssembly.endpointStorage,
             authStorage: servicesAssembly.sessionStorage,
             sessionProvider: servicesAssembly.sessionProvider,
+            actionsService: servicesAssembly.actionsService,
             coordinator: coordinator
         )
         let presenter = FaceTrackingPresenter(

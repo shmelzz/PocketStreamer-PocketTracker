@@ -7,7 +7,6 @@ extension ARFaceAnchor {
         var blendShapes = Dictionary(uniqueKeysWithValues:
                                         blendShapes.map { key, value in (key.rawValue, value.floatValue) })
         blendShapes["timeCode"] = Float(DispatchTime.now().uptimeNanoseconds)
-        print(blendShapes["timeCode"])
         return blendShapes
     }
 }
