@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+protocol IChatPresenter {
+    func onFollowChat()
+    func onLongPress()
+}
+
+protocol IChatView: AnyObject {
+    func onNewMessage(_ model: MessageModel)
+}
+
