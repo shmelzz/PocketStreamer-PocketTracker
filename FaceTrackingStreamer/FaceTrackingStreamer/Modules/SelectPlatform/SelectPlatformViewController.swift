@@ -14,12 +14,14 @@ final class SelectPlatformViewController: UIViewController, ISelectPlatformView,
         let button = UIButton(configuration: .filled())
         button.setTitle("Continue", for: .normal)
         button.addTarget(self, action: #selector(onContinueTapped), for: .touchUpInside)
+        button.addGestureRecognizer(longTapGestureRecognizer)
         return button
     }()
     
     private lazy var channelTextInput: UITextField = {
         let field = UITextField()
         field.placeholder = "Channel"
+        field.textAlignment = .center
         return field
     }()
     
@@ -55,7 +57,8 @@ final class SelectPlatformViewController: UIViewController, ISelectPlatformView,
     
     @objc
     private func onContinueTapped() {
-        presenter?.onContinueTapped()
+        let text = channelTextInput.text
+        presenter?.onContinueTapped(platform: text)
     }
     
     @objc
@@ -69,9 +72,18 @@ final class SelectPlatformViewController: UIViewController, ISelectPlatformView,
         view.addSubview(continueButton)
         continueButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            continueButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 100),
+            continueButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 40),
             continueButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             continueButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
+        
+        view.addSubview(channelTextInput)
+        channelTextInput.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            channelTextInput.bottomAnchor.constraint(equalTo: continueButton.topAnchor, constant: -32),
+            channelTextInput.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            channelTextInput.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
+        ])
+        channelTextInput.delegate = self
     }
 }

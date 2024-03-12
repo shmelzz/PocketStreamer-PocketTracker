@@ -20,6 +20,7 @@ final class FaceTrackingModuleAssembly: BaseModuleAssembly, IFaceTrackingModuleA
             sessionProvider: servicesAssembly.sessionProvider,
             actionsService: servicesAssembly.actionsService,
             chatService: servicesAssembly.chatService,
+            platformManager: servicesAssembly.platformManager,
             coordinator: coordinator
         )
         let presenter = FaceTrackingPresenter(

@@ -38,6 +38,7 @@ final class CoordinatorFactory: ICoordinatorFactory {
             startModuleAssembly: modulesAssembly.startModuleAssembly,
             faceTrackingModuleAssembly: modulesAssembly.faceTrackingModuleAssembly,
             debugMenuModuleAssembly: modulesAssembly.debugMenuModuleAssembly,
+            selectPlatformModuleAssembly: modulesAssembly.selectPlatformModuleAssembly,
             router: router
         )
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ISelectPlatformPresenter {
-    func onContinueTapped()
+    func onContinueTapped(platform name: String?)
     func onLongPress()
 }
 

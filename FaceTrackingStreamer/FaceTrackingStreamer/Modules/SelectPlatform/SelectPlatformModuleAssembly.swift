@@ -17,6 +17,7 @@ final class SelectPlatformModuleAssembly: BaseModuleAssembly, ISelectPlatformMod
         let view = SelectPlatformViewController()
         let presenter = SelectPlatformPresenter(
             view: view,
+            platformManager: servicesAssembly.platformManager,
             coordinator: coordinator
         )
         view.presenter = presenter

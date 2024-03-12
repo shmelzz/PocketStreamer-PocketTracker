@@ -13,6 +13,7 @@ final class MainFlowCoordinator: BaseCoordinator {
     private let startModuleAssembly: IStartStreamModuleAssembly
     private let faceTrackingModuleAssembly: IFaceTrackingModuleAssembly
     private let debugMenuModuleAssembly: IDebugMenuModuleAssembly
+    private let selectPlatformModuleAssembly: ISelectPlatformModuleAssembly
     private let router: IRouter
     
     var coordinatorCompletion: CompletionBlock?
@@ -22,6 +23,7 @@ final class MainFlowCoordinator: BaseCoordinator {
         startModuleAssembly: IStartStreamModuleAssembly,
         faceTrackingModuleAssembly: IFaceTrackingModuleAssembly,
         debugMenuModuleAssembly: IDebugMenuModuleAssembly,
+        selectPlatformModuleAssembly: ISelectPlatformModuleAssembly,
         router: IRouter
     ) {
         self.router = router
@@ -29,6 +31,7 @@ final class MainFlowCoordinator: BaseCoordinator {
         self.startModuleAssembly = startModuleAssembly
         self.faceTrackingModuleAssembly = faceTrackingModuleAssembly
         self.debugMenuModuleAssembly = debugMenuModuleAssembly
+        self.selectPlatformModuleAssembly = selectPlatformModuleAssembly
     }
     
     override func startFlow() {
@@ -47,12 +50,15 @@ final class MainFlowCoordinator: BaseCoordinator {
             let module = debugMenuModuleAssembly.assemble(for: self)
             router.present(module, animated: true)
         case .connectModuleSuccess:
-            let module = startModuleAssembly.assemble(for: self)
+            let module = selectPlatformModuleAssembly.assemble(for: self)
             router.push(module, animated: true)
         case .connectModuleOnLogout:
             onFinish?()
         case let .connectModuleFailure(text):
             router.presentAlert(with: text ?? "")
+        case .selectPlatformContinue:
+            let module = startModuleAssembly.assemble(for: self)
+            router.push(module, animated: true)
         default:
             break
         }
