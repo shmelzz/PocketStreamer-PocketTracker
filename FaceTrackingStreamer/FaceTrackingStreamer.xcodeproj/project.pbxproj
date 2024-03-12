@@ -76,6 +76,7 @@
 		CCB26BB62B9DFA2700B7B9A0 /* ActionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BB52B9DFA2700B7B9A0 /* ActionRequest.swift */; };
 		CCB26BB92B9F9BA100B7B9A0 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BB82B9F9BA100B7B9A0 /* ConfigurableView.swift */; };
 		CCB26BBC2B9F9E9F00B7B9A0 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BBB2B9F9E9F00B7B9A0 /* MessageCell.swift */; };
+		CCB26BBF2BA09C7E00B7B9A0 /* PlatformManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BBE2BA09C7E00B7B9A0 /* PlatformManager.swift */; };
 		CCB800AE2B8287D7003F9AD2 /* SessionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800AD2B8287D7003F9AD2 /* SessionStorage.swift */; };
 		CCB800B02B829F85003F9AD2 /* AuthModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800AF2B829F85003F9AD2 /* AuthModuleAssembly.swift */; };
 		CCB800B32B84ED6A003F9AD2 /* IRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800B22B84ED6A003F9AD2 /* IRequest.swift */; };
@@ -171,6 +172,7 @@
 		CCB26BB52B9DFA2700B7B9A0 /* ActionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionRequest.swift; sourceTree = "<group>"; };
 		CCB26BB82B9F9BA100B7B9A0 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
 		CCB26BBB2B9F9E9F00B7B9A0 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		CCB26BBE2BA09C7E00B7B9A0 /* PlatformManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformManager.swift; sourceTree = "<group>"; };
 		CCB800AD2B8287D7003F9AD2 /* SessionStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStorage.swift; sourceTree = "<group>"; };
 		CCB800AF2B829F85003F9AD2 /* AuthModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModuleAssembly.swift; sourceTree = "<group>"; };
 		CCB800B22B84ED6A003F9AD2 /* IRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequest.swift; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 		CC0C3A2D2B483E5500C43AA5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				CCB26BBD2BA09C6300B7B9A0 /* Platform */,
 				CCB26BB22B9DF5A400B7B9A0 /* Actions */,
 				CCB26B9F2B9DDBEC00B7B9A0 /* Chat */,
 				CCB26B982B9DC36700B7B9A0 /* Composer */,
@@ -579,6 +582,14 @@
 				CCB26BBB2B9F9E9F00B7B9A0 /* MessageCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		CCB26BBD2BA09C6300B7B9A0 /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				CCB26BBE2BA09C7E00B7B9A0 /* PlatformManager.swift */,
+			);
+			path = Platform;
 			sourceTree = "<group>";
 		};
 		CCB800B12B84ED4A003F9AD2 /* Networking */ = {
@@ -829,6 +840,7 @@
 				CC3F81EB2B4B320F006EDC95 /* BodyTrackingViewController.swift in Sources */,
 				CC3718082B867B160069D978 /* StartStreamModuleAssembly.swift in Sources */,
 				CCB26BB12B9DF4AD00B7B9A0 /* ActionsModuleAssembly.swift in Sources */,
+				CCB26BBF2BA09C7E00B7B9A0 /* PlatformManager.swift in Sources */,
 				CCB800DC2B865784003F9AD2 /* ServicesAssembly.swift in Sources */,
 				CCB26B892B9C562A00B7B9A0 /* ConnectPresenter.swift in Sources */,
 				CCB26BA22B9DEC3300B7B9A0 /* SelectPlatformViewController.swift in Sources */,

@@ -22,6 +22,8 @@ protocol IServicesAssembly: AnyObject {
     var actionsService: IActionsService { get }
     
     var chatService: IChatService { get }
+    
+    var platformManager: IPlatformManager { get }
 }
 
 final class ServicesAssembly: IServicesAssembly {
@@ -75,5 +77,9 @@ final class ServicesAssembly: IServicesAssembly {
             requestBuilder: RequestBuilder(sessionProvider: sessionProvider),
             sessionProvider: sessionProvider
         )
+    }()
+    
+    lazy var platformManager: IPlatformManager  = {
+        PlatformManager()
     }()
 }

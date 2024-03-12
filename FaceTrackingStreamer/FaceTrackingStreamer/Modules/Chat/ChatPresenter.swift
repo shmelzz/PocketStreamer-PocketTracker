@@ -12,14 +12,17 @@ final class ChatPresenter: BaseModuleOutput, IChatPresenter, IChatServiceDelegat
     private weak var view: IChatView?
     
     private let chatService: IChatService
+    private let platformManager: IPlatformManager
     
     init(
         chatService: IChatService,
+        platformManager: IPlatformManager,
         view: IChatView,
         coordinator: ICoordinator
     ) {
         self.view = view
         self.chatService = chatService
+        self.platformManager = platformManager
         super.init(coordinator: coordinator)
     }
     
@@ -32,7 +35,8 @@ final class ChatPresenter: BaseModuleOutput, IChatPresenter, IChatServiceDelegat
     // MARK: - IChatPresenter
     
     func onFollowChat() {
-        chatService.connect(model: StreamModel(platform: "twitch", channel: "Thijs"))
+        let platformName = platformManager.getSelectedPlatform()
+        chatService.connect(model: StreamModel(platform: "twitch", channel: platformName ?? ""))
     }
     
     func onLongPress() {

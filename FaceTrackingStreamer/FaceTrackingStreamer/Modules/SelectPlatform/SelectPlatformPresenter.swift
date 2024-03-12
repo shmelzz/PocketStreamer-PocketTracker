@@ -11,16 +11,21 @@ final class SelectPlatformPresenter: BaseModuleOutput, ISelectPlatformPresenter 
     
     private weak var view: ISelectPlatformView?
     
+    private let platformManager: IPlatformManager
+    
     init(
         view: ISelectPlatformView,
+        platformManager: IPlatformManager,
         coordinator: ICoordinator
     ) {
         self.view = view
+        self.platformManager = platformManager
         super.init(coordinator: coordinator)
     }
     
-    func onContinueTapped() {
-        
+    func onContinueTapped(platform name: String?) {
+        platformManager.selectPlatform(name)
+        finish(.selectPlatformContinue)
     }
     
     func onLongPress() {

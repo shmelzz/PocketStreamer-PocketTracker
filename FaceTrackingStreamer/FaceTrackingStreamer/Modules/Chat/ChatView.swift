@@ -59,7 +59,7 @@ final class ChatView: UIView, IChatView, UITableViewDelegate {
         addSubview(followChatButton)
         followChatButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            followChatButton.topAnchor.constraint(equalTo: topAnchor),
+            followChatButton.bottomAnchor.constraint(equalTo: bottomAnchor),
             followChatButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 8),
             followChatButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -8)
         ])
