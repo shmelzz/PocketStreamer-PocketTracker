@@ -33,6 +33,7 @@ final class ChatView: UIView, IChatView, UITableViewDelegate {
     init() {
         super.init(frame: .zero)
         isUserInteractionEnabled = true
+        backgroundColor = .clear
         setupView()
     }
     
@@ -46,12 +47,15 @@ final class ChatView: UIView, IChatView, UITableViewDelegate {
         var snapshot = dataSource.snapshot()
         snapshot.appendItems([model], toSection: .messages)
         dataSource.apply(snapshot)
+        scrollToBottomMessage(snapshot.numberOfItems - 1)
         print(model.message)
     }
     
     // MARK: - Private
     
     private func setupView() {
+        setupTableView()
+        
         addSubview(followChatButton)
         followChatButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -59,8 +63,6 @@ final class ChatView: UIView, IChatView, UITableViewDelegate {
             followChatButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 8),
             followChatButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -8)
         ])
-        
-        
     }
     
     private func setupTableView() {
@@ -72,22 +74,28 @@ final class ChatView: UIView, IChatView, UITableViewDelegate {
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
+        tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.register(MessageCell.self, forCellReuseIdentifier: MessageCell.messageCellId)
+        
+        var snapshot = dataSource.snapshot()
+        snapshot.appendSections([.messages])
+        dataSource.apply(snapshot)
     }
     
     @objc
     private func onfollowChatTapped() {
         presenter?.onFollowChat()
+        followChatButton.isHidden = true
     }
     
-//    private func scrollToBottomMessage(_ count: Int) {
-//        if count >= 1 {
-//            let bottomMessageIndex = IndexPath(row: count - 1, section: 0)
-//            tableView.scrollToRow(at: bottomMessageIndex, at: .bottom, animated: true)
-//        }
-//    }
+    private func scrollToBottomMessage(_ count: Int) {
+        if count >= 1 {
+            let bottomMessageIndex = IndexPath(row: count - 1, section: 0)
+            tableView.scrollToRow(at: bottomMessageIndex, at: .bottom, animated: true)
+        }
+    }
     
     // MARK: - UITableViewDelegate
     

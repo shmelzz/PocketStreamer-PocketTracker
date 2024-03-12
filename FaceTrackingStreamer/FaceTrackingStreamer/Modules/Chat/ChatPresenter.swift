@@ -32,7 +32,7 @@ final class ChatPresenter: BaseModuleOutput, IChatPresenter, IChatServiceDelegat
     // MARK: - IChatPresenter
     
     func onFollowChat() {
-        chatService.connect(model: StreamModel(platform: "twitch", channel: ""))
+        chatService.connect(model: StreamModel(platform: "twitch", channel: "Thijs"))
     }
     
     func onLongPress() {

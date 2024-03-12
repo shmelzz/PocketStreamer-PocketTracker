@@ -25,7 +25,7 @@ final class MessageCell: UITableViewCell, ConfigurableView {
         let label = UILabel()
         label.numberOfLines = 1
         label.font = .systemFont(ofSize: 11)
-        label.textColor = .systemGray
+        label.textColor = .black
         return label
     }()
     
@@ -54,6 +54,7 @@ final class MessageCell: UITableViewCell, ConfigurableView {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupBubble()
         selectionStyle = .none
+        backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {

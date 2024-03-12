@@ -7,8 +7,9 @@
 
 import Foundation
 import Starscream
+import SwiftyJSON
 
-struct MessageModel: Hashable, Decodable {
+struct MessageModel: Hashable, Decodable, JSONParsable {
     let username: String
     let message: String
 }
@@ -20,6 +21,7 @@ struct StreamModel {
 
 protocol IChatService {
     func connect(model: StreamModel)
+    func setDelegate(_ delegate: IChatServiceDelegate)
 }
 
 protocol IChatServiceDelegate: AnyObject {
@@ -27,7 +29,7 @@ protocol IChatServiceDelegate: AnyObject {
 }
 
 final class ChatService: IChatService, WebSocketDelegate {
-
+    
     private var webSocket: WebSocket?
     private let endpointProvider: IEndpointProvider
     private let requestBuilder: IRequestBuilder
@@ -54,10 +56,18 @@ final class ChatService: IChatService, WebSocketDelegate {
         case .disconnected(let reason, let code):
             print("Chat WebSocket disconnected: \(reason)")
         case .text(let text):
+            let json = JSON(parseJSON: text)
+            let model = try? MessageModel.from(json)
+            guard let username = model?.username,
+                  let message = model?.message else { return }
+            delegate?.didReceive(new: MessageModel(username: username, message: message))
             print("Received text: \(text)")
         case .binary(let data):
-//            delegate?.didReceive(new: MessageModel(username: "", message: ""))
-            print("Received data: \(data)")
+            let decoded = try? JSONDecoder().decode(MessageModel.self, from: data)
+            guard let username = decoded?.username,
+                  let message = decoded?.message else { return }
+            delegate?.didReceive(new: MessageModel(username: username, message: message))
+            print("Received data: \(message) from \(username)")
         case .ping(_):
             break
         case .pong(_):
@@ -80,6 +90,10 @@ final class ChatService: IChatService, WebSocketDelegate {
     func connect(model: StreamModel) {
         let endpoint = endpointProvider.streamingEndpoint()
         connect(to: endpoint, model: model)
+    }
+    
+    func setDelegate(_ delegate: IChatServiceDelegate) {
+        self.delegate = delegate
     }
     
     // MARK: - Private
