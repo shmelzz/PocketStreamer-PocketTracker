@@ -9,6 +9,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     private let authStorage: ISessionStorage
     private let sessionProvider: ISessionProvider
     private let actionsService: IActionsService
+    private let chatService: IChatService
     
     private var websocket: WebSocket!
     
@@ -60,6 +61,18 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         return view
     }()
     
+    private lazy var chatView: ChatView = {
+        let view = ChatView()
+        let presenter = ChatPresenter(
+            chatService: chatService,
+            view: view,
+            coordinator: coordinator
+        )
+        chatService.setDelegate(presenter)
+        view.presenter = presenter
+        return view
+    }()
+    
     // MARK: Init
     
     init(
@@ -67,12 +80,14 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         authStorage: ISessionStorage,
         sessionProvider: ISessionProvider,
         actionsService: IActionsService,
+        chatService: IChatService,
         coordinator: ICoordinator
     ) {
         self.endpointStorage = endpointStorage
         self.authStorage = authStorage
         self.sessionProvider = sessionProvider
         self.actionsService = actionsService
+        self.chatService = chatService
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
@@ -117,6 +132,15 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
             actionsCameraView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
             actionsCameraView.widthAnchor.constraint(equalToConstant: 150),
             actionsCameraView.heightAnchor.constraint(equalToConstant: 150)
+        ])
+        
+        view.addSubview(chatView)
+        chatView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            chatView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
+            chatView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+            chatView.bottomAnchor.constraint(equalTo: connectButton.topAnchor, constant: -8),
+            chatView.heightAnchor.constraint(equalToConstant: 300)
         ])
     }
     

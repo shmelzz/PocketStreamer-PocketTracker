@@ -72,7 +72,8 @@ final class ServicesAssembly: IServicesAssembly {
     lazy var chatService: IChatService = {
         ChatService(
             endpointProvider: endpointProvider,
-            requestBuilder: RequestBuilder(sessionProvider: sessionProvider)
+            requestBuilder: RequestBuilder(sessionProvider: sessionProvider),
+            sessionProvider: sessionProvider
         )
     }()
 }
