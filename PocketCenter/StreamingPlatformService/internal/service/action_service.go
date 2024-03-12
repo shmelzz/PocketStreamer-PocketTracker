@@ -39,7 +39,7 @@ func parseCommandPayload(message model.LiveChatMessage) model.PocketAction {
 			Payload: "",
 		} // Return empty strings if the input is not a command
 	}
-
+	input = strings.TrimLeft(input, "!")
 	// Split the string into command and payload
 	parts := strings.SplitN(input, " ", 2)
 	command := parts[0]
