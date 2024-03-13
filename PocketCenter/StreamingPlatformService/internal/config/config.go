@@ -9,6 +9,11 @@ type GoogleSecret struct {
 	ClientSecret    string
 }
 
+type TwitchConfig struct {
+	ClientId     string
+	ClientSecret string
+}
+
 type Config struct {
 	ServerAddress       string
 	Port                string
@@ -16,6 +21,7 @@ type Config struct {
 	GoogleSecret        GoogleSecret
 	AppEnv              string
 	PocketActionAddress string
+	TwitchConfig        TwitchConfig
 }
 
 func loadGoogleSecrets() (*GoogleSecret, error) {
@@ -24,6 +30,15 @@ func loadGoogleSecrets() (*GoogleSecret, error) {
 	return &GoogleSecret{
 		OathRedirectUrl: oathRedirectUrl,
 		ClientSecret:    clientSecret,
+	}, nil
+}
+
+func loadTwitchConfig() (*TwitchConfig, error) {
+	clientId := os.Getenv("TWITCH_CLIENT_ID")
+	clientSecret := os.Getenv("TWTICH_CLIENT_SECRET")
+	return &TwitchConfig{
+		ClientId:     clientId,
+		ClientSecret: clientSecret,
 	}, nil
 }
 
@@ -41,6 +56,8 @@ func LoadConfig() (*Config, error) {
 
 	googleSecret, err := loadGoogleSecrets()
 
+	twitchConfig, err := loadTwitchConfig()
+
 	return &Config{
 		ServerAddress:       serverAddress,
 		Port:                port,
@@ -48,5 +65,6 @@ func LoadConfig() (*Config, error) {
 		GoogleSecret:        *googleSecret,
 		AppEnv:              env,
 		PocketActionAddress: pocketActionAddress,
+		TwitchConfig:        *twitchConfig,
 	}, err
 }

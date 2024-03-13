@@ -14,29 +14,86 @@ import (
 	"google.golang.org/api/youtube/v3"
 )
 
-type GoogleOAuthHandler struct {
+type OAuthHandler struct {
 	userAuthAddress  string
 	youtubeService   *ytbot.YoutubeService
 	broadcastService *service.BroadcastService
 	actionService    *service.PocketActionService
+	twitchService    *twitchbot.TwichService
 }
 
-func NewGoogleOAuthHandler(
+func NewOAuthHandler(
 	userAuthAddress string,
 	youtubeService *ytbot.YoutubeService,
 	broadcastService *service.BroadcastService,
 	actionService *service.PocketActionService,
-) *GoogleOAuthHandler {
-	return &GoogleOAuthHandler{
+	twitchService *twitchbot.TwichService,
+) *OAuthHandler {
+	return &OAuthHandler{
 		userAuthAddress:  userAuthAddress,
 		youtubeService:   youtubeService,
 		broadcastService: broadcastService,
 		actionService:    actionService,
+		twitchService:    twitchService,
 	}
 }
 
-// Login godoc
-// @Summary Login use oath
+// Twitch Channel validation godoc
+// @Summary Twitch Channel validation
+// @Description Twitch Channel validation
+// @Tags twitch
+// @Accept json
+// @Produce json
+// @Param Authentication header string true "Authentication"
+// @Param SessionId header string true "SessionId"
+// @Param channel body model.TwitchChannelValidationRequest true "Channel info"
+// @Success 200 {object} model.TwitchChannelValidationResponse
+// @Failure 404 "Not Found"
+// @Router /twitch/channel-validation [post]
+func (g *OAuthHandler) ValidateTwitchChannel(c *gin.Context) {
+	token := c.Request.Header.Get("Authentication")
+	ok, err := g.validateToken(token)
+	if err != nil {
+		zap.S().Errorf(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Error when try to validate"})
+		return
+	}
+	if !ok {
+		zap.S().Infof("Validation not passed")
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Validation not passed"})
+		return
+	}
+
+	twitchToken, err := g.twitchService.GetTwitchClientToken()
+	var reqBody model.TwitchChannelValidationRequest
+	if err := c.ShouldBindJSON(&reqBody); err != nil {
+		zap.Error(err)
+		c.JSON(http.StatusInternalServerError, nil)
+		return
+	}
+
+	id, err := g.twitchService.GetTwitchUserId(twitchToken, reqBody.Channel)
+	if err != nil {
+		zap.S().Errorf(err.Error())
+		c.JSON(http.StatusNotFound, nil)
+		return
+	}
+
+	found, err := g.twitchService.GetTwitchChannelIsLive(twitchToken, id)
+
+	if err != nil {
+		zap.S().Errorf(err.Error())
+		c.JSON(http.StatusNotFound, nil)
+		return
+	}
+
+	c.JSON(http.StatusOK, model.TwitchChannelValidationResponse{
+		IsLive: found,
+	})
+}
+
+// Google Login godoc
+// @Summary Google Login use oath
 // @Description Login, get url to login in google account
 // @Tags login
 // @Accept json
@@ -47,7 +104,7 @@ func NewGoogleOAuthHandler(
 // @Success 200 "Ok"
 // @Failure 404 "Not Found"
 // @Router /google/login [get]
-func (g *GoogleOAuthHandler) Login(c *gin.Context) {
+func (g *OAuthHandler) Login(c *gin.Context) {
 	token := c.Request.Header.Get("Authentication")
 	streamId := c.Request.Header.Get("StreamId")
 	ok, err := g.validateToken(token)
@@ -90,9 +147,8 @@ func (g *GoogleOAuthHandler) Login(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"oauth_url": url})
 }
 
-func (g *GoogleOAuthHandler) validateToken(token string) (bool, error) {
+func (g *OAuthHandler) validateToken(token string) (bool, error) {
 	// Create a new request to the userauthsessionservice
-	zap.S().Debug(g.userAuthAddress + "/auth/validate")
 	req, err := http.NewRequest("POST", g.userAuthAddress+"/auth/validate", nil)
 	if err != nil {
 		return false, err
@@ -119,7 +175,7 @@ func (g *GoogleOAuthHandler) validateToken(token string) (bool, error) {
 }
 
 // Websocket connect handler
-func (g *GoogleOAuthHandler) HandleReceiver(c *gin.Context) {
+func (g *OAuthHandler) HandleReceiver(c *gin.Context) {
 	r := c.Request
 	w := c.Writer
 	token := r.Header.Get("Authentication")
@@ -149,7 +205,7 @@ func (g *GoogleOAuthHandler) HandleReceiver(c *gin.Context) {
 		channelName := r.Header.Get("Channel")
 		messagesCh := make(chan model.LiveChatMessage)
 		go func() {
-			twitchbot.ConnectToTwitch(messagesCh, channelName)
+			g.twitchService.ConnectToTwitchChat(messagesCh, channelName)
 		}()
 		go func() {
 			for {

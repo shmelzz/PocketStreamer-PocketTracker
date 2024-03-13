@@ -27,7 +27,7 @@ const docTemplate = `{
                 "tags": [
                     "login"
                 ],
-                "summary": "Login use oath",
+                "summary": "Google Login use oath",
                 "parameters": [
                     {
                         "type": "string",
@@ -58,6 +58,75 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found"
                     }
+                }
+            }
+        },
+        "/twitch/channel-validation": {
+            "post": {
+                "description": "Twitch Channel validation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "twitch"
+                ],
+                "summary": "Twitch Channel validation",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication",
+                        "name": "Authentication",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "SessionId",
+                        "name": "SessionId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Channel info",
+                        "name": "channel",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.TwitchChannelValidationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.TwitchChannelValidationResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.TwitchChannelValidationRequest": {
+            "type": "object",
+            "properties": {
+                "channel": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.TwitchChannelValidationResponse": {
+            "type": "object",
+            "properties": {
+                "is_live": {
+                    "type": "boolean"
                 }
             }
         }

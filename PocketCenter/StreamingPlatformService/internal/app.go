@@ -8,6 +8,7 @@ import (
 	"streamingservice/internal/router"
 	"streamingservice/internal/service"
 
+	twitchbot "streamingservice/internal/service/twitch"
 	ytbot "streamingservice/internal/service/youtube"
 
 	_ "streamingservice/internal/docs"
@@ -29,10 +30,17 @@ func NewApp(cfg *config.Config) *App {
 		zap.ReplaceGlobals(zap.Must(zap.NewProduction()))
 	}
 	// Set up the router and routes.
+	twitchService := twitchbot.NewTwichService(cfg.TwitchConfig)
 	pocketActionService := service.NewPocketActionService(cfg.PocketActionAddress)
 	youtubeService := ytbot.NewYoutubeService(*cfg)
 	broadcastService := service.NewBroadcastService()
-	googleOathHandler := handlers.NewGoogleOAuthHandler(cfg.UserAuthAddress, youtubeService, broadcastService, pocketActionService)
+	googleOathHandler := handlers.NewOAuthHandler(
+		cfg.UserAuthAddress,
+		youtubeService,
+		broadcastService,
+		pocketActionService,
+		twitchService,
+	)
 
 	engine := router.InitRoutes(googleOathHandler)
 	return &App{

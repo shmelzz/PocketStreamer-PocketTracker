@@ -9,11 +9,16 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-func InitRoutes(handler *handlers.GoogleOAuthHandler) *gin.Engine {
+func InitRoutes(handler *handlers.OAuthHandler) *gin.Engine {
 	r := gin.Default()
-	apiRoutes := r.Group("/google")
+	googleApiRoutes := r.Group("/google")
 	{
-		apiRoutes.GET("/login", handler.Login)
+		googleApiRoutes.GET("/login", handler.Login)
+	}
+
+	twitchApiRoutes := r.Group("/twitch")
+	{
+		twitchApiRoutes.POST("channel-validation", handler.ValidateTwitchChannel)
 	}
 	r.GET("/message-trackered", handler.HandleReceiver)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
