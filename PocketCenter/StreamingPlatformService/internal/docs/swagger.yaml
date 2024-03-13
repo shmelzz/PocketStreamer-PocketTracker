@@ -1,0 +1,80 @@
+definitions:
+  model.TwitchChannelValidationRequest:
+    properties:
+      channel:
+        type: string
+    type: object
+  model.TwitchChannelValidationResponse:
+    properties:
+      is_live:
+        type: boolean
+    type: object
+info:
+  contact: {}
+paths:
+  /google/login:
+    get:
+      consumes:
+      - application/json
+      description: Login, get url to login in google account
+      parameters:
+      - description: Authentication
+        in: header
+        name: Authentication
+        required: true
+        type: string
+      - description: SessionId
+        in: header
+        name: SessionId
+        required: true
+        type: string
+      - description: StreamId
+        in: header
+        name: StreamId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ok
+        "404":
+          description: Not Found
+      summary: Google Login use oath
+      tags:
+      - login
+  /twitch/channel-validation:
+    post:
+      consumes:
+      - application/json
+      description: Twitch Channel validation
+      parameters:
+      - description: Authentication
+        in: header
+        name: Authentication
+        required: true
+        type: string
+      - description: SessionId
+        in: header
+        name: SessionId
+        required: true
+        type: string
+      - description: Channel info
+        in: body
+        name: channel
+        required: true
+        schema:
+          $ref: '#/definitions/model.TwitchChannelValidationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TwitchChannelValidationResponse'
+        "404":
+          description: Not Found
+      summary: Twitch Channel validation
+      tags:
+      - twitch
+swagger: "2.0"

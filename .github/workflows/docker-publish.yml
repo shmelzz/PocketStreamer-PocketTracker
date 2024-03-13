@@ -13,6 +13,7 @@ env:
   FACEBODY_IMAGE_NAME: facebody
   USERAUTH_IMAGE_NAME: userauth
   POCKETACTION_IMAGE_NAME: pocketaction
+  STREAMING_IMAGE_NAME: streaming
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}${{ github.sha }}
 
 jobs:
@@ -28,7 +29,8 @@ jobs:
           [
             { name: FaceBodyFeatureService, tag: facebody },
             { name: UserAuthSessionService, tag: userauth },
-            { name: PocketActionService, tag: pocketaction }
+            { name: PocketActionService, tag: pocketaction },
+            { name: StreamingPlatformService, tag: streaming }
           ]
     steps:
       - name: Checkout repository
@@ -71,8 +73,11 @@ jobs:
           POCKETACTION_IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.POCKETACTION_IMAGE_NAME }}:${{ env.BRANCH_NAME }}
           FACEBODY_IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.FACEBODY_IMAGE_NAME }}:${{ env.BRANCH_NAME }}
           USERAUTH_IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.USERAUTH_IMAGE_NAME }}:${{ env.BRANCH_NAME }}
+          STREAMING_IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.STREAMING_IMAGE_NAME }}:${{ env.BRANCH_NAME }}
           YC_VM_USERNAME: ${{ vars.YC_VM_USERNAME }}
           YC_VM_SSH: ${{ vars.YC_VM_SSH }}
+          TWITCH_CLIENT_ID : ${{ secrets.TWITCH_CLIENT_ID }}
+          TWITCH_CLIENT_SECRET : ${{ secrets.TWITCH_CLIENT_SECRET }}
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           folder-id: ${{ secrets.YC_FOLDER_ID }}
