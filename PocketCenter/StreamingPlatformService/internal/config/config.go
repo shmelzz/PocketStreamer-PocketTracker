@@ -35,7 +35,7 @@ func loadGoogleSecrets() (*GoogleSecret, error) {
 
 func loadTwitchConfig() (*TwitchConfig, error) {
 	clientId := os.Getenv("TWITCH_CLIENT_ID")
-	clientSecret := os.Getenv("TWTICH_CLIENT_SECRET")
+	clientSecret := os.Getenv("TWITCH_CLIENT_SECRET")
 	return &TwitchConfig{
 		ClientId:     clientId,
 		ClientSecret: clientSecret,
