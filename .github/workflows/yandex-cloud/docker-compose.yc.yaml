@@ -40,6 +40,7 @@ services:
       - SERVER_PORT=9091
       - USER_AUTH_ADDRESS=http://auth_service:8088
       - APP_ENV="production"
+      - APPWRITE_API_KEY={{ env.APPWRITE_API_KEY }}
     restart: always     
   
   streaming: 

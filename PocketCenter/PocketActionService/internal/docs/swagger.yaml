@@ -1,4 +1,13 @@
 definitions:
+  model.Action:
+    properties:
+      displayName:
+        type: string
+      payload:
+        type: string
+      type:
+        type: string
+    type: object
   model.PocketAction:
     properties:
       payload:
@@ -6,9 +15,44 @@ definitions:
       type:
         type: string
     type: object
+  model.PocketActionDocument:
+    properties:
+      actions:
+        items:
+          $ref: '#/definitions/model.Action'
+        type: array
+    type: object
 info:
   contact: {}
 paths:
+  /document:
+    get:
+      consumes:
+      - application/json
+      description: Get global PocketAction document
+      parameters:
+      - description: Authentication
+        in: header
+        name: Authentication
+        required: true
+        type: string
+      - description: SessionId
+        in: header
+        name: SessionId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: PocketAction document
+          schema:
+            $ref: '#/definitions/model.PocketActionDocument'
+        "404":
+          description: Not Found
+      summary: Get global PocketAction document
+      tags:
+      - action
   /pocketaction:
     post:
       consumes:
@@ -40,5 +84,5 @@ paths:
           description: Not Found
       summary: Trigger PocketAction
       tags:
-      - session
+      - action
 swagger: "2.0"

@@ -1,0 +1,19 @@
+{
+  "actions": [
+    {
+      "displayName": "Camera 0",
+      "type": "camera",
+      "payload": "0"
+    },
+    {
+      "displayName": "Camera 1",
+      "type": "camera",
+      "payload": "1"
+    },
+    {
+      "displayName": "Start Rain",
+      "type": "startrain",
+      "payload": "-"
+    }
+  ]
+}

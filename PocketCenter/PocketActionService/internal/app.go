@@ -5,6 +5,7 @@ import (
 	"pocketaction/internal/config"
 	"pocketaction/internal/docs"
 	"pocketaction/internal/handlers"
+	"pocketaction/internal/repository"
 	"pocketaction/internal/router"
 	"pocketaction/internal/service"
 
@@ -26,8 +27,10 @@ func NewApp(cfg *config.Config) *App {
 	}
 
 	docs.SwaggerInfo.BasePath = "/action"
-	service := service.NewBroadcastService()
-	handler := handlers.NewPocketActionHandler(service, cfg.UserAuthAddress)
+	broadcastService := service.NewBroadcastService()
+	documentRepository := repository.NewAppwriteDocumentRepsitory(cfg.AppwriteAPIKey)
+	documentService := service.NewDocumentService(documentRepository)
+	handler := handlers.NewPocketActionHandler(broadcastService, documentService, cfg.UserAuthAddress)
 
 	// Set up the router and routes.
 	engine := router.InitRoutes(handler)

@@ -9,10 +9,12 @@ type Config struct {
 	Port            string
 	UserAuthAddress string
 	AppEnv          string
+	AppwriteAPIKey  string
 }
 
 func LoadConfig() (*Config, error) {
 	appEnv := os.Getenv("APP_ENV")
+	appwrite := os.Getenv("APPWRITE_API_KEY")
 	serverAddress := os.Getenv("SERVER_ADDRESS")
 	port := os.Getenv("SERVER_PORT")
 	userAuthAddress := os.Getenv("USER_AUTH_ADDRESS")
@@ -25,5 +27,6 @@ func LoadConfig() (*Config, error) {
 		Port:            port,
 		UserAuthAddress: userAuthAddress,
 		AppEnv:          appEnv,
+		AppwriteAPIKey:  appwrite,
 	}, nil
 }

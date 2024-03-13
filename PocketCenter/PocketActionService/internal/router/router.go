@@ -17,6 +17,7 @@ func InitRoutes(handler *handlers.PocketActionHandler) *gin.Engine {
 		// Route for getting drivers within a radius
 		apiRoutes.POST("/pocketaction", handler.HandlePocketAction)
 		apiRoutes.GET("/version", handler.HandleVersion)
+		apiRoutes.GET("/document", handler.HandlePocketActionDocument)
 
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

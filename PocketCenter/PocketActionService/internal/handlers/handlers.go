@@ -12,23 +12,26 @@ import (
 
 type PocketActionHandler struct {
 	broadcastService *service.BroadcastService
+	documentService  *service.DocumentService
 	userAuthAddress  string
 }
 
 func NewPocketActionHandler(
 	broadcastService *service.BroadcastService,
+	documentService *service.DocumentService,
 	userAuthAddress string,
 ) *PocketActionHandler {
 	return &PocketActionHandler{
 		broadcastService: broadcastService,
 		userAuthAddress:  userAuthAddress,
+		documentService:  documentService,
 	}
 }
 
 // PocketAction godoc
 // @Summary Trigger PocketAction
 // @Description Trigger Action, send to Composer use websocket
-// @Tags session
+// @Tags action
 // @Accept json
 // @Produce json
 // @Param Authentication header string true "Authentication"
@@ -71,6 +74,38 @@ func (p *PocketActionHandler) HandlePocketAction(c *gin.Context) {
 	zap.S().Infow("Pocket action handled successfully",
 		zap.String("type", pocketAction.Type),
 		zap.String("payload", pocketAction.Payload))
+}
+
+// PocketAction document godoc
+// @Summary Get global PocketAction document
+// @Description Get global PocketAction document
+// @Tags action
+// @Accept json
+// @Produce json
+// @Param Authentication header string true "Authentication"
+// @Param SessionId header string true "SessionId"
+// @Success 200 {object} model.PocketActionDocument "PocketAction document"
+// @Failure 404 "Not Found"
+// @Router /document [get]
+func (p *PocketActionHandler) HandlePocketActionDocument(c *gin.Context) {
+	token := c.Request.Header.Get("Authentication")
+	ok, err := p.validateToken(token)
+	if err != nil {
+		zap.S().Errorf(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Error when try to validate"})
+		return
+	}
+	if !ok {
+		zap.S().Infof("Validation not passed")
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Validation not passed"})
+		return
+	}
+	document, err := p.documentService.GetActionDocument()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Cant parse actions"})
+		return
+	}
+	c.JSON(http.StatusOK, document)
 }
 
 func (p *PocketActionHandler) HandleVersion(c *gin.Context) {
