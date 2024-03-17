@@ -152,6 +152,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
             chatView.bottomAnchor.constraint(equalTo: connectButton.topAnchor, constant: -8),
             chatView.heightAnchor.constraint(equalToConstant: 300)
         ])
+        chatView.presenter?.onViewReady()
     }
     
     @objc

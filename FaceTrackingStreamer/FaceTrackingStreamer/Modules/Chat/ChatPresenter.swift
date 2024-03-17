@@ -39,6 +39,10 @@ final class ChatPresenter: BaseModuleOutput, IChatPresenter, IChatServiceDelegat
         chatService.connect(model: StreamModel(platform: "twitch", channel: platformName ?? ""))
     }
     
+    func onViewReady() {
+        view?.setFollowButton(isHidden: platformManager.getSelectedPlatform() == nil)
+    }
+    
     func onLongPress() {
         finish(.onLongPress)
     }
