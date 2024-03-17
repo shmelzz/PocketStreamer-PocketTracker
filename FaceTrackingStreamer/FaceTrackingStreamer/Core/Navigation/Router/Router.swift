@@ -91,7 +91,7 @@ final class Router: IRouter {
         }
     }
     
-    func presentAlert(with text: String) {
+    func presentOKAlert(with text: String) {
         let alert = UIAlertController(
             title: "Info",
             message: text,
@@ -106,6 +106,32 @@ final class Router: IRouter {
         })
         
         alert.addAction(alertOKAction)
+        rootController?.present(alert, animated: true)
+    }
+    
+    func presentRetryAlert(with text: String, nextModule: any IModule) {
+        let alert = UIAlertController(
+            title: "Error",
+            message: text,
+            preferredStyle: .alert
+        )
+        
+        let alertContinueAction = UIAlertAction(
+            title:"Continue",
+            style: .default,
+            handler: { [weak self] _ in
+                self?.push(nextModule, animated: true)
+        })
+        
+        let alertRetryAction = UIAlertAction(
+            title:"Retry",
+            style: .default,
+            handler: { [weak self] _ in
+                self?.rootController?.dismiss(animated: true)
+        })
+
+        alert.addAction(alertRetryAction)
+        alert.addAction(alertContinueAction)
         rootController?.present(alert, animated: true)
     }
     

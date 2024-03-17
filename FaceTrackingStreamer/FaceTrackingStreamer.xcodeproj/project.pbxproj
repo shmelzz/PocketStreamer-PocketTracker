@@ -77,6 +77,8 @@
 		CCB26BB92B9F9BA100B7B9A0 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BB82B9F9BA100B7B9A0 /* ConfigurableView.swift */; };
 		CCB26BBC2B9F9E9F00B7B9A0 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BBB2B9F9E9F00B7B9A0 /* MessageCell.swift */; };
 		CCB26BBF2BA09C7E00B7B9A0 /* PlatformManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BBE2BA09C7E00B7B9A0 /* PlatformManager.swift */; };
+		CCB26BC12BA748B000B7B9A0 /* ChannelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BC02BA748B000B7B9A0 /* ChannelService.swift */; };
+		CCB26BC42BA748FE00B7B9A0 /* ChannelValidationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BC32BA748FE00B7B9A0 /* ChannelValidationRequest.swift */; };
 		CCB800AE2B8287D7003F9AD2 /* SessionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800AD2B8287D7003F9AD2 /* SessionStorage.swift */; };
 		CCB800B02B829F85003F9AD2 /* AuthModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800AF2B829F85003F9AD2 /* AuthModuleAssembly.swift */; };
 		CCB800B32B84ED6A003F9AD2 /* IRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800B22B84ED6A003F9AD2 /* IRequest.swift */; };
@@ -173,6 +175,8 @@
 		CCB26BB82B9F9BA100B7B9A0 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
 		CCB26BBB2B9F9E9F00B7B9A0 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		CCB26BBE2BA09C7E00B7B9A0 /* PlatformManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformManager.swift; sourceTree = "<group>"; };
+		CCB26BC02BA748B000B7B9A0 /* ChannelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelService.swift; sourceTree = "<group>"; };
+		CCB26BC32BA748FE00B7B9A0 /* ChannelValidationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelValidationRequest.swift; sourceTree = "<group>"; };
 		CCB800AD2B8287D7003F9AD2 /* SessionStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStorage.swift; sourceTree = "<group>"; };
 		CCB800AF2B829F85003F9AD2 /* AuthModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModuleAssembly.swift; sourceTree = "<group>"; };
 		CCB800B22B84ED6A003F9AD2 /* IRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequest.swift; sourceTree = "<group>"; };
@@ -587,9 +591,19 @@
 		CCB26BBD2BA09C6300B7B9A0 /* Platform */ = {
 			isa = PBXGroup;
 			children = (
+				CCB26BC22BA748E300B7B9A0 /* Twitch */,
 				CCB26BBE2BA09C7E00B7B9A0 /* PlatformManager.swift */,
 			);
 			path = Platform;
+			sourceTree = "<group>";
+		};
+		CCB26BC22BA748E300B7B9A0 /* Twitch */ = {
+			isa = PBXGroup;
+			children = (
+				CCB26BC02BA748B000B7B9A0 /* ChannelService.swift */,
+				CCB26BC32BA748FE00B7B9A0 /* ChannelValidationRequest.swift */,
+			);
+			path = Twitch;
 			sourceTree = "<group>";
 		};
 		CCB800B12B84ED4A003F9AD2 /* Networking */ = {
@@ -800,6 +814,7 @@
 				CCB26B852B9C55A700B7B9A0 /* ConnectViewController.swift in Sources */,
 				CCB26B932B9DC22100B7B9A0 /* ChatPresenter.swift in Sources */,
 				CCB26BAF2B9DF49D00B7B9A0 /* ActionsContract.swift in Sources */,
+				CCB26BC42BA748FE00B7B9A0 /* ChannelValidationRequest.swift in Sources */,
 				CC3718142B874E8C0069D978 /* StartStreamPresenter.swift in Sources */,
 				CCB26BB92B9F9BA100B7B9A0 /* ConfigurableView.swift in Sources */,
 				CC3718122B874E6D0069D978 /* StartStreamContract.swift in Sources */,
@@ -810,6 +825,7 @@
 				CC3718052B86739A0069D978 /* ModulesAssembly.swift in Sources */,
 				CC85ADA82B71918C00C91BFD /* AuthService.swift in Sources */,
 				CC3718102B874C2E0069D978 /* IWebSocketRequest.swift in Sources */,
+				CCB26BC12BA748B000B7B9A0 /* ChannelService.swift in Sources */,
 				CCB26BA42B9DEC4700B7B9A0 /* SelectPlatformPresenter.swift in Sources */,
 				CCB26B9C2B9DC84300B7B9A0 /* FindComposerService.swift in Sources */,
 				CCB800DA2B865704003F9AD2 /* BaseModuleAssembly.swift in Sources */,

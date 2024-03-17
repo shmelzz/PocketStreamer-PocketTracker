@@ -41,25 +41,52 @@ final class MainFlowCoordinator: BaseCoordinator {
     
     override func onNext(_ action: CoordinatorAction) {
         switch action {
+            
+        // Start
+            
         case .startModuleOnFaceTapped:
             let module = faceTrackingModuleAssembly.assemble(for: self)
             router.push(module, animated: true)
+            
         case .startModuleOnBodyTapped:
             break
+            
         case .onLongPress:
             let module = debugMenuModuleAssembly.assemble(for: self)
             router.present(module, animated: true)
+            
+        // Connect
+            
         case .connectModuleSuccess:
             let module = selectPlatformModuleAssembly.assemble(for: self)
             router.push(module, animated: true)
+            
         case .connectModuleOnLogout:
             onFinish?()
+            
         case let .connectModuleFailure(text):
-            router.presentAlert(with: text ?? "")
-        case .selectPlatformContinue:
+            router.presentOKAlert(with: text ?? "")
+            
+        // Select
+            
+        case .selectPlatformContinue(let isLive):
             let module = startModuleAssembly.assemble(for: self)
             router.push(module, animated: true)
-        default:
+            if !isLive {
+                router.presentOKAlert(
+                    with: "Channel isn't live. Start stream if you want to follow chat"
+                )
+            }
+            
+        case .selectPlatformValidationError:
+            let module = startModuleAssembly.assemble(for: self)
+            router.presentRetryAlert(
+                with: "Channel validation error. Continue without channel connection?",
+                nextModule: module
+            )
+            
+            
+        case .loginDidSuccessed:
             break
         }
     }

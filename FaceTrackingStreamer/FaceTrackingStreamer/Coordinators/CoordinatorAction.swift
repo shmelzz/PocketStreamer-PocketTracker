@@ -14,7 +14,8 @@ enum CoordinatorAction {
     case connectModuleFailure(text: String?)
     case connectModuleOnLogout
     
-    case selectPlatformContinue
+    case selectPlatformContinue(isLiveChannel: Bool)
+    case selectPlatformValidationError
     
     case startModuleOnFaceTapped
     case startModuleOnBodyTapped

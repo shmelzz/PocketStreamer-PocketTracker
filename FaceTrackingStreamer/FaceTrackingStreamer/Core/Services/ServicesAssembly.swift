@@ -26,6 +26,8 @@ protocol IServicesAssembly: AnyObject {
     var platformManager: IPlatformManager { get }
     
     var endpointProvider: IEndpointProvider { get }
+    
+    var channelService: IChannelService { get }
 }
 
 final class ServicesAssembly: IServicesAssembly {
@@ -87,5 +89,13 @@ final class ServicesAssembly: IServicesAssembly {
     
     lazy var endpointProvider: IEndpointProvider = {
         _endpointProvider
+    }()
+    
+    lazy var channelService: IChannelService = {
+        ChannelService(
+            requestManager: requestManager,
+            endpointProvider: endpointProvider,
+            sessionProvider: sessionProvider
+        )
     }()
 }
