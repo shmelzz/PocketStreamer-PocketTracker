@@ -8,7 +8,7 @@
 import Foundation
 
 protocol IActionsPresenter {
-    func onActionTapped(_ actionModel: ActionModel)
+    func onActionTapped(_ actionModel: ActionRequestModel)
     func onLongPress()
 }
 

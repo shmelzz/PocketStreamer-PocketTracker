@@ -79,6 +79,7 @@
 		CCB26BBF2BA09C7E00B7B9A0 /* PlatformManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BBE2BA09C7E00B7B9A0 /* PlatformManager.swift */; };
 		CCB26BC12BA748B000B7B9A0 /* ChannelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BC02BA748B000B7B9A0 /* ChannelService.swift */; };
 		CCB26BC42BA748FE00B7B9A0 /* ChannelValidationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BC32BA748FE00B7B9A0 /* ChannelValidationRequest.swift */; };
+		CCB26BC62BA75D1800B7B9A0 /* ActionsListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BC52BA75D1800B7B9A0 /* ActionsListRequest.swift */; };
 		CCB800AE2B8287D7003F9AD2 /* SessionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800AD2B8287D7003F9AD2 /* SessionStorage.swift */; };
 		CCB800B02B829F85003F9AD2 /* AuthModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800AF2B829F85003F9AD2 /* AuthModuleAssembly.swift */; };
 		CCB800B32B84ED6A003F9AD2 /* IRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800B22B84ED6A003F9AD2 /* IRequest.swift */; };
@@ -177,6 +178,7 @@
 		CCB26BBE2BA09C7E00B7B9A0 /* PlatformManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformManager.swift; sourceTree = "<group>"; };
 		CCB26BC02BA748B000B7B9A0 /* ChannelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelService.swift; sourceTree = "<group>"; };
 		CCB26BC32BA748FE00B7B9A0 /* ChannelValidationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelValidationRequest.swift; sourceTree = "<group>"; };
+		CCB26BC52BA75D1800B7B9A0 /* ActionsListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsListRequest.swift; sourceTree = "<group>"; };
 		CCB800AD2B8287D7003F9AD2 /* SessionStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStorage.swift; sourceTree = "<group>"; };
 		CCB800AF2B829F85003F9AD2 /* AuthModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModuleAssembly.swift; sourceTree = "<group>"; };
 		CCB800B22B84ED6A003F9AD2 /* IRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequest.swift; sourceTree = "<group>"; };
@@ -566,7 +568,7 @@
 		CCB26BB22B9DF5A400B7B9A0 /* Actions */ = {
 			isa = PBXGroup;
 			children = (
-				CCB26BB52B9DFA2700B7B9A0 /* ActionRequest.swift */,
+				CCB26BC72BA75D1E00B7B9A0 /* Models */,
 				CCB26BB32B9DF84300B7B9A0 /* ActionsService.swift */,
 			);
 			path = Actions;
@@ -604,6 +606,15 @@
 				CCB26BC32BA748FE00B7B9A0 /* ChannelValidationRequest.swift */,
 			);
 			path = Twitch;
+			sourceTree = "<group>";
+		};
+		CCB26BC72BA75D1E00B7B9A0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CCB26BB52B9DFA2700B7B9A0 /* ActionRequest.swift */,
+				CCB26BC52BA75D1800B7B9A0 /* ActionsListRequest.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		CCB800B12B84ED4A003F9AD2 /* Networking */ = {
@@ -815,6 +826,7 @@
 				CCB26B932B9DC22100B7B9A0 /* ChatPresenter.swift in Sources */,
 				CCB26BAF2B9DF49D00B7B9A0 /* ActionsContract.swift in Sources */,
 				CCB26BC42BA748FE00B7B9A0 /* ChannelValidationRequest.swift in Sources */,
+				CCB26BC62BA75D1800B7B9A0 /* ActionsListRequest.swift in Sources */,
 				CC3718142B874E8C0069D978 /* StartStreamPresenter.swift in Sources */,
 				CCB26BB92B9F9BA100B7B9A0 /* ConfigurableView.swift in Sources */,
 				CC3718122B874E6D0069D978 /* StartStreamContract.swift in Sources */,

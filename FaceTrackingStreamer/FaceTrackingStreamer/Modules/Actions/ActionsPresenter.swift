@@ -23,7 +23,7 @@ final class ActionsPresenter: BaseModuleOutput, IActionsPresenter {
         super.init(coordinator: coordinator)
     }
     
-    func onActionTapped(_ actionModel: ActionModel) {
+    func onActionTapped(_ actionModel: ActionRequestModel) {
         actionsService.send(action: actionModel) { [weak self] result in
             switch result {
             case .success(let success):
