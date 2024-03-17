@@ -102,6 +102,8 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        
         setupSceneView()
         setupARFaceTracking()
         setupView()

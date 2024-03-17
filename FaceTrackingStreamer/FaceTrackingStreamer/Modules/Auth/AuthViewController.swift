@@ -52,6 +52,8 @@ final class AuthViewController: UIViewController, IAuthView, UITextFieldDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        
         setupView()
         view.isUserInteractionEnabled = true
         
