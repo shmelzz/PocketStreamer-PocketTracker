@@ -6,6 +6,7 @@ import Starscream
 final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     
     private let endpointStorage: IApiEndpointStorage
+    private let endpointProvider: IEndpointProvider
     private let authStorage: ISessionStorage
     private let sessionProvider: ISessionProvider
     private let actionsService: IActionsService
@@ -24,6 +25,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         endpointStorage: endpointStorage,
         authStorage: authStorage,
         sessionProvider: sessionProvider,
+        endpointProvider: endpointProvider,
         view: vc,
         coordinator: coordinator
     )
@@ -84,6 +86,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         actionsService: IActionsService,
         chatService: IChatService,
         platformManager: IPlatformManager,
+        endpointProvider: IEndpointProvider,
         coordinator: ICoordinator
     ) {
         self.endpointStorage = endpointStorage
@@ -92,6 +95,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         self.actionsService = actionsService
         self.chatService = chatService
         self.platformManager = platformManager
+        self.endpointProvider = endpointProvider
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
@@ -163,13 +167,16 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     
     @objc
     private func onConnectTapped() {
-        guard let envs = endpointStorage.get() else { return }
-        let endpoint = envs.environments.first(where: { $0.isSelected })
+//        guard let envs = endpointStorage.get() else { return }
+//        let endpoint = envs.environments.first(where: { $0.isSelected })
+//        
+//        guard let urlAddress = endpoint?.endpoint.endpoint
+//        else { return }
+//        
+//        let address = "ws://\(urlAddress):4545/facetracking"
         
-        guard let urlAddress = endpoint?.endpoint.endpoint
-        else { return }
-        
-        let address = "ws://\(urlAddress):4545/facetracking"
+        let endpoint = endpointProvider.faceTrackingEndpoint()
+        let address = "ws://\(endpoint)/facetracking"
         
         self.setupWebSocketConnection(url: address)
     }

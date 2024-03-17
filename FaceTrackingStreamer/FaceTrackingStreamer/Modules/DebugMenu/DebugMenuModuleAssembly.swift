@@ -12,6 +12,7 @@ final class DebugMenuModuleAssembly: BaseModuleAssembly, IDebugMenuModuleAssembl
             endpointStorage: servicesAssembly.endpointStorage,
             authStorage: servicesAssembly.sessionStorage,
             sessionProvider: servicesAssembly.sessionProvider,
+            endpointProvider: servicesAssembly.endpointProvider,
             view: view,
             coordinator: coordinator
         )

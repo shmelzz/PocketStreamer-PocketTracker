@@ -8,6 +8,7 @@
 import Foundation
 
 protocol IEndpointProvider {
+    func domains() -> [EnvironmentType: String]
     func authEndpoint() -> String
     func actionEndpoint() -> String
     func faceTrackingEndpoint() -> String
@@ -23,6 +24,11 @@ final class EndpointProvider: IEndpointProvider {
         static let streamingService = 7070
     }
     
+    private enum Hosts {
+        static let prod = "center.pocket-streamer.top"
+        static let test = "test-pocketcenter.tedv2023zxcv.top"
+    }
+    
     private let apiEndpointStorage: IApiEndpointStorage
     
     init(apiEndpointStorage: IApiEndpointStorage) {
@@ -32,29 +38,63 @@ final class EndpointProvider: IEndpointProvider {
     // MARK: - IEndpointProvider
     
     func authEndpoint() -> String {
-        let host = getHost()
+        let host = getSelectedHost()
         return "\(host):\(Ports.authService)"
     }
     
     func actionEndpoint() -> String {
-        let host = getHost()
+        let host = getSelectedHost()
         return "\(host):\(Ports.actionService)"
     }
     
     func faceTrackingEndpoint() -> String {
-        let host = getHost()
+        let host = getSelectedHost()
         return "\(host):\(Ports.faceTrackingService)"
     }
     
     func streamingEndpoint() -> String {
-        let host = getHost()
+        let host = getSelectedHost()
         return "\(host):\(Ports.streamingService)"
     }
     
-    private func getHost() -> String {
+    func domains() -> [EnvironmentType: String] {
+        let data = apiEndpointStorage.get()
+        
+        let prodDomain = data?.environments.first(where: { $0.environment == .prod })
+        let testDomain = data?.environments.first(where: { $0.environment == .test })
+        
+        var prod = Hosts.prod
+        if let host = prodDomain?.endpoint.endpoint,
+           !host.isEmpty {
+            prod = host
+        }
+        
+        var test = Hosts.test
+        if let host = testDomain?.endpoint.endpoint,
+           !host.isEmpty {
+            test = host
+        }
+        
+        return [
+            .prod: prod,
+            .test: test
+        ]
+    }
+    
+    private func getSelectedHost() -> String {
         let data = apiEndpointStorage.get()
         let currentEnv = data?.environments.first(where: {$0.isSelected})
-        let host = currentEnv?.endpoint.endpoint ?? "84.201.133.103"
-        return host
+        
+        if let host = currentEnv?.endpoint.endpoint,
+           !host.isEmpty {
+            return host
+        }
+        
+        switch currentEnv?.environment {
+        case .prod:
+            return Hosts.prod
+        case .test, nil:
+            return Hosts.test
+        }
     }
 }
