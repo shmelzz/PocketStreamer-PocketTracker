@@ -24,16 +24,18 @@ protocol IServicesAssembly: AnyObject {
     var chatService: IChatService { get }
     
     var platformManager: IPlatformManager { get }
+    
+    var endpointProvider: IEndpointProvider { get }
 }
 
 final class ServicesAssembly: IServicesAssembly {
     
     private let requestManager: IRequestManager
-    private let endpointProvider: IEndpointProvider
+    private let _endpointProvider: IEndpointProvider
     
     init(requestManager: IRequestManager, endpointProvider: IEndpointProvider) {
         self.requestManager = requestManager
-        self.endpointProvider = endpointProvider
+        self._endpointProvider = endpointProvider
     }
     
     lazy var authService: IAuthService = {
@@ -81,5 +83,9 @@ final class ServicesAssembly: IServicesAssembly {
     
     lazy var platformManager: IPlatformManager  = {
         PlatformManager()
+    }()
+    
+    lazy var endpointProvider: IEndpointProvider = {
+        _endpointProvider
     }()
 }

@@ -25,6 +25,8 @@ final class BodyTrackingViewController: UIViewController, IBodyTrackingView, ARS
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        
         arView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(arView)
         NSLayoutConstraint.activate([

@@ -5,15 +5,15 @@ struct ApiEndpoint: Codable {
     let port: String
 }
 
+enum EnvironmentType: Codable {
+    case prod
+    case test
+}
+
 struct EnvironmentEndpoint: Codable {
     let environment: EnvironmentType
     let endpoint: ApiEndpoint
     let isSelected: Bool
-    
-    enum EnvironmentType: Codable {
-        case prod
-        case test
-    }
 }
 
 struct Environments: UserDefaultsStorable {

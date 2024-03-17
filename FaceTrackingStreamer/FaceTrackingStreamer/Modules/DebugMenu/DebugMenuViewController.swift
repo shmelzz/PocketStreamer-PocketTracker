@@ -112,7 +112,7 @@ final class DebugMenuViewController: UIViewController, IDebugMenuView, UITextFie
     
     @objc
     private func onButtonTapped() {
-        let selectedEnvironment: EnvironmentEndpoint.EnvironmentType = (environmentControl.selectedSegmentIndex == 0) ? .prod : .test
+        let selectedEnvironment: EnvironmentType = (environmentControl.selectedSegmentIndex == 0) ? .prod : .test
         
         let prodEndpointModel = EnvironmentEndpoint(
             environment: .prod,
