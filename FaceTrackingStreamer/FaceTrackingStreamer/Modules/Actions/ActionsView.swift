@@ -82,18 +82,18 @@ final class ActionsView: UIView, IActionsView {
     
     @objc
     private func onRotateFrontTapped() {
-        presenter?.onActionTapped(ActionModel(payload: "0", type: "camera"))
+        presenter?.onActionTapped(ActionRequestModel(payload: "0", type: "camera"))
     }
     
     @objc
     private func onRotateSideTapped() {
-        presenter?.onActionTapped(ActionModel(payload: "1", type: "camera"))
+        presenter?.onActionTapped(ActionRequestModel(payload: "1", type: "camera"))
     }
     
     @objc
     private func onRainTapped() {
         let type = rainIsRunningState ? "stoprain" : "startrain"
-        presenter?.onActionTapped(ActionModel(payload: "", type: type))
+        presenter?.onActionTapped(ActionRequestModel(payload: "", type: type))
         rainIsRunningState.toggle()
         
         if rainIsRunningState {

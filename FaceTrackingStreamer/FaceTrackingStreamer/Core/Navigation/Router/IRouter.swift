@@ -27,5 +27,6 @@ protocol IRouter {
     
     func popToRootModule(animated: Bool)
     
-    func presentAlert(with text: String)
+    func presentOKAlert(with text: String)
+    func presentRetryAlert(with text: String, nextModule: any IModule)
 }

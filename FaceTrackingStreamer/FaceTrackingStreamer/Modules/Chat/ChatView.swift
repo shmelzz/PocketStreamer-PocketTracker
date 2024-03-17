@@ -24,7 +24,7 @@ final class ChatView: UIView, IChatView, UITableViewDelegate {
     private lazy var followChatButton: UIButton = {
         let button = UIButton(configuration: .filled())
         button.setTitle(Constants.followChatText, for: .normal)
-        button.addTarget(self, action: #selector(onfollowChatTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(onFollowChatTapped), for: .touchUpInside)
         return button
     }()
     
@@ -49,6 +49,10 @@ final class ChatView: UIView, IChatView, UITableViewDelegate {
         dataSource.apply(snapshot)
         scrollToBottomMessage(snapshot.numberOfItems - 1)
         print(model.message)
+    }
+    
+    func setFollowButton(isHidden: Bool) {
+        followChatButton.isHidden = isHidden
     }
     
     // MARK: - Private
@@ -85,7 +89,7 @@ final class ChatView: UIView, IChatView, UITableViewDelegate {
     }
     
     @objc
-    private func onfollowChatTapped() {
+    private func onFollowChatTapped() {
         presenter?.onFollowChat()
         followChatButton.isHidden = true
     }

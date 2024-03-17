@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ActionModel: Encodable {
+struct ActionRequestModel: Encodable {
     let payload: String
     let type: String
 }
@@ -47,7 +47,7 @@ final class ActionRequest: CoreRequest, IJSONRequest {
     }
     
     override func httpBodyData() -> Data? {
-        let model = ActionModel(payload: payload, type: actionType)
+        let model = ActionRequestModel(payload: payload, type: actionType)
         let data = try? JSONEncoder().encode(model)
         return data
     }

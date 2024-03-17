@@ -152,6 +152,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
             chatView.bottomAnchor.constraint(equalTo: connectButton.topAnchor, constant: -8),
             chatView.heightAnchor.constraint(equalToConstant: 300)
         ])
+        chatView.presenter?.onViewReady()
     }
     
     @objc
@@ -167,14 +168,6 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     
     @objc
     private func onConnectTapped() {
-//        guard let envs = endpointStorage.get() else { return }
-//        let endpoint = envs.environments.first(where: { $0.isSelected })
-//        
-//        guard let urlAddress = endpoint?.endpoint.endpoint
-//        else { return }
-//        
-//        let address = "ws://\(urlAddress):4545/facetracking"
-        
         let endpoint = endpointProvider.faceTrackingEndpoint()
         let address = "ws://\(endpoint)/facetracking"
         
@@ -215,8 +208,6 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     private func setupWebSocketConnection(url: String) {
         var request = URLRequest(url: URL(string: url)!)
         request.setValue(sessionProvider.token, forHTTPHeaderField: "Authentication")
-        print(sessionProvider.token)
-        print(sessionProvider.sessionId)
         request.setValue(sessionProvider.sessionId, forHTTPHeaderField: "SessionId")
         request.timeoutInterval = 10
         websocket = WebSocket(request: request)

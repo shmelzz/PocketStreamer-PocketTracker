@@ -8,7 +8,8 @@
 import Foundation
 
 protocol IActionsService {
-    func send(action model: ActionModel, completion: @escaping (Result<EmptyResponse, Error>) -> Void)
+    func send(action model: ActionRequestModel, completion: @escaping (Result<EmptyResponse, Error>) -> Void)
+    func getActionsList( completion: @escaping (Result<ActionsList, Error>) -> Void)
 }
 
 final class ActionsService: IActionsService {
@@ -27,10 +28,18 @@ final class ActionsService: IActionsService {
         self.sessionProvider = sessionProvider
     }
     
-    func send(action model: ActionModel, completion: @escaping (Result<EmptyResponse, Error>) -> Void){
+    func send(action model: ActionRequestModel, completion: @escaping (Result<EmptyResponse, Error>) -> Void){
         let request = ActionRequest(
             payload: model.payload,
             type: model.type,
+            sessionId: sessionProvider.sessionId ?? "",
+            endpoint: endpointProvider.actionEndpoint()
+        )
+        requestManager.execute(request: request, completion: completion)
+    }
+    
+    func getActionsList(completion: @escaping (Result<ActionsList, Error>) -> Void) {
+        let request = ActionsListRequest(
             sessionId: sessionProvider.sessionId ?? "",
             endpoint: endpointProvider.actionEndpoint()
         )
