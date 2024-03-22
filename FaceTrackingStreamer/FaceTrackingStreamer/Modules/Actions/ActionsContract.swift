@@ -8,10 +8,13 @@
 import Foundation
 
 protocol IActionsPresenter {
+    func onViewReady()
     func onActionTapped(_ actionModel: ActionRequestModel)
+    func onActionTapped(with index: Int)
     func onLongPress()
 }
 
 protocol IActionsView: AnyObject {
+    func setActionsView(with models: [ActionModel])
     
 }

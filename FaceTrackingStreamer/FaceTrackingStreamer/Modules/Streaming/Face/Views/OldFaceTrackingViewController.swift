@@ -46,15 +46,8 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         return button
     }()
     
-//    private lazy var actionsCameraView: UIButton = {
-//        let button = UIButton(configuration: .filled())
-//        button.setTitle("Scene settings", for: .normal)
-//        button.addTarget(self, action: #selector(onActionsTapped), for: .touchUpInside)
-//        return button
-//    }()
-    
-    private lazy var actionsCameraView: ActionsView = {
-        let view = ActionsView()
+    private lazy var actionsCameraView: ActionsListView = {
+        let view = ActionsListView()
         let presenter = ActionsPresenter(
             actionsService: actionsService,
             view: view,
@@ -63,6 +56,17 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         view.presenter = presenter
         return view
     }()
+    
+//    private lazy var actionsCameraView: ActionsView = {
+//        let view = ActionsView()
+//        let presenter = ActionsPresenter(
+//            actionsService: actionsService,
+//            view: view,
+//            coordinator: coordinator
+//        )
+//        view.presenter = presenter
+//        return view
+//    }()
     
     private lazy var chatView: ChatView = {
         let view = ChatView()
@@ -140,8 +144,8 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         NSLayoutConstraint.activate([
             actionsCameraView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
             actionsCameraView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-            actionsCameraView.widthAnchor.constraint(equalToConstant: 150),
-            actionsCameraView.heightAnchor.constraint(equalToConstant: 150)
+            actionsCameraView.widthAnchor.constraint(equalToConstant: 180),
+            actionsCameraView.heightAnchor.constraint(equalToConstant: 180)
         ])
         
         view.addSubview(chatView)
