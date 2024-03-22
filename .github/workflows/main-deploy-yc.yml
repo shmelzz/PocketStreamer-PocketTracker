@@ -3,6 +3,9 @@ name: Docker Build and Push PocketCenter
 on:
   push:
     branches: ["main"]
+    paths:
+      - PocketCenter/**
+      - .github/workflows/**
   workflow_dispatch:
 
 env:
