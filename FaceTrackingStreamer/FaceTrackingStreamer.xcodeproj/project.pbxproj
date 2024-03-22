@@ -17,6 +17,7 @@
 		6D6AE7BA2A06907A00A418D6 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 6D6AE7B92A06907A00A418D6 /* Starscream */; };
 		B6EDBB401998C11725E54685 /* Pods_FaceTrackingStreamer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C90F849032981ACD2A74FE6 /* Pods_FaceTrackingStreamer.framework */; };
 		CC0C3A2B2B483E2B00C43AA5 /* DebugMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C3A2A2B483E2B00C43AA5 /* DebugMenuViewController.swift */; };
+		CC27BA972BADE50A00240AFD /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CC27BA962BADE50A00240AFD /* PrivacyInfo.xcprivacy */; };
 		CC2E62E52B94FFF200CCDCED /* FaceTrackingModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E62E42B94FFF200CCDCED /* FaceTrackingModuleAssembly.swift */; };
 		CC2E62E72B9504A000CCDCED /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E62E62B9504A000CCDCED /* BaseViewController.swift */; };
 		CC2E62E92B95061900CCDCED /* BodyTrackingModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E62E82B95061900CCDCED /* BodyTrackingModuleAssembly.swift */; };
@@ -118,6 +119,7 @@
 		7C90F849032981ACD2A74FE6 /* Pods_FaceTrackingStreamer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FaceTrackingStreamer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC9ACAF490F0A4FF8B030FC /* Pods-FaceTrackingStreamer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FaceTrackingStreamer.debug.xcconfig"; path = "Target Support Files/Pods-FaceTrackingStreamer/Pods-FaceTrackingStreamer.debug.xcconfig"; sourceTree = "<group>"; };
 		CC0C3A2A2B483E2B00C43AA5 /* DebugMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewController.swift; sourceTree = "<group>"; };
+		CC27BA962BADE50A00240AFD /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		CC2E62E42B94FFF200CCDCED /* FaceTrackingModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceTrackingModuleAssembly.swift; sourceTree = "<group>"; };
 		CC2E62E62B9504A000CCDCED /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		CC2E62E82B95061900CCDCED /* BodyTrackingModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyTrackingModuleAssembly.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				6D3D34C32A06683E0052AE68 /* Assets.xcassets */,
 				6D3D34C52A06683E0052AE68 /* LaunchScreen.storyboard */,
 				6D3D34C82A06683E0052AE68 /* Info.plist */,
+				CC27BA962BADE50A00240AFD /* PrivacyInfo.xcprivacy */,
 			);
 			path = FaceTrackingStreamer;
 			sourceTree = "<group>";
@@ -762,6 +765,7 @@
 			files = (
 				6D3D34C72A06683E0052AE68 /* LaunchScreen.storyboard in Resources */,
 				CC3F81F22B4C1FE2006EDC95 /* robot.usdz in Resources */,
+				CC27BA972BADE50A00240AFD /* PrivacyInfo.xcprivacy in Resources */,
 				6D3D34C42A06683E0052AE68 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
