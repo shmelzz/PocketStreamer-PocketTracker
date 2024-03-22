@@ -8,7 +8,9 @@
 import Foundation
 
 final class ActionsPresenter: BaseModuleOutput, IActionsPresenter {
-
+    
+    // MARK: - DI
+    
     private weak var view: IActionsView?
     
     private let actionsService: IActionsService
@@ -21,13 +23,35 @@ final class ActionsPresenter: BaseModuleOutput, IActionsPresenter {
         self.view = view
         self.actionsService = actionsService
         super.init(coordinator: coordinator)
+        
+        loadActionsList { [weak self] actions in
+            self?.view?.setActionsView(with: actions)
+        }
+    }
+    
+    // MARK: - State
+    
+    private var actions: [ActionModel] = []
+    
+    // MARK: - IActionsPresenter
+    
+    func onViewReady() {
+        loadActionsList { [weak self] actions in
+            self?.view?.setActionsView(with: actions)
+        }
+    }
+    
+    func onActionTapped(with index: Int) {
+        let action = actions[index]
+        actionsService.send(action: action) { _ in }
     }
     
     func onActionTapped(_ actionModel: ActionRequestModel) {
-        actionsService.send(action: actionModel) { [weak self] result in
+        let model = ActionModel(displayName: "", payload: actionModel.payload, type: actionModel.type)
+        actionsService.send(action: model) { [weak self] result in
             switch result {
-            case .success(let success):
-                print(success)
+            case .success(let data):
+                print(data)
             case .failure(let failure):
                 print(failure.localizedDescription)
             }
@@ -36,5 +60,19 @@ final class ActionsPresenter: BaseModuleOutput, IActionsPresenter {
     
     func onLongPress() {
         finish(.onLongPress)
+    }
+    
+    // MARK: - Private
+    
+    private func loadActionsList(completion: @escaping ([ActionModel]) -> Void) {
+        actionsService.getActionsList { [weak self] result in
+            switch result {
+            case .success(let data):
+                self?.actions = data.actions
+                completion(data.actions)
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
+        }
     }
 }

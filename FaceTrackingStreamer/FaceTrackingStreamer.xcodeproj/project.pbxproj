@@ -80,6 +80,8 @@
 		CCB26BC12BA748B000B7B9A0 /* ChannelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BC02BA748B000B7B9A0 /* ChannelService.swift */; };
 		CCB26BC42BA748FE00B7B9A0 /* ChannelValidationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BC32BA748FE00B7B9A0 /* ChannelValidationRequest.swift */; };
 		CCB26BC62BA75D1800B7B9A0 /* ActionsListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BC52BA75D1800B7B9A0 /* ActionsListRequest.swift */; };
+		CCB26BCC2BADD0C700B7B9A0 /* ActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BCB2BADD0C700B7B9A0 /* ActionCell.swift */; };
+		CCB26BCE2BADD1C900B7B9A0 /* ActionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BCD2BADD1C900B7B9A0 /* ActionsListView.swift */; };
 		CCB800AE2B8287D7003F9AD2 /* SessionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800AD2B8287D7003F9AD2 /* SessionStorage.swift */; };
 		CCB800B02B829F85003F9AD2 /* AuthModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800AF2B829F85003F9AD2 /* AuthModuleAssembly.swift */; };
 		CCB800B32B84ED6A003F9AD2 /* IRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800B22B84ED6A003F9AD2 /* IRequest.swift */; };
@@ -179,6 +181,8 @@
 		CCB26BC02BA748B000B7B9A0 /* ChannelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelService.swift; sourceTree = "<group>"; };
 		CCB26BC32BA748FE00B7B9A0 /* ChannelValidationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelValidationRequest.swift; sourceTree = "<group>"; };
 		CCB26BC52BA75D1800B7B9A0 /* ActionsListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsListRequest.swift; sourceTree = "<group>"; };
+		CCB26BCB2BADD0C700B7B9A0 /* ActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCell.swift; sourceTree = "<group>"; };
+		CCB26BCD2BADD1C900B7B9A0 /* ActionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsListView.swift; sourceTree = "<group>"; };
 		CCB800AD2B8287D7003F9AD2 /* SessionStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStorage.swift; sourceTree = "<group>"; };
 		CCB800AF2B829F85003F9AD2 /* AuthModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModuleAssembly.swift; sourceTree = "<group>"; };
 		CCB800B22B84ED6A003F9AD2 /* IRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequest.swift; sourceTree = "<group>"; };
@@ -557,10 +561,12 @@
 		CCB26BA92B9DF46C00B7B9A0 /* Actions */ = {
 			isa = PBXGroup;
 			children = (
+				CCB26BCA2BADD0B500B7B9A0 /* Views */,
 				CCB26BAA2B9DF48100B7B9A0 /* ActionsView.swift */,
 				CCB26BAC2B9DF49100B7B9A0 /* ActionsPresenter.swift */,
 				CCB26BAE2B9DF49D00B7B9A0 /* ActionsContract.swift */,
 				CCB26BB02B9DF4AD00B7B9A0 /* ActionsModuleAssembly.swift */,
+				CCB26BCD2BADD1C900B7B9A0 /* ActionsListView.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -615,6 +621,14 @@
 				CCB26BC52BA75D1800B7B9A0 /* ActionsListRequest.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		CCB26BCA2BADD0B500B7B9A0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CCB26BCB2BADD0C700B7B9A0 /* ActionCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		CCB800B12B84ED4A003F9AD2 /* Networking */ = {
@@ -834,6 +848,7 @@
 				CC40BEB22B5F10B6004036F3 /* FaceTrackingPresenter.swift in Sources */,
 				CCB800D62B86279C003F9AD2 /* AuthorizationCoordinator.swift in Sources */,
 				CCB800BD2B84F6EB003F9AD2 /* Cancelable.swift in Sources */,
+				CCB26BCC2BADD0C700B7B9A0 /* ActionCell.swift in Sources */,
 				CC3718052B86739A0069D978 /* ModulesAssembly.swift in Sources */,
 				CC85ADA82B71918C00C91BFD /* AuthService.swift in Sources */,
 				CC3718102B874C2E0069D978 /* IWebSocketRequest.swift in Sources */,
@@ -888,6 +903,7 @@
 				CC40BEA12B5D9FFC004036F3 /* DebugMenuPresenter.swift in Sources */,
 				CCB26B8F2B9C6C5800B7B9A0 /* BodyTrackingContract.swift in Sources */,
 				CCB800C32B84FDED003F9AD2 /* EndpointProvider.swift in Sources */,
+				CCB26BCE2BADD1C900B7B9A0 /* ActionsListView.swift in Sources */,
 				CC2E62E72B9504A000CCDCED /* BaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

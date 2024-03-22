@@ -50,9 +50,9 @@ final class ActionsView: UIView, IActionsView {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    override func viewDidLoad() {
-//        setupView()
-//    }
+    func setActionsView(with models: [ActionModel]) {
+        
+    }
     
     private func setupView() {
         addSubview(rotateFrontButton)

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ActionModel: Decodable {
+struct ActionModel: Decodable, Hashable {
     let displayName: String
     let payload: String
     let type: String
