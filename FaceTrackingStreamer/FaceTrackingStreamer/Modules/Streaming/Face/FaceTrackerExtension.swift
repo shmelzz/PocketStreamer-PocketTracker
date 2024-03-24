@@ -1,12 +1,31 @@
 import Foundation
 import ARKit
 
+extension simd_float4x4: Collection {
+    public var startIndex: Int {
+        return 0
+    }
+
+    public var endIndex: Int {
+        return 4
+    }
+
+    public func index(after i: Int) -> Int {
+        return i + 1
+    }
+}
+
 extension ARFaceAnchor {
     
     var eyeNoseMouthData: [String: Float] {
         var blendShapes = Dictionary(uniqueKeysWithValues:
                                         blendShapes.map { key, value in (key.rawValue, value.floatValue) })
         blendShapes["timeCode"] = Float(DispatchTime.now().uptimeNanoseconds)
+        
+        blendShapes["lookAtPointX"] = lookAtPoint.x
+        blendShapes["lookAtPointY"] = lookAtPoint.y
+        blendShapes["lookAtPointZ"] = lookAtPoint.z
+
         return blendShapes
     }
 }
@@ -26,7 +45,7 @@ extension ARBodyAnchor {
 }
 
 extension float4x4 {
-    var positionArray: [Float] {
+    var translationArray: [Float] {
         return [columns.3.x, columns.3.y, columns.3.z]
     }
 }
