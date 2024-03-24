@@ -237,7 +237,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     private func processFaceMotionData(faceAnchor: ARFaceAnchor) {
         // Extract eye, nose, and mouth movement data
         let faceTrackingData = faceAnchor.eyeNoseMouthData
-        
+
         // Send face tracking data to the other device
         sendDataToOtherDevice(faceTrackingData: faceTrackingData)
     }
