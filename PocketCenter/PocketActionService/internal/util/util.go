@@ -2,9 +2,23 @@ package util
 
 import (
 	"fmt"
+	"os"
 	"reflect"
 	"strconv"
 )
+
+func CreateFolder(folderName string) error {
+	return os.Mkdir(folderName, os.ModePerm)
+}
+
+func RemoveAllContents(folderPath string) error {
+	// Use os.RemoveAll to delete all contents of the folder.
+	err := os.RemoveAll(folderPath)
+	if err != nil {
+		return fmt.Errorf("failed to remove all contents of %s: %w", folderPath, err)
+	}
+	return CreateFolder(folderPath)
+}
 
 // ToString changes arg to string
 func ToString(arg interface{}) string {
