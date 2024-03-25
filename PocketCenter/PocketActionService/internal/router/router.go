@@ -18,7 +18,7 @@ func InitRoutes(handler *handlers.PocketActionHandler) *gin.Engine {
 		apiRoutes.POST("/pocketaction", handler.HandlePocketAction)
 		apiRoutes.GET("/version", handler.HandleVersion)
 		apiRoutes.GET("/document", handler.HandlePocketActionDocument)
-
+		apiRoutes.GET("/presentation", handler.HandlePresentation)
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	return r

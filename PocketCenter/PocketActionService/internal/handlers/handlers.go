@@ -188,3 +188,35 @@ func (f *PocketActionHandler) HandleReceiver(c *gin.Context) {
 		}
 	}()
 }
+
+// PocketAction presentation godoc
+// @Summary Get presentation link by page document
+// @Description Get presentation link by page document
+// @Tags action
+// @Accept json
+// @Produce json
+// @Param Authentication header string true "Authentication"
+// @Param SessionId header string true "SessionId"
+// @Success 200 "Ok"
+// @Failure 404 "Not Found"
+// @Router /presentation [get]
+func (p *PocketActionHandler) HandlePresentation(c *gin.Context) {
+	token := c.Request.Header.Get("Authentication")
+	ok, err := p.validateToken(token)
+	if err != nil {
+		zap.S().Errorf(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Error when try to validate"})
+		return
+	}
+	if !ok {
+		zap.S().Infof("Validation not passed")
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Validation not passed"})
+		return
+	}
+	document, err := p.documentService.GetPresentationPath()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Cant parse actions"})
+		return
+	}
+	c.JSON(http.StatusOK, document)
+}

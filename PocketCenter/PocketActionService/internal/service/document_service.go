@@ -21,3 +21,11 @@ func (d *DocumentService) GetActionDocument() (model.PocketActionDocument, error
 		Actions: actions,
 	}, err
 }
+
+func (d *DocumentService) GetPresentationPath() (string, error) {
+	pdf, err := d.documentRepository.GetPdfs()
+	if err != nil {
+		return "", nil
+	}
+	return pdf, nil
+}

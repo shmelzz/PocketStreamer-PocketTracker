@@ -85,4 +85,30 @@ paths:
       summary: Trigger PocketAction
       tags:
       - action
+  /presentation:
+    get:
+      consumes:
+      - application/json
+      description: Get presentation link by page document
+      parameters:
+      - description: Authentication
+        in: header
+        name: Authentication
+        required: true
+        type: string
+      - description: SessionId
+        in: header
+        name: SessionId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Ok
+        "404":
+          description: Not Found
+      summary: Get presentation link by page document
+      tags:
+      - action
 swagger: "2.0"
