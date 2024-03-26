@@ -254,5 +254,5 @@ func (p *PocketActionHandler) HandlePresentationZip(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "cant get presentation processed, error: " + err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, document)
+	c.JSON(http.StatusOK, gin.H{"imageFileExtension": document})
 }
