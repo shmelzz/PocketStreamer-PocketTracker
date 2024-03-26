@@ -1,0 +1,49 @@
+{
+  "documents": [
+    {
+      "$collectionId": "pocket-actions-service",
+      "$createdAt": "2024-03-13T14:25:04.618+00:00",
+      "$databaseId": "pocket-streamer",
+      "$id": "camera-0",
+      "$permissions": [],
+      "$updatedAt": "2024-03-13T14:25:04.618+00:00",
+      "displayName": "Camera 0",
+      "payload": "0",
+      "type": "camera"
+    },
+    {
+      "$collectionId": "pocket-actions-service",
+      "$createdAt": "2024-03-13T14:25:20.666+00:00",
+      "$databaseId": "pocket-streamer",
+      "$id": "camera-1",
+      "$permissions": [],
+      "$updatedAt": "2024-03-13T14:25:20.666+00:00",
+      "displayName": "Camera 1",
+      "payload": "1",
+      "type": "camera"
+    },
+    {
+      "$collectionId": "pocket-actions-service",
+      "$createdAt": "2024-03-13T14:26:08.213+00:00",
+      "$databaseId": "pocket-streamer",
+      "$id": "stop-rain",
+      "$permissions": [],
+      "$updatedAt": "2024-03-13T14:26:08.213+00:00",
+      "displayName": "Stop rain",
+      "payload": "-",
+      "type": "stoprain"
+    },
+    {
+      "$collectionId": "pocket-actions-service",
+      "$createdAt": "2024-03-13T14:27:03.159+00:00",
+      "$databaseId": "pocket-streamer",
+      "$id": "start-rain",
+      "$permissions": [],
+      "$updatedAt": "2024-03-13T14:27:03.159+00:00",
+      "displayName": "Start rain",
+      "payload": "0",
+      "type": "startrain"
+    }
+  ],
+  "total": 4
+}

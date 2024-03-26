@@ -10,6 +10,7 @@ require (
 	github.com/swaggo/gin-swagger v1.6.0
 	github.com/swaggo/swag v1.16.3
 	go.uber.org/zap v1.27.0
+	gopkg.in/gographics/imagick.v3 v3.5.2
 )
 
 require (

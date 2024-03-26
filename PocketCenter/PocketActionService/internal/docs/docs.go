@@ -15,6 +15,48 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/document": {
+            "get": {
+                "description": "Get global PocketAction document",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "action"
+                ],
+                "summary": "Get global PocketAction document",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication",
+                        "name": "Authentication",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "SessionId",
+                        "name": "SessionId",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "PocketAction document",
+                        "schema": {
+                            "$ref": "#/definitions/model.PocketActionDocument"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
         "/pocketaction": {
             "post": {
                 "description": "Trigger Action, send to Composer use websocket",
@@ -25,7 +67,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "session"
+                    "action"
                 ],
                 "summary": "Trigger PocketAction",
                 "parameters": [
@@ -62,9 +104,101 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/presentation": {
+            "get": {
+                "description": "Get presentation link by page document",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "action"
+                ],
+                "summary": "Get presentation link by page document",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication",
+                        "name": "Authentication",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "SessionId",
+                        "name": "SessionId",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/presentation-zip": {
+            "get": {
+                "description": "Get presentation zip by page document",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "action"
+                ],
+                "summary": "Get presentation zip by page document",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication",
+                        "name": "Authentication",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "SessionId",
+                        "name": "SessionId",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "model.Action": {
+            "type": "object",
+            "properties": {
+                "displayName": {
+                    "type": "string"
+                },
+                "payload": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
         "model.PocketAction": {
             "type": "object",
             "properties": {
@@ -73,6 +207,17 @@ const docTemplate = `{
                 },
                 "type": {
                     "type": "string"
+                }
+            }
+        },
+        "model.PocketActionDocument": {
+            "type": "object",
+            "properties": {
+                "actions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Action"
+                    }
                 }
             }
         }

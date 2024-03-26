@@ -65,7 +65,6 @@ func (f *FeatureHandler) HandleFaceTracking(w http.ResponseWriter, r *http.Reque
 			var data model.FaceTrackingFeatures
 			if err = json.Unmarshal(message, &data); err != nil {
 				log.Println("Error unmarshalling JSON:", err)
-				continue
 			}
 
 			err = f.broadcastService.Broadcast(message, session)

@@ -5,8 +5,10 @@ import (
 	"pocketaction/internal/config"
 	"pocketaction/internal/docs"
 	"pocketaction/internal/handlers"
+	"pocketaction/internal/repository"
 	"pocketaction/internal/router"
 	"pocketaction/internal/service"
+	"pocketaction/internal/util"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -25,9 +27,16 @@ func NewApp(cfg *config.Config) *App {
 		zap.ReplaceGlobals(zap.Must(zap.NewProduction()))
 	}
 
+	_, err := util.CreateIfNotExistFolder("presentation")
+	if err != nil {
+		fmt.Println(err)
+	}
 	docs.SwaggerInfo.BasePath = "/action"
-	service := service.NewBroadcastService()
-	handler := handlers.NewPocketActionHandler(service, cfg.UserAuthAddress)
+	broadcastService := service.NewBroadcastService()
+	documentRepository := repository.NewAppwriteDocumentRepsitory(cfg.AppwriteAPIKey)
+	pdfToImageService := service.NewPdfToImageService()
+	documentService := service.NewDocumentService(documentRepository, pdfToImageService)
+	handler := handlers.NewPocketActionHandler(broadcastService, documentService, cfg.UserAuthAddress)
 
 	// Set up the router and routes.
 	engine := router.InitRoutes(handler)

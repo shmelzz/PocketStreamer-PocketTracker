@@ -18,8 +18,23 @@ func getConfigPath() string {
 	return configPath
 }
 
+func getSecretPath() string {
+	var configPath string
+
+	flag.StringVar(&configPath, "s", ".env.dev.secret", "path to config file")
+	flag.Parse()
+
+	return configPath
+}
+
 func main() {
 	err := godotenv.Load(getConfigPath())
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	err = godotenv.Load(getSecretPath())
 
 	if err != nil {
 		fmt.Println(err)
