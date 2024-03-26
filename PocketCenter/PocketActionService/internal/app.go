@@ -27,7 +27,7 @@ func NewApp(cfg *config.Config) *App {
 		zap.ReplaceGlobals(zap.Must(zap.NewProduction()))
 	}
 
-	err := util.CreateIfExistFolder("presentation")
+	_, err := util.CreateIfNotExistFolder("presentation")
 	if err != nil {
 		fmt.Println(err)
 	}

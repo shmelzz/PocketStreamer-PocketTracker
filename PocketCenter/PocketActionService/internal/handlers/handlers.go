@@ -235,6 +235,8 @@ func (p *PocketActionHandler) HandlePresentation(c *gin.Context) {
 // @Router /presentation-zip [get]
 func (p *PocketActionHandler) HandlePresentationZip(c *gin.Context) {
 	token := c.Request.Header.Get("Authentication")
+	sessionId := c.Request.Header.Get("SessionId")
+
 	ok, err := p.validateToken(token)
 	if err != nil {
 		zap.S().Errorf(err.Error())
@@ -246,7 +248,7 @@ func (p *PocketActionHandler) HandlePresentationZip(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Validation not passed"})
 		return
 	}
-	document, err := p.documentService.GetPresentationZipPath()
+	document, err := p.documentService.GetPresentationZipPath(sessionId)
 	if err != nil {
 		zap.S().Error(err)
 		c.JSON(http.StatusBadRequest, gin.H{"message": "cant get presentation processed, error: " + err.Error()})

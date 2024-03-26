@@ -21,13 +21,17 @@ func NewPdfToImageService() *PdfToImageService {
 	return &PdfToImageService{}
 }
 
-func (p *PdfToImageService) ConvertZipToImageFolder(zipPath string) (string, error) {
-	destFolder := "./presentation/1"
-	err := util.RemoveAllContents("./presentation")
-	if err != nil {
-		return "", err
+func (p *PdfToImageService) ConvertZipToImageFolder(zipPath string, sessionId string) (string, error) {
+	destFolder := fmt.Sprintf("./presentation/%s", sessionId)
+
+	ok, err := util.CreateIfNotExistFolder(destFolder)
+
+	if !ok {
+		err := util.RemoveAllContents(destFolder)
+		if err != nil {
+			return "", err
+		}
 	}
-	err = util.CreateIfExistFolder(destFolder)
 	if err != nil {
 		return "", err
 	}
@@ -105,7 +109,7 @@ func (p *PdfToImageService) ConvertPdfToImageFolder(pdfPath string) (string, err
 	if err != nil {
 		return "", err
 	}
-	err = util.CreateIfExistFolder(folderPath)
+	_, err = util.CreateIfNotExistFolder(folderPath)
 	if err != nil {
 		return "", err
 	}

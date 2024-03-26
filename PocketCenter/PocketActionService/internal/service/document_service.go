@@ -40,13 +40,13 @@ func (d *DocumentService) GetPresentationPdfPath() (string, error) {
 	return pdf, nil
 }
 
-func (d *DocumentService) GetPresentationZipPath() (string, error) {
+func (d *DocumentService) GetPresentationZipPath(sessionId string) (string, error) {
 	pdf, err := d.documentRepository.GetZip()
 	if err != nil {
 		return "", err
 	}
 	fmt.Println(pdf)
-	_, err = d.pdfToImageService.ConvertZipToImageFolder(pdf)
+	_, err = d.pdfToImageService.ConvertZipToImageFolder(pdf, sessionId)
 	if err != nil {
 		return "", err
 	}
