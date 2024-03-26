@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"pocketaction/internal/model"
 	"pocketaction/internal/repository"
 )
@@ -27,11 +28,27 @@ func (d *DocumentService) GetActionDocument() (model.PocketActionDocument, error
 	}, err
 }
 
-func (d *DocumentService) GetPresentationPath() (string, error) {
-	pdf, err := d.documentRepository.GetPdfs()
-	d.pdfToImageService.ConvertPdfToImageFolder(pdf)
+func (d *DocumentService) GetPresentationPdfPath() (string, error) {
+	pdf, err := d.documentRepository.GetPdf()
 	if err != nil {
-		return "", nil
+		return "", err
+	}
+	_, err = d.pdfToImageService.ConvertPdfToImageFolder(pdf)
+	if err != nil {
+		return "", err
+	}
+	return pdf, nil
+}
+
+func (d *DocumentService) GetPresentationZipPath() (string, error) {
+	pdf, err := d.documentRepository.GetZip()
+	if err != nil {
+		return "", err
+	}
+	fmt.Println(pdf)
+	_, err = d.pdfToImageService.ConvertZipToImageFolder(pdf)
+	if err != nil {
+		return "", err
 	}
 	return pdf, nil
 }

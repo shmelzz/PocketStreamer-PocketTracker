@@ -213,9 +213,43 @@ func (p *PocketActionHandler) HandlePresentation(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Validation not passed"})
 		return
 	}
-	document, err := p.documentService.GetPresentationPath()
+	document, err := p.documentService.GetPresentationPdfPath()
+	zap.S().Error(err)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "Cant parse actions"})
+		c.JSON(http.StatusBadRequest, gin.H{"message": "cant get presentation processed, error: " + err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, document)
+}
+
+// PocketAction presentation zip godoc
+// @Summary Get presentation zip by page document
+// @Description Get presentation zip by page document
+// @Tags action
+// @Accept json
+// @Produce json
+// @Param Authentication header string true "Authentication"
+// @Param SessionId header string true "SessionId"
+// @Success 200 "Ok"
+// @Failure 404 "Not Found"
+// @Router /presentation-zip [get]
+func (p *PocketActionHandler) HandlePresentationZip(c *gin.Context) {
+	token := c.Request.Header.Get("Authentication")
+	ok, err := p.validateToken(token)
+	if err != nil {
+		zap.S().Errorf(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Error when try to validate"})
+		return
+	}
+	if !ok {
+		zap.S().Infof("Validation not passed")
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Validation not passed"})
+		return
+	}
+	document, err := p.documentService.GetPresentationZipPath()
+	if err != nil {
+		zap.S().Error(err)
+		c.JSON(http.StatusBadRequest, gin.H{"message": "cant get presentation processed, error: " + err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, document)

@@ -7,8 +7,12 @@ import (
 	"strconv"
 )
 
-func CreateFolder(folderName string) error {
-	return os.Mkdir(folderName, os.ModePerm)
+func CreateIfExistFolder(folderName string) error {
+	if _, err := os.Stat(folderName); os.IsNotExist(err) {
+		err := os.Mkdir(folderName, os.ModePerm)
+		return err
+	}
+	return fmt.Errorf("Folder exist")
 }
 
 func RemoveAllContents(folderPath string) error {
@@ -17,7 +21,7 @@ func RemoveAllContents(folderPath string) error {
 	if err != nil {
 		return fmt.Errorf("failed to remove all contents of %s: %w", folderPath, err)
 	}
-	return CreateFolder(folderPath)
+	return CreateIfExistFolder(folderPath)
 }
 
 // ToString changes arg to string

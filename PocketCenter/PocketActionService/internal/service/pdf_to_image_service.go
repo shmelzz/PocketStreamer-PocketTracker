@@ -1,8 +1,15 @@
 package service
 
 import (
+	"archive/zip"
 	"fmt"
+	"io"
+	"os"
+	"path/filepath"
 	"pocketaction/internal/util"
+	"sort"
+	"strconv"
+	"strings"
 
 	"gopkg.in/gographics/imagick.v3/imagick"
 )
@@ -12,6 +19,74 @@ type PdfToImageService struct {
 
 func NewPdfToImageService() *PdfToImageService {
 	return &PdfToImageService{}
+}
+
+func (p *PdfToImageService) ConvertZipToImageFolder(zipPath string) (string, error) {
+	destFolder := "./presentation/1"
+	err := util.RemoveAllContents("./presentation")
+	if err != nil {
+		return "", err
+	}
+	err = util.CreateIfExistFolder(destFolder)
+	if err != nil {
+		return "", err
+	}
+	archive, err := zip.OpenReader(zipPath)
+	if err != nil {
+		return "", err
+	}
+	defer archive.Close()
+
+	// Ensure the destination folder exists
+	if err := os.MkdirAll(destFolder, os.ModePerm); err != nil {
+		return "", err
+	}
+	// Iterate through each file in the zip archive
+	sort.Slice(archive.File, func(i, j int) bool {
+		return archive.File[i].FileInfo().Name() < archive.File[j].FileInfo().Name()
+	})
+	index := 1
+	for _, f := range archive.File {
+		if strings.HasPrefix(f.FileInfo().Name(), "._") || f.FileInfo().IsDir() {
+			continue
+		}
+		filePath := filepath.Join(destFolder, strconv.Itoa(index)+filepath.Ext(f.FileInfo().Name()))
+		index++
+		// Check for ZipSlip vulnerability
+		if !strings.HasPrefix(filePath, filepath.Clean(destFolder)+string(os.PathSeparator)) {
+			return "", fmt.Errorf("%s: illegal file path", filePath)
+		}
+
+		// Create directories if necessary
+		if f.FileInfo().IsDir() {
+			os.MkdirAll(filePath, os.ModePerm)
+			continue
+		}
+
+		// Create the file
+		dstFile, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
+		if err != nil {
+			return "", err
+		}
+
+		// Copy the file from the zip archive to the destination
+		fileInArchive, err := f.Open()
+		if err != nil {
+			dstFile.Close()
+			return "", err
+		}
+
+		if _, err := io.Copy(dstFile, fileInArchive); err != nil {
+			fileInArchive.Close()
+			dstFile.Close()
+			return "", err
+		}
+
+		fileInArchive.Close()
+		dstFile.Close()
+	}
+
+	return "1", nil
 }
 
 func (p *PdfToImageService) ConvertPdfToImageFolder(pdfPath string) (string, error) {
@@ -26,11 +101,11 @@ func (p *PdfToImageService) ConvertPdfToImageFolder(pdfPath string) (string, err
 		return "", err
 	}
 	folderPath := "./presentation/1"
-	// err = util.RemoveAllContents("./presentation")
-	// if err != nil {
-	// 	return "", err
-	// }
-	err = util.CreateFolder(folderPath)
+	err = util.RemoveAllContents("./presentation")
+	if err != nil {
+		return "", err
+	}
+	err = util.CreateIfExistFolder(folderPath)
 	if err != nil {
 		return "", err
 	}

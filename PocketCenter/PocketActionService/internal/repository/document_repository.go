@@ -43,7 +43,7 @@ func (a *AppwriteDocumentRepsitory) GetPocketActionDocument() ([]model.Action, e
 	return actions, nil
 }
 
-func (a *AppwriteDocumentRepsitory) GetFiles() (model.AppwriteFile, error) {
+func (a *AppwriteDocumentRepsitory) GetPdfFiles() (model.AppwriteFile, error) {
 	var client = NewClient()
 	client.SetEndpoint("https://cloud.appwrite.io/v1")
 	client.SetProject("65ee36f3d4d5d4a74ef1")
@@ -64,16 +64,49 @@ func (a *AppwriteDocumentRepsitory) GetFiles() (model.AppwriteFile, error) {
 	}
 	for _, value := range pdfs {
 		pdf := value.(map[string]interface{})
-		presentationPdf = model.AppwriteFile{
-			Id:       pdf["$id"].(string),
-			Mimetype: pdf["mimeType"].(string),
+		if pdf["mimeType"].(string) == "application/pdf" {
+			presentationPdf = model.AppwriteFile{
+				Id:       pdf["$id"].(string),
+				Mimetype: pdf["mimeType"].(string),
+			}
 		}
 	}
 	return presentationPdf, nil
 }
 
-func (a *AppwriteDocumentRepsitory) GetPdfs() (string, error) {
-	file, err := a.GetFiles()
+func (a *AppwriteDocumentRepsitory) GetZipFiles() (model.AppwriteFile, error) {
+	var client = NewClient()
+	client.SetEndpoint("https://cloud.appwrite.io/v1")
+	client.SetProject("65ee36f3d4d5d4a74ef1")
+	client.SetKey(a.appwriteApiKey)
+	var presentationPdf = model.AppwriteFile{
+		Id:       "0",
+		Mimetype: "string",
+	}
+	response, err := client.Call("GET", a.getPathListOfFiles("pocket-presentation"), nil, nil)
+	if err != nil {
+		return presentationPdf, err
+	}
+	files, ok := response["files"].([]interface{})
+	if !ok {
+		// Handle the case where the type assertion fails
+		fmt.Println("Cat parse answer from appwrite list file")
+		return presentationPdf, nil
+	}
+	for _, value := range files {
+		file := value.(map[string]interface{})
+		if file["mimeType"].(string) == "application/zip" {
+			presentationPdf = model.AppwriteFile{
+				Id:       file["$id"].(string),
+				Mimetype: file["mimeType"].(string),
+			}
+		}
+	}
+	return presentationPdf, nil
+}
+
+func (a *AppwriteDocumentRepsitory) GetPdf() (string, error) {
+	file, err := a.GetPdfFiles()
 	if err != nil {
 		return "", err
 	}
@@ -85,6 +118,23 @@ func (a *AppwriteDocumentRepsitory) GetPdfs() (string, error) {
 	response, err := client.RawCall("GET", a.getPathGetFile("pocket-presentation", file.Id), nil, nil)
 	fmt.Println(response)
 	filePath := "./1.pdf"
+	a.downloadFile(*response, filePath)
+	return filePath, nil
+}
+
+func (a *AppwriteDocumentRepsitory) GetZip() (string, error) {
+	file, err := a.GetZipFiles()
+	if err != nil {
+		return "", err
+	}
+	var client = NewClient()
+	client.SetEndpoint("https://cloud.appwrite.io/v1")
+	client.SetProject("65ee36f3d4d5d4a74ef1")
+	client.SetKey(a.appwriteApiKey)
+	fmt.Println(a.getPathGetFile("pocket-presentation", file.Id))
+	response, err := client.RawCall("GET", a.getPathGetFile("pocket-presentation", file.Id), nil, nil)
+	fmt.Println(response)
+	filePath := "./1.zip"
 	a.downloadFile(*response, filePath)
 	return filePath, nil
 }
@@ -106,7 +156,7 @@ func (a *AppwriteDocumentRepsitory) downloadFile(response http.Response, filePat
 
 	// Check the response status code
 	if response.StatusCode != http.StatusOK {
-		panic("Failed to download file")
+		fmt.Println("cant donwload file, status code", response.StatusCode)
 	}
 
 	// Extract filename from 'Content-Disposition' header if available
@@ -124,14 +174,14 @@ func (a *AppwriteDocumentRepsitory) downloadFile(response http.Response, filePat
 	// Create a new file to save the downloaded file
 	out, err := os.Create(filePath)
 	if err != nil {
-		panic(err)
+		fmt.Println("cant create file, err ", err)
 	}
 	defer out.Close()
 
 	// Copy the response body to the file
 	_, err = io.Copy(out, response.Body)
 	if err != nil {
-		panic(err)
+		fmt.Println("cant copy reponse body file, err ", err)
 	}
 	return nil
 }

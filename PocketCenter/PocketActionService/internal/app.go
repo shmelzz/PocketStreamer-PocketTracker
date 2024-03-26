@@ -27,9 +27,9 @@ func NewApp(cfg *config.Config) *App {
 		zap.ReplaceGlobals(zap.Must(zap.NewProduction()))
 	}
 
-	err := util.CreateFolder("presentation")
+	err := util.CreateIfExistFolder("presentation")
 	if err != nil {
-		return nil
+		fmt.Println(err)
 	}
 	docs.SwaggerInfo.BasePath = "/action"
 	broadcastService := service.NewBroadcastService()
