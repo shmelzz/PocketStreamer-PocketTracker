@@ -56,8 +56,8 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ env.REGISTRY }}/${{ matrix.service.tag }}:${{ env.BRANCH_NAME }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ matrix.service.tag }}:buildcache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ matrix.service.tag }}:buildcache,mode=max
 
   update-yc:
     runs-on: self-hosted
