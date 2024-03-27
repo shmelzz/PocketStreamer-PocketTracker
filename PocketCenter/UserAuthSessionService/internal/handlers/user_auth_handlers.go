@@ -10,12 +10,12 @@ import (
 
 type UserAuthHandler struct {
 	userAuthService *service.UserAuthService
-	sessionService  *service.SessionService
+	sessionService  service.SessionServiceInterface
 }
 
 func NewUserAuthHandler(
 	userAuthService *service.UserAuthService,
-	sessionService *service.SessionService,
+	sessionService service.SessionServiceInterface,
 ) *UserAuthHandler {
 	return &UserAuthHandler{
 		userAuthService: userAuthService,
