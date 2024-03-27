@@ -1,12 +1,16 @@
 package services
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
+	"pocketcenter/internal/metrics"
 	"sync"
+	"time"
 
 	"github.com/gorilla/websocket"
+	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 )
 
 var upgrader = websocket.Upgrader{
@@ -103,34 +107,34 @@ func (s *BroadcastService) Broadcast(message []byte, sessionId string) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	// influxClient := influxdb2.NewClient("http://localhost:8086", "Tjo_7XVMbeaLlqim3rmeG-yawFKPkHa6DbsSKBzCNFWajsMrd1ppx7idadnRVLi6MHFRzk2X2mQH6VuWLfQxEA==")
-	// writeAPI := influxClient.WriteAPIBlocking("pocket-center", "pocket-center")
+	influxClient := influxdb2.NewClient("http://localhost:8086", "Tjo_7XVMbeaLlqim3rmeG-yawFKPkHa6DbsSKBzCNFWajsMrd1ppx7idadnRVLi6MHFRzk2X2mQH6VuWLfQxEA==")
+	writeAPI := influxClient.WriteAPIBlocking("pocket-center", "pocket-center")
 	if s.composerClients[sessionId] == nil {
 		return fmt.Errorf("Cant find session")
 	}
 	select {
 	case s.composerClients[sessionId].Send <- message:
-		// p := influxdb2.NewPointWithMeasurement("sendToComposerStatus").
-		// 	AddField("status", true).
-		// 	SetTime(time.Now())
-		// err := writeAPI.WritePoint(context.Background(), p)
-		// if err != nil {
-		// 	log.Println("Cant connect to influxdb")
-		// }
-		// metrics.ComposerDataStatus.WithLabelValues("success").Inc()
+		p := influxdb2.NewPointWithMeasurement("sendToComposerStatus").
+			AddField("status", true).
+			SetTime(time.Now())
+		err := writeAPI.WritePoint(context.Background(), p)
+		if err != nil {
+			log.Println("Cant connect to influxdb")
+		}
+		metrics.ComposerDataStatus.WithLabelValues("success").Inc()
 		log.Printf("Send a message to client, client count: %d", len(s.composerClients))
 	default:
-		// p := influxdb2.NewPointWithMeasurement("sendToComposerStatus").
-		// 	AddField("status", false).
-		// 	SetTime(time.Now())
-		// err := writeAPI.WritePoint(context.Background(), p)
-		// if err != nil {
-		// 	log.Println("Cant connect to influxdb")
-		// }
-		// metrics.ComposerDataStatus.WithLabelValues("failed").Inc()
+		p := influxdb2.NewPointWithMeasurement("sendToComposerStatus").
+			AddField("status", false).
+			SetTime(time.Now())
+		err := writeAPI.WritePoint(context.Background(), p)
+		if err != nil {
+			log.Println("Cant connect to influxdb")
+		}
+		metrics.ComposerDataStatus.WithLabelValues("failed").Inc()
 		log.Printf("Failed to send message to client, client count")
 	}
-	// influxClient.Close()
+	influxClient.Close()
 	return nil
 }
 
