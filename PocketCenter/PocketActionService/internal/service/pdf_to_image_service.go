@@ -3,6 +3,8 @@ package service
 import (
 	"archive/zip"
 	"fmt"
+	"image"
+	"image/jpeg"
 	"io"
 	"os"
 	"path/filepath"
@@ -11,6 +13,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/nfnt/resize"
 	"gopkg.in/gographics/imagick.v3/imagick"
 )
 
@@ -82,6 +85,8 @@ func (p *PdfToImageService) ConvertZipToImageFolder(zipPath string, sessionId st
 			return "", err
 		}
 
+		stretchImage(fileInArchive, dstFile)
+
 		if _, err := io.Copy(dstFile, fileInArchive); err != nil {
 			fileInArchive.Close()
 			dstFile.Close()
@@ -93,6 +98,29 @@ func (p *PdfToImageService) ConvertZipToImageFolder(zipPath string, sessionId st
 	}
 
 	return imageExt, nil
+}
+
+func stretchImage(input io.ReadCloser, dstFile *os.File) error {
+	// Decode the image from the input
+	img, _, err := image.Decode(input)
+	if err != nil {
+		return fmt.Errorf("failed to decode image: %v", err)
+	}
+
+	// Calculate the new dimensions
+	bounds := img.Bounds()
+	newWidth := int(float64(bounds.Dx()) * 1.09688889)
+	newHeight := bounds.Dy()
+
+	resizedImg := resize.Resize(uint(newWidth), uint(newHeight), img, resize.Lanczos3)
+
+	// Create a new image with the new dimensions
+	err = jpeg.Encode(dstFile, resizedImg, nil)
+	if err != nil {
+		return fmt.Errorf("failed to encode image: %v", err)
+	}
+
+	return nil
 }
 
 func (p *PdfToImageService) ConvertPdfToImageFolder(pdfPath string) (string, error) {
