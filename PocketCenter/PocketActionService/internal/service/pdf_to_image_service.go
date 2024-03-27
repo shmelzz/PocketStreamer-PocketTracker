@@ -109,7 +109,7 @@ func stretchImage(input io.ReadCloser, dstFile *os.File) error {
 
 	// Calculate the new dimensions
 	bounds := img.Bounds()
-	newWidth := int(float64(bounds.Dx()) * 1.09688889)
+	newWidth := int(float64(bounds.Dx()) * 1.097)
 	newHeight := bounds.Dy()
 
 	resizedImg := resize.Resize(uint(newWidth), uint(newHeight), img, resize.Lanczos3)
