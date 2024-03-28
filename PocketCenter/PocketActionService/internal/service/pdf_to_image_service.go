@@ -3,6 +3,8 @@ package service
 import (
 	"archive/zip"
 	"fmt"
+	"image"
+	"image/jpeg"
 	"io"
 	"os"
 	"path/filepath"
@@ -11,6 +13,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/nfnt/resize"
 	"gopkg.in/gographics/imagick.v3/imagick"
 )
 
@@ -50,11 +53,13 @@ func (p *PdfToImageService) ConvertZipToImageFolder(zipPath string, sessionId st
 		return archive.File[i].FileInfo().Name() < archive.File[j].FileInfo().Name()
 	})
 	index := 1
+	imageExt := ".jpeg"
 	for _, f := range archive.File {
 		if strings.HasPrefix(f.FileInfo().Name(), "._") || f.FileInfo().IsDir() {
 			continue
 		}
-		filePath := filepath.Join(destFolder, strconv.Itoa(index)+filepath.Ext(f.FileInfo().Name()))
+		imageExt = filepath.Ext(f.FileInfo().Name())
+		filePath := filepath.Join(destFolder, strconv.Itoa(index)+imageExt)
 		index++
 		// Check for ZipSlip vulnerability
 		if !strings.HasPrefix(filePath, filepath.Clean(destFolder)+string(os.PathSeparator)) {
@@ -80,6 +85,8 @@ func (p *PdfToImageService) ConvertZipToImageFolder(zipPath string, sessionId st
 			return "", err
 		}
 
+		stretchImage(fileInArchive, dstFile)
+
 		if _, err := io.Copy(dstFile, fileInArchive); err != nil {
 			fileInArchive.Close()
 			dstFile.Close()
@@ -90,7 +97,30 @@ func (p *PdfToImageService) ConvertZipToImageFolder(zipPath string, sessionId st
 		dstFile.Close()
 	}
 
-	return "1", nil
+	return imageExt, nil
+}
+
+func stretchImage(input io.ReadCloser, dstFile *os.File) error {
+	// Decode the image from the input
+	img, _, err := image.Decode(input)
+	if err != nil {
+		return fmt.Errorf("failed to decode image: %v", err)
+	}
+
+	// Calculate the new dimensions
+	bounds := img.Bounds()
+	newWidth := int(float64(bounds.Dx()) * 1.097)
+	newHeight := bounds.Dy()
+
+	resizedImg := resize.Resize(uint(newWidth), uint(newHeight), img, resize.Lanczos3)
+
+	// Create a new image with the new dimensions
+	err = jpeg.Encode(dstFile, resizedImg, nil)
+	if err != nil {
+		return fmt.Errorf("failed to encode image: %v", err)
+	}
+
+	return nil
 }
 
 func (p *PdfToImageService) ConvertPdfToImageFolder(pdfPath string) (string, error) {
