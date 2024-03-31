@@ -9,6 +9,12 @@ import Foundation
 
 final class AuthorizationCoordinator: BaseCoordinator {
     
+    private enum Constants {
+        static let loginErrorText = "Login failed. Try again."
+        static let registerErrorText = "Register failed. Try again."
+        static let registerSuccessText = "Success. Now login."
+    }
+    
     private let router: IRouter
     private let authModuleAssembly: IAuthModuleAssembly
     private let debugMenuModuleAssembly: IDebugMenuModuleAssembly
@@ -32,6 +38,16 @@ final class AuthorizationCoordinator: BaseCoordinator {
         switch action {
         case .loginDidSuccessed:
             onFinish?()
+            
+        case .loginError:
+            router.presentOKAlert(with: Constants.loginErrorText)
+            
+        case .registerError:
+            router.presentOKAlert(with: Constants.registerErrorText)
+            
+        case .registerSuccess:
+            router.presentOKAlert(with: Constants.registerSuccessText)
+            
         case .onLongPress:
             let module = debugMenuModuleAssembly.assemble(for: self)
             router.present(module, animated: true)

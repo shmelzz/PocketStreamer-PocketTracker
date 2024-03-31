@@ -20,6 +20,7 @@ final class AuthViewController: UIViewController, IAuthView, UITextFieldDelegate
     private lazy var passwordTextInput: UITextField = {
         let field = UITextField()
         field.placeholder = "Password"
+        field.isSecureTextEntry = true
         return field
     }()
     
