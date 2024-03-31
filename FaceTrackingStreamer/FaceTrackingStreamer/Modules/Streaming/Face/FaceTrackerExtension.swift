@@ -22,10 +22,20 @@ extension ARFaceAnchor {
                                         blendShapes.map { key, value in (key.rawValue, value.floatValue) })
         blendShapes["timeCode"] = Float(DispatchTime.now().uptimeNanoseconds)
         
-        blendShapes["lookAtPointX"] = lookAtPoint.x
-        blendShapes["lookAtPointY"] = lookAtPoint.y
-        blendShapes["lookAtPointZ"] = lookAtPoint.z
+//        blendShapes["lookAtPointX"] = lookAtPoint.x
+//        blendShapes["lookAtPointY"] = lookAtPoint.y
+//        blendShapes["lookAtPointZ"] = lookAtPoint.z
 
+        let text = "faceAnchorM"
+        
+        let matrix = transform.compactMap{ $0 }
+        
+        for i in 0...3 {
+            for j in 0...3 {
+                blendShapes["\(text)\(i)\(j)"] = transform[i][j]
+            }
+        }
+        
         return blendShapes
     }
 }

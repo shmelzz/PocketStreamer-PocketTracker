@@ -84,9 +84,8 @@ final class MainFlowCoordinator: BaseCoordinator {
                 with: "Channel validation error. Continue without channel connection?",
                 nextModule: module
             )
-            
-            
-        case .loginDidSuccessed:
+        
+        case .loginDidSuccessed, .loginError, .registerError, .registerSuccess:
             break
         }
     }

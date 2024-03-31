@@ -9,6 +9,9 @@ import Foundation
 
 enum CoordinatorAction {
     case loginDidSuccessed
+    case loginError
+    case registerError
+    case registerSuccess
     
     case connectModuleSuccess
     case connectModuleFailure(text: String?)

@@ -45,7 +45,7 @@ final class AuthPresenter: BaseModuleOutput, IAuthPresenter {
                 self?.sessionProvider.token = data.token
                 self?.finish(.loginDidSuccessed)
             case .failure(_):
-                break
+                self?.finish(.loginError)
             }
         }
     }
@@ -54,9 +54,9 @@ final class AuthPresenter: BaseModuleOutput, IAuthPresenter {
         authService.register(with: model) { [weak self] result in
             switch result {
             case .success(let data):
-                print(data)
+                self?.finish(.registerSuccess)
             case .failure(_):
-                break
+                self?.finish(.registerError)
             }
         }
     }
