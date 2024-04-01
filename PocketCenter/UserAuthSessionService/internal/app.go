@@ -59,7 +59,8 @@ func (app *App) Run() {
 		}
 	}
 	fmt.Println("Listening on port", app.Config.Port, "...", "From IP: ")
-	log.Fatal(app.Engine.Run(fmt.Sprintf("%s:%s", app.Config.ServerAddress, app.Config.Port)))
+	go log.Fatal(app.Engine.Run(fmt.Sprintf("%s:%s", app.Config.ServerAddress, "8088")))
+	go log.Fatal(app.Engine.Run(fmt.Sprintf("%s:%s", app.Config.ServerAddress, app.Config.Port)))
 }
 
 func initDB(ctx context.Context, config *config.RepoConfig) (*pgxpool.Pool, error) {

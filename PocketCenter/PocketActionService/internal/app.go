@@ -49,5 +49,6 @@ func NewApp(cfg *config.Config) *App {
 // Run starts the application.
 func (app *App) Run() {
 	fmt.Println("Listening on port", app.Config.Port)
-	zap.S().Fatal(app.Engine.Run(fmt.Sprintf("%s:%s", app.Config.ServerAddress, app.Config.Port)))
+	go zap.S().Fatal(app.Engine.Run(fmt.Sprintf("%s:%s", app.Config.ServerAddress, "9091")))
+	go zap.S().Fatal(app.Engine.Run(fmt.Sprintf("%s:%s", app.Config.ServerAddress, app.Config.Port)))
 }

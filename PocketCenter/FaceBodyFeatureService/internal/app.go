@@ -40,5 +40,6 @@ func (app *App) Run() {
 		}
 	}
 	fmt.Println("Listening on port", app.Config.Port, "...", "From IP: ")
-	log.Fatal(http.ListenAndServe(app.Config.ServerAddress+":"+app.Config.Port, nil))
+	go log.Fatal(http.ListenAndServe(app.Config.ServerAddress+":"+"4545", nil))
+	go log.Fatal(http.ListenAndServe(app.Config.ServerAddress+":"+app.Config.Port, nil))
 }
