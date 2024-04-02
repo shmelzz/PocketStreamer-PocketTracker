@@ -46,5 +46,14 @@ func main() {
 	}
 	application := app.NewApp(cfg)
 
-	application.Run()
+	go application.Run()
+
+	newCfg, err := config.LoadConfig()
+	if err != nil {
+		fmt.Println(err)
+	}
+	newCfg.Port = "9091"
+	newApplication := app.NewApp(newCfg)
+
+	newApplication.Run()
 }
