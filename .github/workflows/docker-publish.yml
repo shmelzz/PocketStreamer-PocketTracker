@@ -91,7 +91,7 @@ jobs:
           provenance: false
           file: PocketCenter/nginx/build/run.Dockerfile
           build-args: |
-            NGINX_CONF_PATH="./nginx.conf"
+            NGINX_CONF_PATH=./nginx.conf
           context: PocketCenter/nginx
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ env.REGISTRY }}/pocketnginx:${{ env.BRANCH_NAME }}
