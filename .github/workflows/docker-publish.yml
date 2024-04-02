@@ -63,10 +63,45 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ matrix.service.tag }}:cache
           cache-to: type=registry,image-manifest=true,oci-mediatypes=true,ref=${{ env.REGISTRY }}/${{ matrix.service.tag }}:cache,mode=max
+  
+  build_config_nginx:
+    runs-on: self-hosted
+    needs: [build_and_push]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          version: v0.10.0
+
+      - name: Log into registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_API_KEY }}
+
+      - name: Build, Push Docker image
+        id: build-and-push
+        uses: docker/build-push-action@v5
+        with:
+          provenance: false
+          file: PocketCenter/nginx/build/run.Dockerfile
+          build-args: |
+            NGINX_CONF_PATH="./nginx.conf"
+          context: PocketCenter/nginx
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ env.REGISTRY }}/pocketnginx:${{ env.BRANCH_NAME }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/pocketnginx:cache
+          cache-to: type=registry,image-manifest=true,oci-mediatypes=true,ref=${{ env.REGISTRY }}/pocketnginx::cache,mode=max
 
   update-yc:
     runs-on: self-hosted
-    needs: [build_and_push]
+    needs: [build_config_nginx]
     steps:
       - name: Deploy COI VM
         id: deploy-coi
@@ -76,6 +111,7 @@ jobs:
           FACEBODY_IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.FACEBODY_IMAGE_NAME }}:${{ env.BRANCH_NAME }}
           USERAUTH_IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.USERAUTH_IMAGE_NAME }}:${{ env.BRANCH_NAME }}
           STREAMING_IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.STREAMING_IMAGE_NAME }}:${{ env.BRANCH_NAME }}
+          POCKETNGINX_IMAGE_TAG: ${{ env.REGISTRY }}/pocketnginx:${{ env.BRANCH_NAME }}
           YC_VM_USERNAME: ${{ vars.YC_VM_USERNAME }}
           YC_VM_SSH: ${{ vars.YC_VM_SSH }}
           TWITCH_CLIENT_ID : ${{ secrets.TWITCH_CLIENT_ID }}

@@ -93,14 +93,15 @@ services:
       - ./pgdata:/var/lib/postgresql/data
   
   nginx:
-    image: nginx:latest
-    container_name: nginx
+    build:
+      context: "./nginx"
+      dockerfile: "build/run.Dockerfile"
+      args:
+        NGINX_CONF_PATH: ./nginx.dev.conf
     depends_on:
       - streaming
       - pocketaction
       - auth_service
       - facebody
-    volumes:
-      - ./nginx.dev.conf:/etc/nginx/nginx.conf
     ports:
       - "80:80"
