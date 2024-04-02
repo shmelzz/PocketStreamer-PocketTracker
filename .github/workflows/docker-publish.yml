@@ -97,7 +97,7 @@ jobs:
           tags: ${{ env.REGISTRY }}/pocketnginx:${{ env.BRANCH_NAME }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/pocketnginx:cache
-          cache-to: type=registry,image-manifest=true,oci-mediatypes=true,ref=${{ env.REGISTRY }}/pocketnginx::cache,mode=max
+          cache-to: type=registry,image-manifest=true,oci-mediatypes=true,ref=${{ env.REGISTRY }}/pocketnginx:cache,mode=max
 
   update-yc:
     runs-on: self-hosted
