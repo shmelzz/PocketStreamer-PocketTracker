@@ -38,6 +38,7 @@ func main() {
 		fmt.Println(err)
 	}
 	newCfg.Port = "8088"
+	newCfg.SwaggerBasePath = "/auth"
 	newApplication := app.NewApp(newCfg)
 
 	newApplication.Run()

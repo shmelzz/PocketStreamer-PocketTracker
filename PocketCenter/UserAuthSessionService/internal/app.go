@@ -27,7 +27,7 @@ type App struct {
 
 // NewApp creates and configures your application.
 func NewApp(cfg *config.Config) *App {
-	docs.SwaggerInfo.BasePath = "/auth"
+	docs.SwaggerInfo.BasePath = cfg.SwaggerBasePath
 	pgxPool, err := initDB(context.Background(), &cfg.Repo)
 	if err != nil {
 		log.Fatal(err)

@@ -10,9 +10,11 @@ type Config struct {
 	UserAuthAddress string
 	AppEnv          string
 	AppwriteAPIKey  string
+	SwaggerBasePath string
 }
 
 func LoadConfig() (*Config, error) {
+	swaggerBasePath := os.Getenv("SWAGGER_BASE_PATH")
 	appEnv := os.Getenv("APP_ENV")
 	appwrite := os.Getenv("APPWRITE_API_KEY")
 	serverAddress := os.Getenv("SERVER_ADDRESS")
@@ -28,5 +30,6 @@ func LoadConfig() (*Config, error) {
 		UserAuthAddress: userAuthAddress,
 		AppEnv:          appEnv,
 		AppwriteAPIKey:  appwrite,
+		SwaggerBasePath: swaggerBasePath,
 	}, nil
 }

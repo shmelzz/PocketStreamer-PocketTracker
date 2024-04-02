@@ -21,6 +21,7 @@ type App struct {
 
 // NewApp creates and configures your application.
 func NewApp(cfg *config.Config) *App {
+	docs.SwaggerInfo.BasePath = cfg.SwaggerBasePath
 	if cfg.AppEnv == "development" {
 		zap.ReplaceGlobals(zap.Must(zap.NewDevelopment()))
 	} else if cfg.AppEnv == "production" {

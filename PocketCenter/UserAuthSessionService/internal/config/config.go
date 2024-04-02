@@ -5,9 +5,10 @@ import (
 )
 
 type Config struct {
-	ServerAddress string
-	Port          string
-	Repo          RepoConfig
+	ServerAddress   string
+	Port            string
+	Repo            RepoConfig
+	SwaggerBasePath string
 }
 
 type RepoConfig struct {
@@ -18,6 +19,7 @@ type RepoConfig struct {
 func LoadConfig() (*Config, error) {
 	dsn := os.Getenv("DSN")
 	mig_dir := os.Getenv("MIGRATIONS_DIR")
+	swaggerBasePath := os.Getenv("SWAGGER_BASE_PATH")
 	repoConfig := RepoConfig{
 		Dsn:     dsn,
 		Mig_dir: mig_dir,
@@ -29,8 +31,9 @@ func LoadConfig() (*Config, error) {
 		port = "8080" // Default address
 	}
 	return &Config{
-		ServerAddress: serverAddress,
-		Port:          port,
-		Repo:          repoConfig,
+		ServerAddress:   serverAddress,
+		Port:            port,
+		Repo:            repoConfig,
+		SwaggerBasePath: swaggerBasePath,
 	}, nil
 }
