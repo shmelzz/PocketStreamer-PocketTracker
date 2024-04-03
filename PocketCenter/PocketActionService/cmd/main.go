@@ -53,7 +53,6 @@ func main() {
 		fmt.Println(err)
 	}
 	newCfg.Port = "9091"
-	newCfg.SwaggerBasePath = ""
 	newApplication := app.NewApp(newCfg)
 
 	newApplication.Run()
