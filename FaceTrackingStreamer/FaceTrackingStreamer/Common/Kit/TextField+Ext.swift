@@ -16,6 +16,7 @@ extension UITextField {
         field.layer.cornerRadius = 10
         field.layer.masksToBounds = true
         field.font = font
+        field.textColor = .white
         return field
     }
     

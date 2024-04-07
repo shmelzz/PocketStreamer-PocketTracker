@@ -27,8 +27,8 @@ extension UIButton {
         configuration?.attributedTitle = AttributedString(
             text,
             attributes: AttributeContainer([
-                NSAttributedString.Key.font: configuration?.attributedTitle?.font,
-                NSAttributedString.Key.foregroundColor: configuration?.attributedTitle?.foregroundColor
+                NSAttributedString.Key.font: configuration?.attributedTitle?.font ?? Fonts.redditMonoMedium,
+                NSAttributedString.Key.foregroundColor: configuration?.attributedTitle?.foregroundColor ?? .white
             ])
         )
     }
