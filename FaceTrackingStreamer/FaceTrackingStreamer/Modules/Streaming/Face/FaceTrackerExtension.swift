@@ -26,10 +26,7 @@ extension ARFaceAnchor {
 //        blendShapes["lookAtPointY"] = lookAtPoint.y
 //        blendShapes["lookAtPointZ"] = lookAtPoint.z
 
-        let text = "faceAnchorM"
-        
-        let matrix = transform.compactMap{ $0 }
-        
+        let text = "faceAnchorM"        
         for i in 0...3 {
             for j in 0...3 {
                 blendShapes["\(text)\(i)\(j)"] = transform[i][j]

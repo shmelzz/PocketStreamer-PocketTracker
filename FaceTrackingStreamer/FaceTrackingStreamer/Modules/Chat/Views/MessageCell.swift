@@ -34,6 +34,7 @@ final class MessageCell: UITableViewCell, ConfigurableView {
         label.backgroundColor = Constants.greyColor
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 12
+        label.layer.opacity = 0.5
         return label
     }()
     

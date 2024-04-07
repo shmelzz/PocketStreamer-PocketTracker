@@ -16,6 +16,20 @@
 		6D6AE7B72A067BFC00A418D6 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D6AE7B62A067BFC00A418D6 /* ARKit.framework */; };
 		6D6AE7BA2A06907A00A418D6 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 6D6AE7B92A06907A00A418D6 /* Starscream */; };
 		B6EDBB401998C11725E54685 /* Pods_FaceTrackingStreamer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C90F849032981ACD2A74FE6 /* Pods_FaceTrackingStreamer.framework */; };
+		CC030F862BB9E7C400077E2E /* IModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC030F852BB9E7C400077E2E /* IModuleView.swift */; };
+		CC030F902BC2BA6F00077E2E /* RedditMono-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC030F882BC2BA6F00077E2E /* RedditMono-Black.ttf */; };
+		CC030F912BC2BA6F00077E2E /* RedditMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC030F892BC2BA6F00077E2E /* RedditMono-Regular.ttf */; };
+		CC030F922BC2BA6F00077E2E /* RedditMono-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC030F8A2BC2BA6F00077E2E /* RedditMono-ExtraBold.ttf */; };
+		CC030F932BC2BA6F00077E2E /* RedditMono-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC030F8B2BC2BA6F00077E2E /* RedditMono-Light.ttf */; };
+		CC030F942BC2BA6F00077E2E /* RedditMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC030F8C2BC2BA6F00077E2E /* RedditMono-Bold.ttf */; };
+		CC030F952BC2BA6F00077E2E /* RedditMono-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC030F8D2BC2BA6F00077E2E /* RedditMono-SemiBold.ttf */; };
+		CC030F962BC2BA6F00077E2E /* RedditMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC030F8E2BC2BA6F00077E2E /* RedditMono-Medium.ttf */; };
+		CC030F972BC2BA6F00077E2E /* RedditMono-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC030F8F2BC2BA6F00077E2E /* RedditMono-ExtraLight.ttf */; };
+		CC030F992BC2BC1400077E2E /* Font+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC030F982BC2BC1400077E2E /* Font+Ext.swift */; };
+		CC030F9B2BC2F16000077E2E /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC030F9A2BC2F16000077E2E /* Images.swift */; };
+		CC030F9D2BC2F74900077E2E /* TextField+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC030F9C2BC2F74900077E2E /* TextField+Ext.swift */; };
+		CC030F9F2BC2F82E00077E2E /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC030F9E2BC2F82E00077E2E /* UIColor+Ext.swift */; };
+		CC030FA12BC3069300077E2E /* Button+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC030FA02BC3069300077E2E /* Button+Ext.swift */; };
 		CC0C3A2B2B483E2B00C43AA5 /* DebugMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0C3A2A2B483E2B00C43AA5 /* DebugMenuViewController.swift */; };
 		CC27BA972BADE50A00240AFD /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CC27BA962BADE50A00240AFD /* PrivacyInfo.xcprivacy */; };
 		CC2E62E52B94FFF200CCDCED /* FaceTrackingModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E62E42B94FFF200CCDCED /* FaceTrackingModuleAssembly.swift */; };
@@ -118,6 +132,20 @@
 		6D6AE7B62A067BFC00A418D6 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		7C90F849032981ACD2A74FE6 /* Pods_FaceTrackingStreamer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FaceTrackingStreamer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC9ACAF490F0A4FF8B030FC /* Pods-FaceTrackingStreamer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FaceTrackingStreamer.debug.xcconfig"; path = "Target Support Files/Pods-FaceTrackingStreamer/Pods-FaceTrackingStreamer.debug.xcconfig"; sourceTree = "<group>"; };
+		CC030F852BB9E7C400077E2E /* IModuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IModuleView.swift; sourceTree = "<group>"; };
+		CC030F882BC2BA6F00077E2E /* RedditMono-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedditMono-Black.ttf"; sourceTree = "<group>"; };
+		CC030F892BC2BA6F00077E2E /* RedditMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedditMono-Regular.ttf"; sourceTree = "<group>"; };
+		CC030F8A2BC2BA6F00077E2E /* RedditMono-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedditMono-ExtraBold.ttf"; sourceTree = "<group>"; };
+		CC030F8B2BC2BA6F00077E2E /* RedditMono-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedditMono-Light.ttf"; sourceTree = "<group>"; };
+		CC030F8C2BC2BA6F00077E2E /* RedditMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedditMono-Bold.ttf"; sourceTree = "<group>"; };
+		CC030F8D2BC2BA6F00077E2E /* RedditMono-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedditMono-SemiBold.ttf"; sourceTree = "<group>"; };
+		CC030F8E2BC2BA6F00077E2E /* RedditMono-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedditMono-Medium.ttf"; sourceTree = "<group>"; };
+		CC030F8F2BC2BA6F00077E2E /* RedditMono-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RedditMono-ExtraLight.ttf"; sourceTree = "<group>"; };
+		CC030F982BC2BC1400077E2E /* Font+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Ext.swift"; sourceTree = "<group>"; };
+		CC030F9A2BC2F16000077E2E /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		CC030F9C2BC2F74900077E2E /* TextField+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextField+Ext.swift"; sourceTree = "<group>"; };
+		CC030F9E2BC2F82E00077E2E /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
+		CC030FA02BC3069300077E2E /* Button+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Ext.swift"; sourceTree = "<group>"; };
 		CC0C3A2A2B483E2B00C43AA5 /* DebugMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewController.swift; sourceTree = "<group>"; };
 		CC27BA962BADE50A00240AFD /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		CC2E62E42B94FFF200CCDCED /* FaceTrackingModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceTrackingModuleAssembly.swift; sourceTree = "<group>"; };
@@ -275,6 +303,21 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		CC030F872BC2BA5100077E2E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				CC030F882BC2BA6F00077E2E /* RedditMono-Black.ttf */,
+				CC030F8C2BC2BA6F00077E2E /* RedditMono-Bold.ttf */,
+				CC030F8A2BC2BA6F00077E2E /* RedditMono-ExtraBold.ttf */,
+				CC030F8F2BC2BA6F00077E2E /* RedditMono-ExtraLight.ttf */,
+				CC030F8B2BC2BA6F00077E2E /* RedditMono-Light.ttf */,
+				CC030F8E2BC2BA6F00077E2E /* RedditMono-Medium.ttf */,
+				CC030F892BC2BA6F00077E2E /* RedditMono-Regular.ttf */,
+				CC030F8D2BC2BA6F00077E2E /* RedditMono-SemiBold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		CC0C3A252B4832E100C43AA5 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -428,7 +471,8 @@
 		CC3F81E92B4B31D9006EDC95 /* Face */ = {
 			isa = PBXGroup;
 			children = (
-				CC40BEAB2B5F0915004036F3 /* Views */,
+				CC40BEA92B5F08F4004036F3 /* FaceTrackingViewController.swift */,
+				6D3D34CE2A0668560052AE68 /* OldFaceTrackingViewController.swift */,
 				6D3D34D02A066FF20052AE68 /* FaceTrackerExtension.swift */,
 				CC40BEAC2B5F097A004036F3 /* FaceTrackingContract.swift */,
 				CC40BEB12B5F10B6004036F3 /* FaceTrackingPresenter.swift */,
@@ -440,6 +484,7 @@
 		CC3F81F42B4C2151006EDC95 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CC030F872BC2BA5100077E2E /* Fonts */,
 				CC3F81F12B4C1FE2006EDC95 /* robot.usdz */,
 			);
 			path = Resources;
@@ -471,17 +516,13 @@
 				CCB26BB72B9F9B8B00B7B9A0 /* View */,
 				CCB800C62B85F99C003F9AD2 /* Storage */,
 				CCB800B12B84ED4A003F9AD2 /* Networking */,
+				CC030F982BC2BC1400077E2E /* Font+Ext.swift */,
+				CC030F9A2BC2F16000077E2E /* Images.swift */,
+				CC030F9C2BC2F74900077E2E /* TextField+Ext.swift */,
+				CC030F9E2BC2F82E00077E2E /* UIColor+Ext.swift */,
+				CC030FA02BC3069300077E2E /* Button+Ext.swift */,
 			);
 			path = Kit;
-			sourceTree = "<group>";
-		};
-		CC40BEAB2B5F0915004036F3 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				CC40BEA92B5F08F4004036F3 /* FaceTrackingViewController.swift */,
-				6D3D34CE2A0668560052AE68 /* OldFaceTrackingViewController.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		CC40BEAE2B5F0D7B004036F3 /* Common */ = {
@@ -683,6 +724,7 @@
 				CCB800D92B865704003F9AD2 /* BaseModuleAssembly.swift */,
 				CC3718042B86739A0069D978 /* ModulesAssembly.swift */,
 				CC3718092B867F4E0069D978 /* IModuleOutput.swift */,
+				CC030F852BB9E7C400077E2E /* IModuleView.swift */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -763,10 +805,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC030F922BC2BA6F00077E2E /* RedditMono-ExtraBold.ttf in Resources */,
 				6D3D34C72A06683E0052AE68 /* LaunchScreen.storyboard in Resources */,
+				CC030F932BC2BA6F00077E2E /* RedditMono-Light.ttf in Resources */,
+				CC030F972BC2BA6F00077E2E /* RedditMono-ExtraLight.ttf in Resources */,
 				CC3F81F22B4C1FE2006EDC95 /* robot.usdz in Resources */,
+				CC030F912BC2BA6F00077E2E /* RedditMono-Regular.ttf in Resources */,
+				CC030F942BC2BA6F00077E2E /* RedditMono-Bold.ttf in Resources */,
+				CC030F962BC2BA6F00077E2E /* RedditMono-Medium.ttf in Resources */,
 				CC27BA972BADE50A00240AFD /* PrivacyInfo.xcprivacy in Resources */,
 				6D3D34C42A06683E0052AE68 /* Assets.xcassets in Resources */,
+				CC030F952BC2BA6F00077E2E /* RedditMono-SemiBold.ttf in Resources */,
+				CC030F902BC2BA6F00077E2E /* RedditMono-Black.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -820,6 +870,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCB800CC2B861F45003F9AD2 /* IRouter.swift in Sources */,
+				CC030F862BB9E7C400077E2E /* IModuleView.swift in Sources */,
 				CCB800C12B84FD56003F9AD2 /* RegisterRequest.swift in Sources */,
 				6D3D34CF2A0668560052AE68 /* OldFaceTrackingViewController.swift in Sources */,
 				CCB800B02B829F85003F9AD2 /* AuthModuleAssembly.swift in Sources */,
@@ -837,11 +888,13 @@
 				CCB26B9E2B9DDBE300B7B9A0 /* ChatService.swift in Sources */,
 				CC40BEA32B5DA011004036F3 /* DebugMenuModuleAssembly.swift in Sources */,
 				CCB800B92B84F1CB003F9AD2 /* JSONParsable.swift in Sources */,
+				CC030F9B2BC2F16000077E2E /* Images.swift in Sources */,
 				CCB26BA82B9DEC5E00B7B9A0 /* SelectPlatformModuleAssembly.swift in Sources */,
 				CCB800D82B86283E003F9AD2 /* MainFlowCoordinator.swift in Sources */,
 				CC40BEAA2B5F08F4004036F3 /* FaceTrackingViewController.swift in Sources */,
 				CCB26B852B9C55A700B7B9A0 /* ConnectViewController.swift in Sources */,
 				CCB26B932B9DC22100B7B9A0 /* ChatPresenter.swift in Sources */,
+				CC030F9D2BC2F74900077E2E /* TextField+Ext.swift in Sources */,
 				CCB26BAF2B9DF49D00B7B9A0 /* ActionsContract.swift in Sources */,
 				CCB26BC42BA748FE00B7B9A0 /* ChannelValidationRequest.swift in Sources */,
 				CCB26BC62BA75D1800B7B9A0 /* ActionsListRequest.swift in Sources */,
@@ -858,10 +911,12 @@
 				CC3718102B874C2E0069D978 /* IWebSocketRequest.swift in Sources */,
 				CCB26BC12BA748B000B7B9A0 /* ChannelService.swift in Sources */,
 				CCB26BA42B9DEC4700B7B9A0 /* SelectPlatformPresenter.swift in Sources */,
+				CC030F9F2BC2F82E00077E2E /* UIColor+Ext.swift in Sources */,
 				CCB26B9C2B9DC84300B7B9A0 /* FindComposerService.swift in Sources */,
 				CCB800DA2B865704003F9AD2 /* BaseModuleAssembly.swift in Sources */,
 				CC40BEAD2B5F097A004036F3 /* FaceTrackingContract.swift in Sources */,
 				CC0C3A2B2B483E2B00C43AA5 /* DebugMenuViewController.swift in Sources */,
+				CC030F992BC2BC1400077E2E /* Font+Ext.swift in Sources */,
 				CCB26B952B9DC22D00B7B9A0 /* ChatContract.swift in Sources */,
 				CC3718032B866D9A0069D978 /* ValidateRequest.swift in Sources */,
 				CCB26BBC2B9F9E9F00B7B9A0 /* MessageCell.swift in Sources */,
@@ -881,6 +936,7 @@
 				CCB800C52B85F227003F9AD2 /* SessionProvider.swift in Sources */,
 				CCB26B872B9C560500B7B9A0 /* ConnectContract.swift in Sources */,
 				CCB800D02B862193003F9AD2 /* CoordinatorFactory.swift in Sources */,
+				CC030FA12BC3069300077E2E /* Button+Ext.swift in Sources */,
 				CCB800CA2B861F1E003F9AD2 /* BaseCoordinator.swift in Sources */,
 				CC37180A2B867F4E0069D978 /* IModuleOutput.swift in Sources */,
 				CCB26B8D2B9C6C4C00B7B9A0 /* BodyTrackingPresenter.swift in Sources */,
