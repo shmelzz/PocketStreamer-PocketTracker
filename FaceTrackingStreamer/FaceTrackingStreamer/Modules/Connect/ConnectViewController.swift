@@ -23,9 +23,9 @@ final class ConnectViewController: UIViewController, IConnectView, UIGestureReco
     private lazy var connectButton: UIButton = {
         let button = UIButton.tinted(
             title: Constants.startScanText,
-            font: Fonts.redditMonoSemiBold
+            font: Fonts.redditMonoMedium
         )
-        button.tintColor = .black
+        button.tintColor = .white
         button.addTarget(self, action: #selector(onConnectButton), for: .touchUpInside)
         return button
     }()
@@ -106,7 +106,7 @@ final class ConnectViewController: UIViewController, IConnectView, UIGestureReco
         
         UIView.animate(withDuration: 0.6) {
             self.imageView.alpha = 1
-            self.scanView.alpha = 0
+            self.scanView.isHidden = true
         }
     }
     
@@ -130,7 +130,8 @@ final class ConnectViewController: UIViewController, IConnectView, UIGestureReco
         NSLayoutConstraint.activate([
             connectButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 100),
             connectButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            connectButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16)
+            connectButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            connectButton.heightAnchor.constraint(equalToConstant: 44)
         ])
         
         view.addSubview(scanView)
