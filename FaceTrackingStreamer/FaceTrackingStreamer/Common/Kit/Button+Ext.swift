@@ -22,4 +22,14 @@ extension UIButton {
         button.tintColor = .black
         return button
     }
+    
+    func reconfigureTitle(_ text: String) {
+        configuration?.attributedTitle = AttributedString(
+            text,
+            attributes: AttributeContainer([
+                NSAttributedString.Key.font: configuration?.attributedTitle?.font,
+                NSAttributedString.Key.foregroundColor: configuration?.attributedTitle?.foregroundColor
+            ])
+        )
+    }
 }

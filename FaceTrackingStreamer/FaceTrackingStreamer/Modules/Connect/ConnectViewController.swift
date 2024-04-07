@@ -15,16 +15,24 @@ final class ConnectViewController: UIViewController, IConnectView, UIGestureReco
         static let stopScanText = "Stop scanning"
     }
     
+    private lazy var imageView: UIImageView = {
+        let view = UIImageView(image: ImageAssets.connectCircle)
+        return view
+    }()
+    
     private lazy var connectButton: UIButton = {
-        let button = UIButton(configuration: .filled())
-        button.setTitle(Constants.startScanText, for: .normal)
+        let button = UIButton.tinted(
+            title: Constants.startScanText,
+            font: Fonts.redditMonoSemiBold
+        )
+        button.tintColor = .black
         button.addTarget(self, action: #selector(onConnectButton), for: .touchUpInside)
         return button
     }()
     
     private lazy var logoutButton: UIButton = {
         var config = UIButton.Configuration.plain()
-        config.image = UIImage(systemName: "rectangle.portrait.and.arrow.right")
+        config.image = UIImage(systemName: "rectangle.portrait.and.arrow.right")?.withRenderingMode(.alwaysOriginal).withTintColor(.white)
         let button = UIButton(configuration: config)
         button.addTarget(self, action: #selector(onLogoutButton), for: .touchUpInside)
         return button
@@ -67,22 +75,39 @@ final class ConnectViewController: UIViewController, IConnectView, UIGestureReco
     @objc
     private func onConnectButton() {
         if scanView.isHidden {
-            connectButton.setTitle(Constants.stopScanText, for: .normal)
-            cameraManager.startQRCodeDetection { [weak self] result in
-                switch result {
-                case .success(let value):
-                    self?.cameraManager.stopQRCodeDetection()
-                    self?.presenter?.onConnectSuccess(with: value)
-                    print(value)
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
+            startScan()
         } else {
-            connectButton.setTitle(Constants.startScanText, for: .normal)
-            cameraManager.stopQRCodeDetection()
+            stopScan()
         }
-        scanView.isHidden.toggle()
+    }
+    
+    private func startScan() {
+        connectButton.reconfigureTitle(Constants.stopScanText)
+        cameraManager.startQRCodeDetection { [weak self] result in
+            switch result {
+            case .success(let value):
+                self?.cameraManager.stopQRCodeDetection()
+                self?.presenter?.onConnectSuccess(with: value)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        UIView.animate(withDuration: 0.6) {
+            self.imageView.alpha = 0
+        } completion: { _ in
+            self.scanView.isHidden = false
+        }
+    }
+    
+    private func stopScan() {
+        connectButton.reconfigureTitle(Constants.startScanText)
+        cameraManager.stopQRCodeDetection()
+        
+        UIView.animate(withDuration: 0.6) {
+            self.imageView.alpha = 1
+            self.scanView.alpha = 0
+        }
     }
     
     @objc
@@ -117,5 +142,14 @@ final class ConnectViewController: UIViewController, IConnectView, UIGestureReco
             scanView.heightAnchor.constraint(equalTo: scanView.widthAnchor)
         ])
         cameraManager.addPreviewLayerToView(scanView)
+        
+        view.addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
+            imageView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            imageView.bottomAnchor.constraint(equalTo: connectButton.topAnchor, constant: -16),
+            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor)
+        ])
     }
 }
