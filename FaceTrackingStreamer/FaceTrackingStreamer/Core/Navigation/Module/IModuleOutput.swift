@@ -11,7 +11,7 @@ protocol IModuleOutput: AnyObject {
     func finish(_ action: CoordinatorAction)
 }
 
-class BaseModuleOutput: IModuleOutput {
+class BaseModuleOutput: NSObject, IModuleOutput {
     
     private let coordinator: ICoordinator
     

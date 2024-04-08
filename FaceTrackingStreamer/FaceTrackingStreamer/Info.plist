@@ -2,6 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>RedditMono-SemiBold.ttf</string>
+		<string>RedditMono-ExtraBold.ttf</string>
+		<string>RedditMono-ExtraLight.ttf</string>
+		<string>RedditMono-Light.ttf</string>
+		<string>RedditMono-Medium.ttf</string>
+		<string>RedditMono-Regular.ttf</string>
+		<string>RedditMono-Bold.ttf</string>
+		<string>RedditMono-Black.ttf</string>
+	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

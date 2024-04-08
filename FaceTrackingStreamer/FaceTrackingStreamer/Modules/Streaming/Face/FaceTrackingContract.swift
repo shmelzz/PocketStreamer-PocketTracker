@@ -13,6 +13,6 @@ protocol IFaceTrackingView: AnyObject {
 
 protocol IFaceTrackingPresenter {
     func onViewDidLoad()
-    
+    func onConnectTapped()
 }
 

@@ -28,6 +28,8 @@ protocol IServicesAssembly: AnyObject {
     var endpointProvider: IEndpointProvider { get }
     
     var channelService: IChannelService { get }
+    
+    var faceTrackingService: IFaceTrackingService { get }
 }
 
 final class ServicesAssembly: IServicesAssembly {
@@ -94,6 +96,13 @@ final class ServicesAssembly: IServicesAssembly {
     lazy var channelService: IChannelService = {
         ChannelService(
             requestManager: requestManager,
+            endpointProvider: endpointProvider,
+            sessionProvider: sessionProvider
+        )
+    }()
+    
+    lazy var faceTrackingService: IFaceTrackingService = {
+        FaceTrackingService(
             endpointProvider: endpointProvider,
             sessionProvider: sessionProvider
         )

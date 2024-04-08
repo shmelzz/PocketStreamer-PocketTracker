@@ -3,7 +3,7 @@ import Starscream
 
 protocol IFaceTrackingService {
     func connect()
-    func send(facetrackingData: [String: Any])
+    func send(_ facetrackingData: [String: Any])
 }
 
 protocol IFaceTrackingServiceDelegate: AnyObject {
@@ -11,16 +11,20 @@ protocol IFaceTrackingServiceDelegate: AnyObject {
 }
 
 final class FaceTrackingService: IFaceTrackingService, WebSocketDelegate {
-
+    
+    private let endpointProvider: IEndpointProvider
+    private let sessionProvider: ISessionProvider
+    
     private var webSocket: WebSocket?
-    private let endpointProvider: IApiEndpointStorage
     
     weak var delegate: IFaceTrackingServiceDelegate?
     
     init(
-        endpointProvider: IApiEndpointStorage
+        endpointProvider: IEndpointProvider,
+        sessionProvider: ISessionProvider
     ) {
         self.endpointProvider = endpointProvider
+        self.sessionProvider = sessionProvider
     }
     
     // MARK: - WebSocketDelegate
@@ -54,7 +58,7 @@ final class FaceTrackingService: IFaceTrackingService, WebSocketDelegate {
     
     // MARK: - IFaceTrackingService
     
-    func send(facetrackingData: [String : Any]) {
+    func send(_ facetrackingData: [String : Any]) {
         guard let data = try? JSONSerialization.data(withJSONObject: facetrackingData, options: []) else {
             print("Error encoding face tracking data")
             return
@@ -63,16 +67,18 @@ final class FaceTrackingService: IFaceTrackingService, WebSocketDelegate {
     }
     
     func connect() {
-        guard let endpoint = endpointProvider.get()?.environments.first(where: { $0.isSelected })?.endpoint else { return }
+        let endpoint = endpointProvider.faceTrackingEndpoint()
         connect(to: endpoint)
     }
     
     // MARK: - Private
     
-    private func connect(to model: ApiEndpoint) {
-        guard let url = URL(string: "ws://\(model.endpoint):\(model.port)/facetracking") else { return }
+    private func connect(to host: String) {
+        guard let url = URL(string: "ws://\(host)/facetracking") else { return }
         var request = URLRequest(url: url)
-        request.timeoutInterval = 5
+        request.setValue(sessionProvider.token, forHTTPHeaderField: "Authentication")
+        request.setValue(sessionProvider.sessionId, forHTTPHeaderField: "SessionId")
+        request.timeoutInterval = 10
         webSocket = WebSocket(request: request)
         webSocket?.delegate = self
         webSocket?.connect()
