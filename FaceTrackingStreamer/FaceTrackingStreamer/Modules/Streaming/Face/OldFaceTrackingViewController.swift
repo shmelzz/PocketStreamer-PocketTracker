@@ -143,9 +143,9 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         actionsCameraView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             actionsCameraView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
-            actionsCameraView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-            actionsCameraView.widthAnchor.constraint(equalToConstant: 180),
-            actionsCameraView.heightAnchor.constraint(equalToConstant: 180)
+            actionsCameraView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            actionsCameraView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.7),
+            actionsCameraView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.7)
         ])
         
         view.addSubview(chatView)

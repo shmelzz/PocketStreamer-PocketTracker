@@ -12,21 +12,22 @@ final class ActionCell: UITableViewCell, ConfigurableView {
     static let actionCellId = "ActionCell"
     
     private enum Constants {
-        static let greyColor = UIColor.systemBlue
+        static let backColor = UIColor.black.withAlphaComponent(0.2)
     }
     
     private lazy var actionName = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .center
+        label.font = Fonts.redditMonoLight
         return label
     }()
     
     private lazy var actionBubble = {
         let label = UIView()
-        label.backgroundColor = Constants.greyColor
+        label.backgroundColor = Constants.backColor
         label.layer.masksToBounds = true
-        label.layer.cornerRadius = 8
+        label.layer.cornerRadius = 12
         return label
     }()
     
@@ -62,7 +63,7 @@ final class ActionCell: UITableViewCell, ConfigurableView {
             actionBubble.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
             actionBubble.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             actionBubble.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            actionBubble.heightAnchor.constraint(equalToConstant: 46)
+            actionBubble.heightAnchor.constraint(equalToConstant: 40)
         ])
 
         actionName.translatesAutoresizingMaskIntoConstraints = false

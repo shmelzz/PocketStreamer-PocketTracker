@@ -23,6 +23,15 @@ extension UIButton {
         return button
     }
     
+    static func tinted(image: UIImage?) -> UIButton {
+        var configuration = UIButton.Configuration.borderedTinted()
+        let button = UIButton(configuration: configuration)
+        button.setImage(image, for: .normal)
+        button.tintColor = .black
+        button.imageView?.contentMode = .scaleToFill
+        return button
+    }
+    
     func reconfigureTitle(_ text: String) {
         configuration?.attributedTitle = AttributedString(
             text,

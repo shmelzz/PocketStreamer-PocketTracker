@@ -12,6 +12,13 @@ enum ActionSections: Hashable, CaseIterable {
 }
 
 final class ActionsListView: UIView, IActionsView, UITableViewDelegate {
+    
+    private lazy var showActionsButton: UIButton = {
+        let button = UIButton.tinted(image: ImageAssets.cubes)
+        button.addTarget(self, action: #selector(onShowActionsTap), for: .touchUpInside)
+//        button.addGestureRecognizer(longTapGestureRecognizer)
+        return button
+    }()
 
     private lazy var tableView = UITableView(frame: .zero)
     
@@ -39,15 +46,30 @@ final class ActionsListView: UIView, IActionsView, UITableViewDelegate {
     
     // MARK: - Private
     
+    @objc
+    private func onShowActionsTap() {
+        tableView.isHidden.toggle()
+    }
+    
     private func setupView() {
+        addSubview(showActionsButton)
+        showActionsButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            showActionsButton.topAnchor.constraint(equalTo: topAnchor),
+            showActionsButton.widthAnchor.constraint(equalToConstant: 48),
+            showActionsButton.heightAnchor.constraint(equalToConstant: 48),
+            showActionsButton.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
+        
         setupTableView()
     }
     
     private func setupTableView() {
+        tableView.isHidden = true
         tableView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(tableView)
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: topAnchor),
+            tableView.topAnchor.constraint(equalTo: showActionsButton.bottomAnchor, constant: 8),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor)
