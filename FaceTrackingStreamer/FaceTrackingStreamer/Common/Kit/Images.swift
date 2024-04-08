@@ -14,6 +14,7 @@ enum ImageAssets {
     static let faceMesh = UIImage(named: "face_mesh")
     static let connectCircle = UIImage(named: "connection")
     static let backNavy = UIImage(named: "background_navy")
+    static let smile = UIImage(named: "smile")
     
     
     static let account = UIImage(systemName: "person.crop.circle")?.withRenderingMode(.alwaysOriginal).withTintColor(.white)

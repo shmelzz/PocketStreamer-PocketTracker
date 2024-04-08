@@ -5,7 +5,7 @@
 //  Created by Elizaveta Shelemekh on 10.03.2024.
 //
 
-import Foundation
+import UIKit
 
 final class SelectPlatformPresenter: BaseModuleOutput, ISelectPlatformPresenter {
     
@@ -13,6 +13,8 @@ final class SelectPlatformPresenter: BaseModuleOutput, ISelectPlatformPresenter 
     
     private let platformManager: IPlatformManager
     private let channelService: IChannelService
+    
+    private let dataSource = ["Twitch", "YouTube"]
     
     init(
         view: ISelectPlatformView,
@@ -41,5 +43,21 @@ final class SelectPlatformPresenter: BaseModuleOutput, ISelectPlatformPresenter 
     
     func onLongPress() {
         finish(.onLongPress)
+    }
+    
+    // MARK: - UIPickerViewDataSource
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        dataSource.count
+    }
+    
+    // MARK: - UIPickerViewDelegate
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        dataSource[row]
     }
 }
