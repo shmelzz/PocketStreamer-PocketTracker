@@ -6,6 +6,8 @@ on:
     paths:
       - pocket-streamer-landing/**
       - .github/workflows/landing-deploy.yml
+      - .github/workflows/yandex-cloud/docker-compose.landing.yc.yaml
+      - .github/workflows/yandex-cloud/user-data.yaml
   workflow_dispatch:
 
 env:
@@ -74,7 +76,7 @@ jobs:
           vm-service-account-id: ${{ secrets.YC_SERVICE_ACCOUNT_ID }}
           vm-cores: 1
           vm-memory: 1Gb
-          vm-core-fraction: 10
+          vm-core-fraction: 20
           vm-subnet-id: ${{ secrets.YC_SUBNET_ID }}
           user-data-path: "./.github/workflows/yandex-cloud/user-data.yaml"
           docker-compose-path: "./.github/workflows/yandex-cloud/docker-compose.landing.yc.yaml"
