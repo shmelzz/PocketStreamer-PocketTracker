@@ -12,6 +12,7 @@ title: Welcome to PocketStreamer  Your Gateway to Virtual Broadcasting
    <a href="https://testflight.apple.com/join/hM2dHWso" target="_blank">
      <img src="https://askyourself.app/assets/testflight.png" alt="Download on TestFlight" style="width: auto; height: 70px;">
    </a>
+    <h3 style="text-align: center;">iOS</h3>
  </div>
  <div style="text-align: center;">
    <h5 style="text-align: center;">Telegram Channel</h5>
@@ -24,6 +25,7 @@ title: Welcome to PocketStreamer  Your Gateway to Virtual Broadcasting
    <a href="https://testflight.apple.com/join/L2sEste8" target="_blank">
      <img src="https://askyourself.app/assets/testflight.png" alt="Download on TestFlight" style="width: auto; height: 70px;">
    </a>
+    <h3 style="text-align: center;">macOS</h3>
  </div>
 </div>
 
