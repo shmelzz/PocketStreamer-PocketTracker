@@ -4,5 +4,5 @@ services:
     landing:
         image: {{ env.LANDING_TAG }}
         ports:
-          - "0.0.0.0:80:8080" # Map the default port from the container to the host
+          - "0.0.0.0:80:8088" # Map the default port from the container to the host
         restart: always
