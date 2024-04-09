@@ -1,5 +1,5 @@
 ---
-title: Welcome to PocketStreamer  Your Gateway to Virtual Broadcasting
+title: Welcome to PocketStreamer
 ---
 # Your Gateway to Virtual Broadcasting
 <p align="center">
