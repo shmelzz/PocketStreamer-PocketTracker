@@ -13,8 +13,12 @@ enum ActionSections: Hashable, CaseIterable {
 
 final class ActionsListView: UIView, IActionsView, UITableViewDelegate {
     
+    private lazy var showActionsImage: UIImageView = {
+        return UIImageView(image: ImageAssets.cubes)
+    }()
+    
     private lazy var showActionsButton: UIButton = {
-        let button = UIButton.tinted(image: ImageAssets.cubes)
+        let button = UIButton.tinted(color: .black)
         button.addTarget(self, action: #selector(onShowActionsTap), for: .touchUpInside)
 //        button.addGestureRecognizer(longTapGestureRecognizer)
         return button
@@ -56,9 +60,18 @@ final class ActionsListView: UIView, IActionsView, UITableViewDelegate {
         showActionsButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             showActionsButton.topAnchor.constraint(equalTo: topAnchor),
-            showActionsButton.widthAnchor.constraint(equalToConstant: 48),
-            showActionsButton.heightAnchor.constraint(equalToConstant: 48),
+            showActionsButton.widthAnchor.constraint(equalToConstant: 52),
+            showActionsButton.heightAnchor.constraint(equalToConstant: 52),
             showActionsButton.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
+        
+        showActionsButton.addSubview(showActionsImage)
+        showActionsImage.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            showActionsImage.topAnchor.constraint(equalTo: showActionsButton.topAnchor, constant: 4),
+            showActionsImage.trailingAnchor.constraint(equalTo: showActionsButton.trailingAnchor, constant: -4),
+            showActionsImage.bottomAnchor.constraint(equalTo: showActionsButton.bottomAnchor, constant: -4),
+            showActionsImage.leadingAnchor.constraint(equalTo: showActionsButton.leadingAnchor, constant: 4)
         ])
         
         setupTableView()

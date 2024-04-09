@@ -19,7 +19,7 @@ final class ActionCell: UITableViewCell, ConfigurableView {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.font = Fonts.redditMonoLight
+        label.font = Fonts.redditMonoRegular
         return label
     }()
     

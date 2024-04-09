@@ -23,12 +23,10 @@ extension UIButton {
         return button
     }
     
-    static func tinted(image: UIImage?) -> UIButton {
+    static func tinted(color: UIColor) -> UIButton {
         var configuration = UIButton.Configuration.borderedTinted()
         let button = UIButton(configuration: configuration)
-        button.setImage(image, for: .normal)
-        button.tintColor = .black
-        button.imageView?.contentMode = .scaleToFill
+        button.tintColor = color
         return button
     }
     
