@@ -1,0 +1,8 @@
+version: '3.7'
+
+services:
+    landing:
+        image: {{ env.LANDING_TAG }}
+        ports:
+          - "0.0.0.0:8080:8080" # Map the default port from the container to the host
+        restart: always

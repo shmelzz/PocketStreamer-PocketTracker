@@ -1,0 +1,80 @@
+name: Docker Build and Push PocketCenter
+
+on:
+  push:
+    branches: ["meta-*"]
+    paths:
+      - pocket-streamer-landing/**
+      - .github/workflows/landing-deploy.yml
+  workflow_dispatch:
+
+env:
+  REGISTRY: cr.yandex/crpsa7b6pi9hgku83m9q
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}${{ github.sha }}
+  LANDING_IMAGE_NAME: pocketlanding
+
+jobs:
+  build_and_push:
+    runs-on: self-hosted
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      matrix:
+        service:
+          [
+            { name: pocket-streamer-landing, tag: pocketlanding },
+          ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        # with:
+        #   version: v0.9.1
+
+      - name: Log into registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_API_KEY }}
+
+      - name: Build, Push Docker image
+        id: build-and-push
+        uses: docker/build-push-action@v5
+        with:
+          provenance: false
+          file: ${{ matrix.service.name }}/Dockerfile
+          context: ${{ matrix.service.name }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ env.REGISTRY }}/${{ matrix.service.tag }}:${{ env.BRANCH_NAME }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ matrix.service.tag }}:cache
+          cache-to: type=registry,image-manifest=true,oci-mediatypes=true,ref=${{ env.REGISTRY }}/${{ matrix.service.tag }}:cache,mode=max
+
+  update-yc:
+    runs-on: self-hosted
+    needs: [build_and_push]
+    steps:
+      - name: Deploy COI VM
+        id: deploy-coi
+        uses: yc-actions/yc-coi-deploy@v2
+        env:
+          LANDING_TAG: ${{ env.REGISTRY }}/${{ env.POCKETACTION_IMAGE_NAME }}:${{ env.BRANCH_NAME }}
+          YC_VM_USERNAME: ${{ vars.YC_VM_USERNAME }}
+          YC_VM_SSH: ${{ vars.YC_VM_SSH }}
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+          folder-id: ${{ secrets.YC_FOLDER_ID }}
+          vm-name: pocket-landing
+          vm-service-account-id: ${{ secrets.YC_SERVICE_ACCOUNT_ID }}
+          vm-cores: 1
+          vm-memory: 1Gb
+          vm-core-fraction: 10
+          vm-subnet-id: ${{ secrets.YC_SUBNET_ID }}
+          user-data-path: "./.github/workflows/yandex-cloud/user-data.yaml"
+          docker-compose-path: "./.github/workflows/yandex-cloud/docker-compose.landing.yc.yaml"
