@@ -15,7 +15,10 @@ enum ImageAssets {
     static let connectCircle = UIImage(named: "connection")
     static let backNavy = UIImage(named: "background_navy")
     static let smile = UIImage(named: "smile")
-    
+    static let net = UIImage(named: "net")
+    static let error = UIImage(named: "error")
+    static let undefined = UIImage(named: "undefined")
+    static let cubes = UIImage(named: "cubes")
     
     static let account = UIImage(systemName: "person.crop.circle")?.withRenderingMode(.alwaysOriginal).withTintColor(.white)
     static let key = UIImage(systemName: "key")?.withRenderingMode(.alwaysOriginal).withTintColor(.white)

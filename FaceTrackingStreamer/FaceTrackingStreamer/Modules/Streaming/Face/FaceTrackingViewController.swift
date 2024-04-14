@@ -27,6 +27,10 @@ final class FaceTrackingViewController: UIViewController, IFaceTrackingView {
         return button
     }()
     
+    private let actionsListView: UIView?
+    
+    private let chatView: UIView?
+    
 //    private lazy var actionsCameraView: ActionsListView = {
 //        let view = ActionsListView()
 //        let presenter = ActionsPresenter(
@@ -42,6 +46,19 @@ final class FaceTrackingViewController: UIViewController, IFaceTrackingView {
     var presenter: IFaceTrackingPresenter?
     
     // MARK: - Init
+    
+    init(
+        actionsListView: UIView?,
+        chatView: UIView?
+    ) {
+        self.actionsListView = actionsListView
+        self.chatView = chatView
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

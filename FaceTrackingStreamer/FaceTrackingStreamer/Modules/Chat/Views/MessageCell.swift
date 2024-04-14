@@ -38,19 +38,6 @@ final class MessageCell: UITableViewCell, ConfigurableView {
         return label
     }()
     
-//    private lazy var time = {
-//        let label = UILabel()
-//        label.font = .systemFont(ofSize: 11)
-//        label.textColor = .systemGray
-//        return label
-//    }()
-    
-    //    private lazy var dateFormatter = {
-    //        let formatter = DateFormatter()
-    //        formatter.dateFormat = "HH:mm"
-    //        return formatter
-    //    }()
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupBubble()
@@ -101,12 +88,5 @@ final class MessageCell: UITableViewCell, ConfigurableView {
             message.trailingAnchor.constraint(equalTo: messageBubble.trailingAnchor, constant: -46),
             message.leadingAnchor.constraint(equalTo: messageBubble.leadingAnchor, constant: 12)
         ])
-        
-//        time.translatesAutoresizingMaskIntoConstraints = false
-//        messageBubble.addSubview(time)
-//        NSLayoutConstraint.activate([
-//            time.bottomAnchor.constraint(equalTo: messageBubble.bottomAnchor, constant: -6),
-//            time.trailingAnchor.constraint(equalTo: messageBubble.trailingAnchor, constant: -12)
-//        ])
     }
 }

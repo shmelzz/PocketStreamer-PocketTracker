@@ -23,6 +23,13 @@ extension UIButton {
         return button
     }
     
+    static func tinted(color: UIColor) -> UIButton {
+        var configuration = UIButton.Configuration.borderedTinted()
+        let button = UIButton(configuration: configuration)
+        button.tintColor = color
+        return button
+    }
+    
     func reconfigureTitle(_ text: String) {
         configuration?.attributedTitle = AttributedString(
             text,

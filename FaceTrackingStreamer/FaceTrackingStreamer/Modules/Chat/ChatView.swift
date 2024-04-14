@@ -22,8 +22,11 @@ final class ChatView: UIView, IChatView, UITableViewDelegate {
     private lazy var dataSource = DataSource(tableView)
     
     private lazy var followChatButton: UIButton = {
-        let button = UIButton(configuration: .filled())
-        button.setTitle(Constants.followChatText, for: .normal)
+        let button = UIButton.tinted(
+            title: "Follow chat",
+            font: Fonts.redditMonoSemiBold
+        )
+        button.tintColor = .black
         button.addTarget(self, action: #selector(onFollowChatTapped), for: .touchUpInside)
         return button
     }()
