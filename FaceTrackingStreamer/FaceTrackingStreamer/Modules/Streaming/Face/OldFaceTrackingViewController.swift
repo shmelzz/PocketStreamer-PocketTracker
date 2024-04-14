@@ -32,9 +32,17 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     
     private var coordinator: ICoordinator
     
+    private lazy var connectionStatusImageView: UIImageView = {
+        let view = UIImageView(image: ImageAssets.undefined)
+        return view
+    }()
+    
     private lazy var connectButton: UIButton = {
-        let button = UIButton(configuration: .filled())
-        button.setTitle("Connect", for: .normal)
+        let button = UIButton.tinted(
+            title: "Connect",
+            font: Fonts.redditMonoSemiBold
+        )
+        button.tintColor = .black
         button.addTarget(self, action: #selector(onConnectTapped), for: .touchUpInside)
         return button
     }()
@@ -56,17 +64,6 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         view.presenter = presenter
         return view
     }()
-    
-//    private lazy var actionsCameraView: ActionsView = {
-//        let view = ActionsView()
-//        let presenter = ActionsPresenter(
-//            actionsService: actionsService,
-//            view: view,
-//            coordinator: coordinator
-//        )
-//        view.presenter = presenter
-//        return view
-//    }()
     
     private lazy var chatView: ChatView = {
         let view = ChatView()
@@ -125,6 +122,15 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     // MARK: Private
     
     private func setupView() {
+        view.addSubview(connectionStatusImageView)
+        connectionStatusImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            connectionStatusImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            connectionStatusImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            connectionStatusImageView.heightAnchor.constraint(equalToConstant: 52),
+            connectionStatusImageView.widthAnchor.constraint(equalToConstant: 52)
+        ])
+        
         view.addSubview(connectButton)
         connectButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -244,6 +250,7 @@ extension OldFaceTrackingViewController: WebSocketDelegate {
         switch event {
         case .connected(let headers):
             connectButton.tintColor = .systemGreen
+            connectionStatusImageView.image = ImageAssets.net
             print("WebSocket connected")
             isWebsocketConnected = true
             guard let jsonData = try? JSONSerialization.data(withJSONObject: ["leftEye":[1.2], "rightEye":[2.3], "geometry":[1]], options: []) else {
@@ -256,6 +263,7 @@ extension OldFaceTrackingViewController: WebSocketDelegate {
             websocket.write(data: jsonData)
         case .disconnected(let reason, let code):
             connectButton.tintColor = .systemRed
+            connectionStatusImageView.image = ImageAssets.error
             print("WebSocket disconnected: \(reason)")
             isWebsocketConnected = false
         case .text(let text):
@@ -272,6 +280,7 @@ extension OldFaceTrackingViewController: WebSocketDelegate {
             break
         case .cancelled:
             connectButton.tintColor = .systemRed
+            connectionStatusImageView.image = ImageAssets.error
             print("WebSocket cancelled")
         case .error(let error):
             let alert = UIAlertController(

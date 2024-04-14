@@ -14,7 +14,7 @@ protocol IFaceTrackingModuleAssembly {
 final class FaceTrackingModuleAssembly: BaseModuleAssembly, IFaceTrackingModuleAssembly {
     
     func assemble(for coordinator: ICoordinator) -> any IModule {
-        let view = OldFaceTrackingViewController(
+        let oldView = OldFaceTrackingViewController(
             endpointStorage: servicesAssembly.endpointStorage,
             authStorage: servicesAssembly.sessionStorage,
             sessionProvider: servicesAssembly.sessionProvider,
@@ -24,6 +24,19 @@ final class FaceTrackingModuleAssembly: BaseModuleAssembly, IFaceTrackingModuleA
             endpointProvider: servicesAssembly.endpointProvider,
             coordinator: coordinator
         )
+        
+        let actionsAssembly = ActionsModuleViewAssembly(servicesAssembly: servicesAssembly)
+        let moduleView = actionsAssembly.assemble(for: coordinator)
+        
+        let chatAssembly = ChatModuleViewAssembly(servicesAssembly: servicesAssembly)
+        let chatModuleView = chatAssembly.assemble(for: coordinator)
+        
+        
+        let view = FaceTrackingViewController(
+            actionsListView: moduleView.viewToPresent,
+            chatView: chatModuleView.viewToPresent
+        )
+        
         let presenter = FaceTrackingPresenter(
             endpointStorage: servicesAssembly.endpointStorage,
             endpointProvider: servicesAssembly.endpointProvider,
@@ -33,10 +46,11 @@ final class FaceTrackingModuleAssembly: BaseModuleAssembly, IFaceTrackingModuleA
             chatService: servicesAssembly.chatService,
             platformManager: servicesAssembly.platformManager,
             faceTrackingService: servicesAssembly.faceTrackingService,
-            view: view,
+            view: oldView,
             coordinator: coordinator
         )
-        // view.presenter = presenter
-        return Module(viewToPresent: view, viewOutput: presenter)
+        
+        view.presenter = presenter
+        return Module(viewToPresent: oldView, viewOutput: presenter)
     }
 }

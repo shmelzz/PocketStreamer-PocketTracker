@@ -83,5 +83,4 @@ final class FaceTrackingService: IFaceTrackingService, WebSocketDelegate {
         webSocket?.delegate = self
         webSocket?.connect()
     }
-    
 }

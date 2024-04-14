@@ -12,7 +12,7 @@ final class ActionCell: UITableViewCell, ConfigurableView {
     static let actionCellId = "ActionCell"
     
     private enum Constants {
-        static let backColor = UIColor.black.withAlphaComponent(0.2)
+        static let backColor = UIColor.black.withAlphaComponent(0.5)
     }
     
     private lazy var actionName = {
