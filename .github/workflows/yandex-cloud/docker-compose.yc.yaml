@@ -45,7 +45,7 @@ services:
       - USER_AUTH_ADDRESS=http://auth_service:50000
       - APP_ENV="production"
       - APPWRITE_API_KEY={{ env.APPWRITE_API_KEY }}
-      - SWAGGER_BASE_PATH="/pocketaction"
+      - SWAGGER_BASE_PATH=/pocketaction
     restart: always     
   
   streaming: 
@@ -61,7 +61,7 @@ services:
       - POCKETACTION_ADDRESS=http://pocketaction:49333
       - TWITCH_CLIENT_ID={{ env.TWITCH_CLIENT_ID }}
       - TWITCH_CLIENT_SECRET={{ env.TWITCH_CLIENT_SECRET }}
-      - SWAGGER_BASE_PATH="/streaming"
+      - SWAGGER_BASE_PATH=/streaming
     restart: always 
 
   user_db:
