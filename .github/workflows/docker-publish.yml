@@ -5,7 +5,9 @@ on:
     branches: ["meta-*"]
     paths:
       - PocketCenter/**
-      - .github/workflows/**
+      - .github/workflows/docker-publish.yml
+      - .github/workflows/yandex-cloud/docker-compose.yc.yaml
+      - .github/workflows/yandex-cloud/user-data.yaml
   workflow_dispatch:
 
 env:
