@@ -32,7 +32,7 @@ jobs:
             { name: FaceBodyFeatureService, tag: facebody },
             { name: UserAuthSessionService, tag: userauth },
             { name: PocketActionService, tag: pocketaction },
-            { name: StreamingPlatformService, tag: streaming}
+            { name: StreamingPlatformService, tag: streaming }
           ]
     steps:
       - name: Checkout repository
@@ -40,8 +40,8 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-        with:
-          version: v0.9.1
+        # with:
+        #   version: v0.9.1
 
       - name: Log into registry
         if: github.event_name != 'pull_request'
