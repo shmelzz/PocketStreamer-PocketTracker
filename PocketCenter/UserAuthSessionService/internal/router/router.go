@@ -1,15 +1,19 @@
 package router
 
 import (
+	"time"
 	"userauth/internal/handlers"
 
+	"github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"go.uber.org/zap"
 )
 
-func InitRoutes(handler *handlers.UserAuthHandler) *gin.Engine {
+func InitRoutes(handler *handlers.UserAuthHandler, logger *zap.Logger) *gin.Engine {
 	r := gin.Default()
+	r.Use(ginzap.Ginzap(logger, time.RFC3339, true))
 	apiRoutes := r.Group("/auth")
 	{
 		// Route for getting drivers within a radius

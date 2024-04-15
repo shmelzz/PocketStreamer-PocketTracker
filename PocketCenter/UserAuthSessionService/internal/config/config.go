@@ -9,6 +9,8 @@ type Config struct {
 	Port            string
 	Repo            RepoConfig
 	SwaggerBasePath string
+	AppEnv          string
+	LokiAddress     string
 }
 
 type RepoConfig struct {
@@ -18,8 +20,10 @@ type RepoConfig struct {
 
 func LoadConfig() (*Config, error) {
 	dsn := os.Getenv("DSN")
+	appEnv := os.Getenv("APP_ENV")
 	mig_dir := os.Getenv("MIGRATIONS_DIR")
 	swaggerBasePath := os.Getenv("SWAGGER_BASE_PATH")
+	lokiAddress := os.Getenv("LOKI_ADDRESS")
 	repoConfig := RepoConfig{
 		Dsn:     dsn,
 		Mig_dir: mig_dir,
@@ -35,5 +39,7 @@ func LoadConfig() (*Config, error) {
 		Port:            port,
 		Repo:            repoConfig,
 		SwaggerBasePath: swaggerBasePath,
+		AppEnv:          appEnv,
+		LokiAddress:     lokiAddress,
 	}, nil
 }
