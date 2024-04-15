@@ -1,4 +1,4 @@
-name: Update landing
+name: Update log metrics systems
 
 on:
   push:
@@ -12,7 +12,6 @@ on:
 jobs:
   update-yc:
     runs-on: self-hosted
-    needs: [build_and_push]
     steps:
       - name: Deploy COI VM
         id: deploy-coi
