@@ -151,7 +151,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
             actionsCameraView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
             actionsCameraView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             actionsCameraView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.7),
-            actionsCameraView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.7)
+            actionsCameraView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.4)
         ])
         
         view.addSubview(chatView)
@@ -160,7 +160,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
             chatView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
             chatView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
             chatView.bottomAnchor.constraint(equalTo: connectButton.topAnchor, constant: -8),
-            chatView.heightAnchor.constraint(equalToConstant: 300)
+            chatView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.45)
         ])
         chatView.presenter?.onViewReady()
     }
