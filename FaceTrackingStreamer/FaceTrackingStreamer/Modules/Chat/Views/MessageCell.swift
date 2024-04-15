@@ -31,7 +31,7 @@ final class MessageCell: UITableViewCell, ConfigurableView {
     
     private lazy var messageBubble = {
         let label = UIView()
-        label.backgroundColor = Constants.greyColor
+        label.backgroundColor = .black
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 12
         label.layer.opacity = 0.5
