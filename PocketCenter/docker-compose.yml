@@ -1,7 +1,7 @@
-version: '3.7'
+version: "3.7"
 
 services:
-## Face/BodyFeatureTrackingService
+  ## Face/BodyFeatureTrackingService
   facebody:
     build:
       context: "./FaceBodyFeatureService"
@@ -14,10 +14,8 @@ services:
       - SERVER_PORT=49454
       - USER_AUTH_ADDRESS=http://auth_service:50000
     restart: always
-    networks:
-        - loki-network
-        
-## UserAuthSession service    
+
+  ## UserAuthSession service
   auth_service:
     build:
       context: "./UserAuthSessionService"
@@ -37,10 +35,8 @@ services:
       MIGRATIONS_DIR: "file://migrations/auth"
       SERVER_ADDRESS: "0.0.0.0"
       SERVER_PORT: "50000"
-    networks:
-        - database-network
 
- ## Pocket action service
+  ## Pocket action service
   pocketaction:
     build:
       context: "./PocketActionService"
@@ -95,7 +91,7 @@ services:
       retries: 5
     volumes:
       - ./pgdata:/var/lib/postgresql/data
-  
+
   nginx:
     build:
       context: "./nginx"
@@ -109,35 +105,3 @@ services:
       - facebody
     ports:
       - "80:80"
-    networks:
-      - database-network
-
-  loki:
-      image: grafana/loki:latest
-      ports:
-        - "3100:3100"
-      networks:
-        - loki-network
-      command: -config.file=/etc/loki/local-config.yaml
-
-  promtail:
-      image: grafana/promtail:latest
-      volumes:
-        - /var/log:/var/log
-        - ./promtail-config.yaml:/etc/promtail/config.yaml
-      networks:
-        - loki-network
-      command: -config.file=/etc/promtail/config.yaml
-  
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3000:3000"
-    depends_on:
-      - loki
-
-networks:
-  loki-network:
-    driver: bridge
-  database-network:
-    driver: bridge
