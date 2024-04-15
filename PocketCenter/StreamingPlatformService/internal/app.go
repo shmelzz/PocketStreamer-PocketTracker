@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"streamingservice/internal/config"
+	docs "streamingservice/internal/docs"
 	"streamingservice/internal/handlers"
 	"streamingservice/internal/router"
 	"streamingservice/internal/service"
@@ -24,6 +25,8 @@ type App struct {
 
 // NewApp creates and configures your application.
 func NewApp(cfg *config.Config) *App {
+	docs.SwaggerInfo.BasePath = cfg.SwaggerBasePath
+	fmt.Println("Swagger base path" + cfg.SwaggerBasePath)
 	if cfg.AppEnv == "development" {
 		zap.ReplaceGlobals(zap.Must(zap.NewDevelopment()))
 	} else if cfg.AppEnv == "production" {

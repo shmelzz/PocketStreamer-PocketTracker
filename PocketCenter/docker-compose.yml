@@ -1,17 +1,21 @@
 version: '3.7'
 
 services:
+## Face/BodyFeatureTrackingService
   facebody:
     build:
       context: "./FaceBodyFeatureService"
       dockerfile: "build/run.Dockerfile"
     ports:
       - "4545:4545" # Map the default port from the container to the host
+      - "49454:49454"
     environment:
       - SERVER_ADDRESS=0.0.0.0
-      - SERVER_PORT=4545
-      - USER_AUTH_ADDRESS=http://auth_service:8088
+      - SERVER_PORT=49454
+      - USER_AUTH_ADDRESS=http://auth_service:50000
     restart: always
+
+## UserAuthSession service    
   auth_service:
     build:
       context: "./UserAuthSessionService"
@@ -22,26 +26,32 @@ services:
         condition: service_healthy
     expose:
       - "9091"
-      - "8088"
+      - "50000"
     ports:
       - "8088:8088"
+      - "50000:50000"
     environment:
       DSN: "postgres://usr:authpwd@user_db:5432/auth?sslmode=disable"
       MIGRATIONS_DIR: "file://migrations/auth"
       SERVER_ADDRESS: "0.0.0.0"
-      SERVER_PORT: "8088"
+      SERVER_PORT: "50000"
 
+ ## Pocket action service
   pocketaction:
     build:
       context: "./PocketActionService"
       dockerfile: "build/run.Dockerfile"
     ports:
       - "9091:9091" # Map the default port from the container to the host
+      - "49333:49333"
+    expose:
+      - "49333"
     environment:
       - SERVER_ADDRESS=0.0.0.0
-      - SERVER_PORT=9091
-      - USER_AUTH_ADDRESS=http://auth_service:8088
+      - SERVER_PORT=49333
+      - USER_AUTH_ADDRESS=http://auth_service:50000
       - APP_ENV=development
+      - APPWRITE_API_KEY=""
     restart: always
 
   streaming:
@@ -50,12 +60,15 @@ services:
       dockerfile: "build/run.Dockerfile"
     ports:
       - "7070:7070" # Map the default port from the container to the host
+      - "63222:63222"
     environment:
       - SERVER_ADDRESS=0.0.0.0
-      - SERVER_PORT=7070
-      - USER_AUTH_ADDRESS=http://auth_service:8088
+      - SERVER_PORT=63222
+      - USER_AUTH_ADDRESS=http://auth_service:50000
       - APP_ENV=development
-      - POCKETACTION_ADDRESS=http://pocketaction:9091
+      - POCKETACTION_ADDRESS=http://pocketaction:49333
+      - TWITCH_CLIENT_ID=""
+      - TWITCH_CLIENT_SECRET=""
     restart: always
 
   user_db:
@@ -78,3 +91,17 @@ services:
       retries: 5
     volumes:
       - ./pgdata:/var/lib/postgresql/data
+  
+  nginx:
+    build:
+      context: "./nginx"
+      dockerfile: "build/run.Dockerfile"
+      args:
+        NGINX_CONF_PATH: ./nginx.dev.conf
+    depends_on:
+      - streaming
+      - pocketaction
+      - auth_service
+      - facebody
+    ports:
+      - "80:80"

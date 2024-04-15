@@ -1,16 +1,20 @@
 package router
 
 import (
-	"net/http"
 	"pocketcenter/internal/handlers"
 
+	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 // InitRoutes initializes all the routes for the application.
-func InitRoutes(handler *handlers.FeatureHandler) {
-	http.HandleFunc("/facetracking", handler.HandleFaceTracking)
-	http.HandleFunc("/composed", handler.HandleReceiver)
-	http.Handle("/metrics", promhttp.Handler())
-	http.HandleFunc("/version", handler.HandleVersion)
+// Need to rewrite to gin
+func InitRoutes(handler *handlers.FeatureHandler) *gin.Engine {
+	r := gin.Default()
+	r.GET("/metrics", gin.WrapH(promhttp.Handler()))
+	r.GET("/facetracking", handler.HandleFaceTracking)
+	r.GET("/composed", handler.HandleReceiver)
+	r.GET("/version", handler.HandleVersion)
+
+	return r
 }

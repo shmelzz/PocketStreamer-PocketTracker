@@ -22,6 +22,7 @@ type Config struct {
 	AppEnv              string
 	PocketActionAddress string
 	TwitchConfig        TwitchConfig
+	SwaggerBasePath     string
 }
 
 func loadGoogleSecrets() (*GoogleSecret, error) {
@@ -43,6 +44,7 @@ func loadTwitchConfig() (*TwitchConfig, error) {
 }
 
 func LoadConfig() (*Config, error) {
+	swaggerBasePath := os.Getenv("SWAGGER_BASE_PATH")
 	pocketActionAddress := os.Getenv("POCKETACTION_ADDRESS")
 	serverAddress := os.Getenv("SERVER_ADDRESS")
 	port := os.Getenv("SERVER_PORT")
@@ -66,5 +68,6 @@ func LoadConfig() (*Config, error) {
 		AppEnv:              env,
 		PocketActionAddress: pocketActionAddress,
 		TwitchConfig:        *twitchConfig,
+		SwaggerBasePath:     swaggerBasePath,
 	}, err
 }

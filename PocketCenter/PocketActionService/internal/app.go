@@ -3,7 +3,7 @@ package app
 import (
 	"fmt"
 	"pocketaction/internal/config"
-	"pocketaction/internal/docs"
+	docs "pocketaction/internal/docs"
 	"pocketaction/internal/handlers"
 	"pocketaction/internal/repository"
 	"pocketaction/internal/router"
@@ -31,7 +31,8 @@ func NewApp(cfg *config.Config) *App {
 	if err != nil {
 		fmt.Println(err)
 	}
-	docs.SwaggerInfo.BasePath = "/action"
+	docs.SwaggerInfo.BasePath = cfg.SwaggerBasePath
+	fmt.Println("Swagger base path" + cfg.SwaggerBasePath)
 	broadcastService := service.NewBroadcastService()
 	documentRepository := repository.NewAppwriteDocumentRepsitory(cfg.AppwriteAPIKey)
 	pdfToImageService := service.NewPdfToImageService()

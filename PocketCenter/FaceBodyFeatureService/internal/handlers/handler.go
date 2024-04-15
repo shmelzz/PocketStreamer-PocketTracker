@@ -6,8 +6,11 @@ import (
 	"net/http"
 	"pocketcenter/internal/model"
 	"pocketcenter/internal/services"
+
+	"github.com/gin-gonic/gin"
 )
 
+// TODO: need to rewrite to gin
 type FeatureHandler struct {
 	broadcastService *services.BroadcastService
 	userAuthAddress  string
@@ -24,7 +27,9 @@ type VersionResponse struct {
 	Version string `json:"version"`
 }
 
-func (f *FeatureHandler) HandleVersion(w http.ResponseWriter, r *http.Request) {
+func (f *FeatureHandler) HandleVersion(c *gin.Context) {
+	r := c.Request
+	w := c.Writer
 	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -32,7 +37,9 @@ func (f *FeatureHandler) HandleVersion(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(VersionResponse{Version: "v1"})
 }
 
-func (f *FeatureHandler) HandleFaceTracking(w http.ResponseWriter, r *http.Request) {
+func (f *FeatureHandler) HandleFaceTracking(c *gin.Context) {
+	r := c.Request
+	w := c.Writer
 	token := r.Header.Get("Authentication")
 	session := r.Header.Get("SessionId")
 	ok, err := f.validateToken(token)
@@ -76,7 +83,9 @@ func (f *FeatureHandler) HandleFaceTracking(w http.ResponseWriter, r *http.Reque
 	}()
 }
 
-func (f *FeatureHandler) HandleReceiver(w http.ResponseWriter, r *http.Request) {
+func (f *FeatureHandler) HandleReceiver(c *gin.Context) {
+	r := c.Request
+	w := c.Writer
 	token := r.Header.Get("Authentication")
 	session := r.Header.Get("SessionId")
 	ok, err := f.validateToken(token)
