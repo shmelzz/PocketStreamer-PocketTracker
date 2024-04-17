@@ -2,12 +2,13 @@ package handlers
 
 import (
 	"encoding/json"
-	"log"
+	"fmt"
 	"net/http"
 	"pocketcenter/internal/model"
 	"pocketcenter/internal/services"
 
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 // TODO: need to rewrite to gin
@@ -42,20 +43,22 @@ func (f *FeatureHandler) HandleFaceTracking(c *gin.Context) {
 	w := c.Writer
 	token := r.Header.Get("Authentication")
 	session := r.Header.Get("SessionId")
-	ok, err := f.validateToken(token)
+	logger := zap.L()
+	ok, username, err := f.validateToken(token)
 	if err != nil {
-		log.Println(err)
+		logger.Error("Error when try to validate", zap.Error(err))
 		http.Error(w, "Error when try to validate", http.StatusBadRequest)
 		return
 	}
 	if !ok {
-		log.Println("Validation not passed")
+		logger.Error("Validation not passed", zap.Error(err))
 		http.Error(w, "Validation not passed", http.StatusUnauthorized)
 		return
 	}
 	client, err := f.broadcastService.AddTracker(w, r)
+	logger.With(zap.String("username", username))
 	if err != nil {
-		log.Println(err)
+		logger.Error("Cant add tracker", zap.Error(err))
 		http.Error(w, "Can't add tracker", http.StatusBadRequest)
 		return
 	}
@@ -65,18 +68,18 @@ func (f *FeatureHandler) HandleFaceTracking(c *gin.Context) {
 		for {
 			message, err := client.Read()
 			if err != nil {
-				log.Println("Error reading message:", err)
+				logger.Error("Error reading message:", zap.Error(err))
 				return
 			}
 
 			var data model.FaceTrackingFeatures
 			if err = json.Unmarshal(message, &data); err != nil {
-				log.Println("Error unmarshalling JSON:", err)
+				logger.Error("Error unmarshalling JSON:", zap.Error(err))
 			}
 
 			err = f.broadcastService.Broadcast(message, session)
 			if err != nil {
-				log.Printf(err.Error())
+				logger.Error("Error when broadcasting", zap.Error(err))
 				return
 			}
 		}
@@ -88,21 +91,24 @@ func (f *FeatureHandler) HandleReceiver(c *gin.Context) {
 	w := c.Writer
 	token := r.Header.Get("Authentication")
 	session := r.Header.Get("SessionId")
-	ok, err := f.validateToken(token)
+	ok, username, err := f.validateToken(token)
+
+	logger := zap.L()
 	if err != nil {
-		log.Println(err)
+		logger.Error("Validation error", zap.Error(err))
 		http.Error(w, "Error when try to validate", http.StatusBadRequest)
 		return
 	}
 	if !ok {
-		log.Println("Validation not passed")
+		logger.Error("Validation not passed", zap.Error(err))
 		http.Error(w, "Validation not passed", http.StatusUnauthorized)
 		return
 	}
 
+	logger = logger.With(zap.String("username", username))
 	client, err := f.broadcastService.AddComposer(w, r)
 	if err != nil {
-		log.Println(err)
+		logger.Error("Cant add composer", zap.Error(err))
 		return
 	}
 
@@ -118,7 +124,7 @@ func (f *FeatureHandler) HandleReceiver(c *gin.Context) {
 				}
 				err := f.broadcastService.SendToClient(client, message)
 				if err != nil {
-					log.Println("Error writing message:", err)
+					logger.Error("Error writing message:", zap.Error(err))
 					return
 				}
 			}
@@ -126,12 +132,11 @@ func (f *FeatureHandler) HandleReceiver(c *gin.Context) {
 	}()
 }
 
-func (f *FeatureHandler) validateToken(token string) (bool, error) {
+func (f *FeatureHandler) validateToken(token string) (bool, string, error) {
 	// Create a new request to the userauthsessionservice
 	req, err := http.NewRequest("POST", f.userAuthAddress+"/auth/validate", nil)
 	if err != nil {
-		log.Println(err)
-		return false, err
+		return false, "", err
 	}
 
 	// Add the token to the request header
@@ -141,16 +146,26 @@ func (f *FeatureHandler) validateToken(token string) (bool, error) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Println(err)
-		return false, err
+		return false, "", err
 	}
 	defer resp.Body.Close()
 
 	// Check the response
 	if resp.StatusCode != http.StatusOK {
-		log.Println("Token validation failed")
-		return false, nil
+		return false, "", nil
 	}
 
-	return true, nil
+	var result map[string]string
+	err = json.NewDecoder(resp.Body).Decode(&result)
+	if err != nil {
+		return false, "", err
+	}
+
+	// Extract the username from the response
+	username, ok := result["username"]
+	if !ok {
+		return false, "", fmt.Errorf("Username not found in response")
+	}
+
+	return true, username, nil
 }
