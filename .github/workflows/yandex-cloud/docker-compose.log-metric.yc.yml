@@ -54,7 +54,3 @@ services:
     restart: never
     networks:
       - loki
-
-volumes:
-  loki-data:
-    external: true
