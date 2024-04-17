@@ -11,7 +11,7 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     volumes:
         - ~/loki/local-config.yaml:/etc/loki/local-config.yaml
-        - loki-data:/loki
+        - ~/loki-data:/loki
     restart: never
     networks:
       - loki
