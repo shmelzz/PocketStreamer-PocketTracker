@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-yc:
+  update-log-metric-on-yc:
     runs-on: self-hosted
     steps:
       - name: Deploy COI VM
