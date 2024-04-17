@@ -10,8 +10,8 @@ services:
       - "0.0.0.0:3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
     volumes:
-        - /etc/loki/local-config.yaml:/etc/loki/local-config.yaml
-        - /etc/loki-data:/loki
+        - ~/loki/local-config.yaml:/etc/loki/local-config.yaml
+        - ~/loki-data:/loki
     networks:
       - loki
 
