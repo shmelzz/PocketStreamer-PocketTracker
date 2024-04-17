@@ -11,7 +11,7 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     volumes:
         - ~/loki/local-config.yaml:/etc/loki/local-config.yaml
-        - ~/loki-data:/loki
+        - loki-data:/loki
     networks:
       - loki
 
@@ -51,3 +51,7 @@ services:
       - "0.0.0.0:3000:3000"
     networks:
       - loki
+
+volumes:
+  loki-data:
+    external: true
