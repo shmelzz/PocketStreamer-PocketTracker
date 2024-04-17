@@ -12,6 +12,7 @@ services:
     volumes:
         - ~/loki/local-config.yaml:/etc/loki/local-config.yaml
         - loki-data:/loki
+    restart: never
     networks:
       - loki
 
@@ -21,6 +22,7 @@ services:
       - /var/log:/var/log
       - ~/promtail/config.yml:/etc/promtail/config.yml
     command: -config.file=/etc/promtail/config.yml
+    restart: never
     networks:
       - loki
 
@@ -49,6 +51,7 @@ services:
     image: grafana/grafana:latest
     ports:
       - "0.0.0.0:3000:3000"
+    restart: never
     networks:
       - loki
 
