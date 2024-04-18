@@ -59,8 +59,8 @@ func (f *FeatureHandler) HandleFaceTracking(c *gin.Context) {
 		http.Error(w, "Validation not passed", http.StatusUnauthorized)
 		return
 	}
-	client, err := f.broadcastService.AddTracker(w, r)
-	logger := f.logger.With(zap.String("username", username))
+	client, err := f.broadcastService.AddTracker(w, r, username)
+	logger := f.logger.With(zap.String("username", username)).With(zap.String("session", session))
 	if err != nil {
 		logger.Error("Cant add tracker", zap.Error(err))
 		http.Error(w, "Can't add tracker", http.StatusBadRequest)
@@ -108,8 +108,8 @@ func (f *FeatureHandler) HandleReceiver(c *gin.Context) {
 		return
 	}
 
-	logger := f.logger.With(zap.String("username", username))
-	client, err := f.broadcastService.AddComposer(w, r)
+	logger := f.logger.With(zap.String("username", username)).With(zap.String("session", session))
+	client, err := f.broadcastService.AddComposer(w, r, username)
 	if err != nil {
 		logger.Error("Cant add composer", zap.Error(err))
 		return

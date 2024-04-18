@@ -42,7 +42,7 @@ func SetUpLoki(cfg *config.Config) *zap.Logger {
 // NewApp creates and configures your application.
 func NewApp(cfg *config.Config) *App {
 	zaplogger := SetUpLoki(cfg)
-	handlers := handlers.NewFeatureHandler(services.NewBroadcastService(), cfg.UserAuthAddress, zaplogger)
+	handlers := handlers.NewFeatureHandler(services.NewBroadcastService(zaplogger), cfg.UserAuthAddress, zaplogger)
 	engine := router.InitRoutes(handlers, zaplogger)
 	// Set up the router and routes.
 
