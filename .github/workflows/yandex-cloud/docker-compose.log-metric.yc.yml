@@ -28,6 +28,8 @@ services:
   grafana:
     environment:
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+    volumes:
+      - /home/coi-data/grafana:/var/lib/grafana
     entrypoint:
       - sh
       - -euc
