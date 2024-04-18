@@ -11,16 +11,21 @@ import (
 	"go.uber.org/zap"
 )
 
-// TODO: need to rewrite to gin
 type FeatureHandler struct {
 	broadcastService *services.BroadcastService
 	userAuthAddress  string
+	logger           *zap.Logger
 }
 
-func NewFeatureHandler(broadcastService *services.BroadcastService, userAuthAddress string) *FeatureHandler {
+func NewFeatureHandler(
+	broadcastService *services.BroadcastService,
+	userAuthAddress string,
+	zapLogger *zap.Logger,
+) *FeatureHandler {
 	return &FeatureHandler{
 		broadcastService: broadcastService,
 		userAuthAddress:  userAuthAddress,
+		logger:           zapLogger,
 	}
 }
 
@@ -43,20 +48,19 @@ func (f *FeatureHandler) HandleFaceTracking(c *gin.Context) {
 	w := c.Writer
 	token := r.Header.Get("Authentication")
 	session := r.Header.Get("SessionId")
-	logger := zap.L()
 	ok, username, err := f.validateToken(token)
 	if err != nil {
-		logger.Error("Error when try to validate", zap.Error(err))
+		f.logger.Error("Error when try to validate", zap.Error(err))
 		http.Error(w, "Error when try to validate", http.StatusBadRequest)
 		return
 	}
 	if !ok {
-		logger.Error("Validation not passed", zap.Error(err))
+		f.logger.Error("Validation not passed", zap.Error(err))
 		http.Error(w, "Validation not passed", http.StatusUnauthorized)
 		return
 	}
 	client, err := f.broadcastService.AddTracker(w, r)
-	logger.With(zap.String("username", username))
+	logger := f.logger.With(zap.String("username", username))
 	if err != nil {
 		logger.Error("Cant add tracker", zap.Error(err))
 		http.Error(w, "Can't add tracker", http.StatusBadRequest)
@@ -93,19 +97,18 @@ func (f *FeatureHandler) HandleReceiver(c *gin.Context) {
 	session := r.Header.Get("SessionId")
 	ok, username, err := f.validateToken(token)
 
-	logger := zap.L()
 	if err != nil {
-		logger.Error("Validation error", zap.Error(err))
+		f.logger.Error("Validation error", zap.Error(err))
 		http.Error(w, "Error when try to validate", http.StatusBadRequest)
 		return
 	}
 	if !ok {
-		logger.Error("Validation not passed", zap.Error(err))
+		f.logger.Error("Validation not passed", zap.Error(err))
 		http.Error(w, "Validation not passed", http.StatusUnauthorized)
 		return
 	}
 
-	logger = logger.With(zap.String("username", username))
+	logger := f.logger.With(zap.String("username", username))
 	client, err := f.broadcastService.AddComposer(w, r)
 	if err != nil {
 		logger.Error("Cant add composer", zap.Error(err))
