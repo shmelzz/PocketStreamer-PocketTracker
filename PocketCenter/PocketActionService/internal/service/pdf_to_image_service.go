@@ -14,14 +14,18 @@ import (
 	"strings"
 
 	"github.com/nfnt/resize"
+	"go.uber.org/zap"
 	"gopkg.in/gographics/imagick.v3/imagick"
 )
 
 type PdfToImageService struct {
+	logger *zap.Logger
 }
 
-func NewPdfToImageService() *PdfToImageService {
-	return &PdfToImageService{}
+func NewPdfToImageService(zapLogger *zap.Logger) *PdfToImageService {
+	return &PdfToImageService{
+		logger: zapLogger,
+	}
 }
 
 func (p *PdfToImageService) ConvertZipToImageFolder(zipPath string, sessionId string) (string, error) {

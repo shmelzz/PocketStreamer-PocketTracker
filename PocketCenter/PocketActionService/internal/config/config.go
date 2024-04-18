@@ -11,10 +11,12 @@ type Config struct {
 	AppEnv          string
 	AppwriteAPIKey  string
 	SwaggerBasePath string
+	LokiAddress     string
 }
 
 func LoadConfig() (*Config, error) {
 	swaggerBasePath := os.Getenv("SWAGGER_BASE_PATH")
+	lokiAddress := os.Getenv("LOKI_ADDRESS")
 	appEnv := os.Getenv("APP_ENV")
 	appwrite := os.Getenv("APPWRITE_API_KEY")
 	serverAddress := os.Getenv("SERVER_ADDRESS")
@@ -31,5 +33,6 @@ func LoadConfig() (*Config, error) {
 		AppEnv:          appEnv,
 		AppwriteAPIKey:  appwrite,
 		SwaggerBasePath: swaggerBasePath,
+		LokiAddress:     lokiAddress,
 	}, nil
 }

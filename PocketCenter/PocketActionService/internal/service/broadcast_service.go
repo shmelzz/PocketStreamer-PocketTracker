@@ -18,6 +18,7 @@ type BroadcastService struct {
 	sessions        map[string]bool
 	composerClients map[string]*Client
 	mu              sync.Mutex
+	logger          *zap.Logger
 }
 
 type Client struct {
@@ -25,10 +26,11 @@ type Client struct {
 	Send chan []byte
 }
 
-func NewBroadcastService() *BroadcastService {
+func NewBroadcastService(zapLogger *zap.Logger) *BroadcastService {
 	return &BroadcastService{
 		sessions:        make(map[string]bool),
 		composerClients: make(map[string]*Client),
+		logger:          zapLogger,
 	}
 }
 
@@ -48,7 +50,7 @@ func (s *BroadcastService) AddComposer(w http.ResponseWriter, r *http.Request) (
 	s.mu.Lock()
 	s.sessions[session] = true
 	s.composerClients[session] = client
-	zap.S().Info("Add composer")
+	s.logger.Info("Add composer")
 	s.mu.Unlock()
 	return client, nil
 }
@@ -78,7 +80,7 @@ func (s *BroadcastService) Broadcast(message []byte, sessionId string) error {
 
 	select {
 	case s.composerClients[sessionId].Send <- message:
-		zap.S().Debug("Send to composer, message: ", message)
+		s.logger.Debug("Send to composer, message: ", zap.String("msg", string(message)))
 	default:
 	}
 	return nil
