@@ -30,6 +30,7 @@ services:
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
     volumes:
       - /home/coi-data/grafana:/var/lib/grafana
+    user: '0'
     entrypoint:
       - sh
       - -euc
