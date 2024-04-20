@@ -14,7 +14,9 @@ protocol IStartStreamModuleAssembly {
 final class StartStreamModuleAssembly: BaseModuleAssembly, IStartStreamModuleAssembly {
     
     func assemble(for coordinator: ICoordinator) -> any IModule {
-        let view = StartStreamViewController()
+        let view = StartStreamViewController(
+        servicesAssembly: servicesAssembly
+        )
         let presenter = StartStreamPresenter(
             view: view,
             coordinator: coordinator

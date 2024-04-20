@@ -3,19 +3,31 @@ import RealityKit
 import ARKit
 import Combine
 
+import Network
+import Starscream
+
 final class BodyTrackingViewController: UIViewController, IBodyTrackingView, ARSessionDelegate {
     
     private let arView: ARView
     
     // The 3D character to display.
     var character: BodyTrackedEntity?
-    let characterOffset: SIMD3<Float> = [-1.0, 0, 0] // Offset the character by one meter to the left
+    let characterOffset: SIMD3<Float> = [-0.5, 0, 0] // Offset the character by one meter to the left
     let characterAnchor = AnchorEntity()
     
     var presenter: IBodyTrackingPresenter?
     
-    init() {
+    private let servicesAssembly: IServicesAssembly
+    
+    private var websocket: WebSocket!
+    
+    private var shouldSend: Bool = true
+    
+    init(
+        servicesAssembly: IServicesAssembly
+    ) {
         self.arView = ARView(frame: .zero)
+        self.servicesAssembly = servicesAssembly
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -72,11 +84,37 @@ final class BodyTrackingViewController: UIViewController, IBodyTrackingView, ARS
                 print("Error: Unable to load model as BodyTrackedEntity")
             }
         })
+        
+        onConnectTapped()
+    }
+    
+    @objc
+    private func onConnectTapped() {
+        let endpoint = servicesAssembly.endpointProvider.faceTrackingEndpoint()
+        let address = "ws://\(endpoint)/bodytracking"
+        
+        self.setupWebSocketConnection(url: address)
+        Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { _ in
+            self.shouldSend.toggle()
+        }
+    }
+    
+    private func setupWebSocketConnection(url: String) {
+        var request = URLRequest(url: URL(string: url)!)
+        request.setValue(servicesAssembly.sessionProvider.token, forHTTPHeaderField: "Authentication")
+        request.setValue(servicesAssembly.sessionProvider.sessionId, forHTTPHeaderField: "SessionId")
+        print("sessionId: \(servicesAssembly.sessionProvider.sessionId)")
+        request.timeoutInterval = 10
+        websocket = WebSocket(request: request)
+        websocket.delegate = self
+        websocket.connect()
     }
     
     func session(_ session: ARSession, didUpdate anchors: [ARAnchor]) {
         for anchor in anchors {
             guard let bodyAnchor = anchor as? ARBodyAnchor else { continue }
+            
+            processFaceMotionData(anchor: bodyAnchor)
             
             // Update the position of the character anchor's position.
             let bodyPosition = simd_make_float3(bodyAnchor.transform.columns.3)
@@ -91,6 +129,71 @@ final class BodyTrackingViewController: UIViewController, IBodyTrackingView, ARS
                 // 2. the character was loaded.
                 characterAnchor.addChild(character)
             }
+        }
+    }
+    
+    private func processFaceMotionData(anchor: ARBodyAnchor) {
+        if shouldSend {
+            let data = anchor.data
+            sendDataToOtherDevice(bodyData: data)
+        }
+    }
+    
+    private func sendDataToOtherDevice(bodyData: [String: simd_float4x4]) {
+        guard let websocket = websocket else {
+            return
+        }
+
+        guard let jsonData = try? JSONEncoder().encode(bodyData) else {
+            print("Error encoding face tracking data")
+            return
+        }
+        
+        websocket.write(data: jsonData)
+    }
+}
+
+extension BodyTrackingViewController: WebSocketDelegate {
+    
+    func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
+        switch event {
+        case .connected(let headers):
+            print("WebSocket connected")
+        case .disconnected(let reason, let code):
+            print("WebSocket disconnected: \(reason)")
+        case .text(let text):
+            print("Received text: \(text)")
+        case .binary(let data):
+            print("Received data: \(data)")
+        case .ping(_):
+            break
+        case .pong(_):
+            break
+        case .viabilityChanged(_):
+            break
+        case .reconnectSuggested(_):
+            break
+        case .cancelled:
+            print("WebSocket cancelled")
+        case .error(let error):
+            let alert = UIAlertController(
+                title: "Error",
+                message: error?.localizedDescription ?? "Unknown error",
+                preferredStyle: .alert
+            )
+            
+            let alertOKAction = UIAlertAction(
+                title:"OK",
+                style: .default,
+                handler: { [weak self] _ in
+                    self?.dismiss(animated: true)
+            })
+            
+            alert.addAction(alertOKAction)
+            present(alert, animated: true)
+            print("WebSocket error: \(error?.localizedDescription ?? "Unknown error")")
+        case .peerClosed:
+            print()
         }
     }
 }
