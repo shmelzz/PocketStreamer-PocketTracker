@@ -103,6 +103,9 @@ jobs:
     runs-on: self-hosted
     needs: [build_config_nginx]
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Deploy COI VM
         id: deploy-coi
         uses: yc-actions/yc-coi-deploy@v2

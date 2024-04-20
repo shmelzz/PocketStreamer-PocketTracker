@@ -62,6 +62,9 @@ jobs:
     runs-on: self-hosted
     needs: [build_and_push]
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
       - name: Deploy COI VM
         id: deploy-coi
         uses: yc-actions/yc-coi-deploy@v2
