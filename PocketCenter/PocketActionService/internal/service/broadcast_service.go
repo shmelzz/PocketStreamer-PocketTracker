@@ -75,7 +75,7 @@ func (s *BroadcastService) Broadcast(message []byte, sessionId string) error {
 	defer s.mu.Unlock()
 
 	if s.composerClients[sessionId] == nil {
-		return fmt.Errorf("Cant find sessionId")
+		return fmt.Errorf("Cant find sessionId %s", sessionId)
 	}
 
 	select {

@@ -4,7 +4,7 @@ import (
 	"time"
 	"userauth/internal/handlers"
 
-	"github.com/gin-contrib/zap"
+	ginzap "github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"

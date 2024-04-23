@@ -3,15 +3,19 @@ package router
 import (
 	"net/http"
 	"pocketaction/internal/handlers"
+	"time"
 
+	ginzap "github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
+	"go.uber.org/zap"
 
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-func InitRoutes(handler *handlers.PocketActionHandler) *gin.Engine {
+func InitRoutes(handler *handlers.PocketActionHandler, logger *zap.Logger) *gin.Engine {
 	r := gin.Default()
+	r.Use(ginzap.Ginzap(logger, time.RFC3339, true))
 	r.StaticFS("/prez", http.Dir("./presentation"))
 	apiRoutes := r.Group("/action")
 	{

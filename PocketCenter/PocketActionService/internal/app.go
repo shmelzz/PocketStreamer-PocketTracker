@@ -56,7 +56,7 @@ func NewApp(cfg *config.Config) *App {
 	handler := handlers.NewPocketActionHandler(broadcastService, documentService, cfg.UserAuthAddress, zaplogger)
 
 	// Set up the router and routes.
-	engine := router.InitRoutes(handler)
+	engine := router.InitRoutes(handler, zaplogger)
 	return &App{
 		Config: cfg,
 		Engine: engine,
