@@ -15,6 +15,7 @@ final class BodyTrackingModuleAssembly: BaseModuleAssembly, IBodyTrackingModuleA
     
     func assemble(for coordinator: ICoordinator) -> any IModule {
         let view = BodyTrackingViewController(
+            servicesAssembly: servicesAssembly
         )
         
         let presenter = BodyTrackingPresenter(

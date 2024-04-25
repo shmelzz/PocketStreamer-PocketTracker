@@ -36,6 +36,7 @@ final class MainFlowCoordinator: BaseCoordinator {
     
     override func startFlow() {
         let module = connectModuleAssembly.assemble(for: self)
+//        let module = startModuleAssembly.assemble(for: self)
         router.setRootModule(module, hideBar: false)
     }
     
