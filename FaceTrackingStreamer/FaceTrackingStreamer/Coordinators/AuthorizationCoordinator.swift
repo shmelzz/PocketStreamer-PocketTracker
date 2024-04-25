@@ -49,8 +49,10 @@ final class AuthorizationCoordinator: BaseCoordinator {
             router.presentOKAlert(with: Constants.registerSuccessText)
             
         case .onLongPress:
+#if DEBUG
             let module = debugMenuModuleAssembly.assemble(for: self)
             router.present(module, animated: true)
+#endif
         default:
             break
         }

@@ -138,13 +138,6 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
             connectButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24)
         ])
         
-        view.addSubview(settingsButton)
-        settingsButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            settingsButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            settingsButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24)
-        ])
-        
         view.addSubview(actionsCameraView)
         actionsCameraView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -163,6 +156,17 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
             chatView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.45)
         ])
         chatView.presenter?.onViewReady()
+        
+        
+#if DEBUG
+        view.addSubview(settingsButton)
+        settingsButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            settingsButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            settingsButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24)
+        ])
+#endif
+        
     }
     
     @objc
@@ -236,10 +240,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     }
     
     private func processFaceMotionData(faceAnchor: ARFaceAnchor) {
-        // Extract eye, nose, and mouth movement data
         let faceTrackingData = faceAnchor.eyeNoseMouthData
-
-        // Send face tracking data to the other device
         sendDataToOtherDevice(faceTrackingData: faceTrackingData)
     }
 }

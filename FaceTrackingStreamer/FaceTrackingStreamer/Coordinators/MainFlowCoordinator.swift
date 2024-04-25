@@ -36,14 +36,14 @@ final class MainFlowCoordinator: BaseCoordinator {
     
     override func startFlow() {
         let module = connectModuleAssembly.assemble(for: self)
-//        let module = startModuleAssembly.assemble(for: self)
+        //        let module = startModuleAssembly.assemble(for: self)
         router.setRootModule(module, hideBar: false)
     }
     
     override func onNext(_ action: CoordinatorAction) {
         switch action {
             
-        // Start
+            // Start
             
         case .startModuleOnFaceTapped:
             let module = faceTrackingModuleAssembly.assemble(for: self)
@@ -53,10 +53,12 @@ final class MainFlowCoordinator: BaseCoordinator {
             break
             
         case .onLongPress:
+#if DEBUG
             let module = debugMenuModuleAssembly.assemble(for: self)
             router.present(module, animated: true)
+#endif
             
-        // Connect
+            // Connect
             
         case .connectModuleSuccess:
             let module = selectPlatformModuleAssembly.assemble(for: self)
@@ -68,7 +70,7 @@ final class MainFlowCoordinator: BaseCoordinator {
         case let .connectModuleFailure(text):
             router.presentOKAlert(with: text ?? "")
             
-        // Select
+            // Select
             
         case .selectPlatformContinue(let isLive):
             let module = startModuleAssembly.assemble(for: self)
@@ -85,7 +87,7 @@ final class MainFlowCoordinator: BaseCoordinator {
                 with: "Channel validation error. Continue without channel connection?",
                 nextModule: module
             )
-        
+            
         case .loginDidSuccessed, .loginError, .registerError, .registerSuccess:
             break
         }
