@@ -26,10 +26,10 @@ final class ConnectPresenter: BaseModuleOutput, IConnectPresenter {
         super.init(coordinator: coordinator)
     }
     
-    // MARK: - IStartStreamPresenter
+    // MARK: - IConnectPresenter
     
     func onConnectTapped() {
-//        finish(.startModuleOnFaceTapped)
+        
     }
     
     func onLongPress() {
@@ -42,9 +42,12 @@ final class ConnectPresenter: BaseModuleOutput, IConnectPresenter {
             switch result {
             case .success:
                 self?.finish(.connectModuleSuccess)
-            case .failure(let data):
+            case .failure:
+#if DEBUG
                 self?.finish(.connectModuleSuccess)
-//                self?.finish(.connectModuleFailure(text: data.localizedDescription))
+#else
+                self?.finish(.connectModuleFailure(text: "Error connecting to PocketComposer"))
+#endif
             }
         }
     }
