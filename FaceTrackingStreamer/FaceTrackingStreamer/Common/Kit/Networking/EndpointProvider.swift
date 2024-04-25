@@ -91,9 +91,9 @@ final class EndpointProvider: IEndpointProvider {
         }
         
         switch currentEnv?.environment {
-        case .prod:
+        case .prod, nil:
             return Hosts.prod
-        case .test, nil:
+        case .test:
             return Hosts.test
         }
     }
