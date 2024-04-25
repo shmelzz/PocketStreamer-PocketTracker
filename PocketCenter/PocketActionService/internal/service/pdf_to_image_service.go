@@ -55,6 +55,12 @@ func (p *PdfToImageService) ConvertZipToImageFolder(zipPath string, sessionId st
 	index := 1
 	imageExt := ".jpeg"
 	for _, f := range archive.File {
+		if !strings.HasSuffix(f.FileInfo().Name(), ".jpg") &&
+			!strings.HasSuffix(f.FileInfo().Name(), ".jpeg") &&
+			!strings.HasSuffix(f.FileInfo().Name(), ".png") {
+			continue
+		}
+
 		if strings.HasPrefix(f.FileInfo().Name(), "._") || f.FileInfo().IsDir() {
 			continue
 		}
