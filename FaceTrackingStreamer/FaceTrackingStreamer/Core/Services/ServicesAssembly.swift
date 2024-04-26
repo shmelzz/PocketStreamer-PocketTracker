@@ -30,6 +30,8 @@ protocol IServicesAssembly: AnyObject {
     var channelService: IChannelService { get }
     
     var faceTrackingService: IFaceTrackingService { get }
+    
+    var actionsStorage: IActionsStorage { get }
 }
 
 final class ServicesAssembly: IServicesAssembly {
@@ -106,5 +108,9 @@ final class ServicesAssembly: IServicesAssembly {
             endpointProvider: endpointProvider,
             sessionProvider: sessionProvider
         )
+    }()
+    
+    lazy var actionsStorage: IActionsStorage = {
+        ActionsStorage()
     }()
 }

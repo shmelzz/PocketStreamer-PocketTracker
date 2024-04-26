@@ -18,6 +18,7 @@ final class ChatModuleViewAssembly: BaseModuleAssembly, IChatModuleViewAssembly 
         let presenter = ChatPresenter(
             chatService: servicesAssembly.chatService,
             platformManager: servicesAssembly.platformManager,
+            actionsStorage: servicesAssembly.actionsStorage,
             view: view,
             coordinator: coordinator
         )

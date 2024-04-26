@@ -13,23 +13,37 @@ final class ChatPresenter: BaseModuleOutput, IChatPresenter, IChatServiceDelegat
     
     private let chatService: IChatService
     private let platformManager: IPlatformManager
+    private let actionsStorage: IActionsStorage
     
     init(
         chatService: IChatService,
         platformManager: IPlatformManager,
+        actionsStorage: IActionsStorage,
         view: IChatView,
         coordinator: ICoordinator
     ) {
         self.view = view
         self.chatService = chatService
         self.platformManager = platformManager
+        self.actionsStorage = actionsStorage
         super.init(coordinator: coordinator)
     }
     
     // MARK: - IChatServiceDelegate
     
     func didReceive(new message: MessageModel) {
-        view?.onNewMessage(message)
+        let isAction = actionsStorage.contains(with: message.message)
+        let viewModel = MessageViewModel(
+            id: UUID().uuidString,
+            username: message.username,
+            message: message.message,
+            isAction: isAction
+        )
+        view?.onNewMessage(viewModel)
+        
+        if isAction {
+            view?.didReceiveAction()
+        }
     }
     
     // MARK: - IChatPresenter

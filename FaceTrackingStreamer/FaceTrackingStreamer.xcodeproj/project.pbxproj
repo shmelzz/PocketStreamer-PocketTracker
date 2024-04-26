@@ -98,6 +98,8 @@
 		CCB26BC62BA75D1800B7B9A0 /* ActionsListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BC52BA75D1800B7B9A0 /* ActionsListRequest.swift */; };
 		CCB26BCC2BADD0C700B7B9A0 /* ActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BCB2BADD0C700B7B9A0 /* ActionCell.swift */; };
 		CCB26BCE2BADD1C900B7B9A0 /* ActionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB26BCD2BADD1C900B7B9A0 /* ActionsListView.swift */; };
+		CCB606AC2BDBBF8000F933AC /* ActionsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB606AB2BDBBF8000F933AC /* ActionsStorage.swift */; };
+		CCB606AF2BDBC28800F933AC /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB606AE2BDBC28800F933AC /* MessageViewModel.swift */; };
 		CCB800AE2B8287D7003F9AD2 /* SessionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800AD2B8287D7003F9AD2 /* SessionStorage.swift */; };
 		CCB800B02B829F85003F9AD2 /* AuthModuleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800AF2B829F85003F9AD2 /* AuthModuleAssembly.swift */; };
 		CCB800B32B84ED6A003F9AD2 /* IRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB800B22B84ED6A003F9AD2 /* IRequest.swift */; };
@@ -215,6 +217,8 @@
 		CCB26BC52BA75D1800B7B9A0 /* ActionsListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsListRequest.swift; sourceTree = "<group>"; };
 		CCB26BCB2BADD0C700B7B9A0 /* ActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCell.swift; sourceTree = "<group>"; };
 		CCB26BCD2BADD1C900B7B9A0 /* ActionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsListView.swift; sourceTree = "<group>"; };
+		CCB606AB2BDBBF8000F933AC /* ActionsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsStorage.swift; sourceTree = "<group>"; };
+		CCB606AE2BDBC28800F933AC /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
 		CCB800AD2B8287D7003F9AD2 /* SessionStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStorage.swift; sourceTree = "<group>"; };
 		CCB800AF2B829F85003F9AD2 /* AuthModuleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModuleAssembly.swift; sourceTree = "<group>"; };
 		CCB800B22B84ED6A003F9AD2 /* IRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequest.swift; sourceTree = "<group>"; };
@@ -360,6 +364,7 @@
 		CC0C3A282B483DFE00C43AA5 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				CCB606AD2BDBC27C00F933AC /* Models */,
 				CCB26BBA2B9F9E9100B7B9A0 /* Views */,
 				CCB26B902B9DC1F800B7B9A0 /* ChatView.swift */,
 				CCB26B922B9DC22100B7B9A0 /* ChatPresenter.swift */,
@@ -498,6 +503,7 @@
 			children = (
 				CC3F81FE2B5D6204006EDC95 /* ApiEndpointStorage.swift */,
 				CCB800AD2B8287D7003F9AD2 /* SessionStorage.swift */,
+				CCB606AB2BDBBF8000F933AC /* ActionsStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -676,6 +682,14 @@
 				CCB26BCB2BADD0C700B7B9A0 /* ActionCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		CCB606AD2BDBC27C00F933AC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CCB606AE2BDBC28800F933AC /* MessageViewModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		CCB800B12B84ED4A003F9AD2 /* Networking */ = {
@@ -931,6 +945,7 @@
 				CC3F81E72B4B2923006EDC95 /* FaceTrackingService.swift in Sources */,
 				CCB26B972B9DC25D00B7B9A0 /* ChatModuleAssembly.swift in Sources */,
 				CC85ADB12B71960F00C91BFD /* LoginRequest.swift in Sources */,
+				CCB606AC2BDBBF8000F933AC /* ActionsStorage.swift in Sources */,
 				CC2E62E52B94FFF200CCDCED /* FaceTrackingModuleAssembly.swift in Sources */,
 				CCB800AE2B8287D7003F9AD2 /* SessionStorage.swift in Sources */,
 				CC40BE9F2B5D9FEA004036F3 /* DebugMenuContract.swift in Sources */,
@@ -960,6 +975,7 @@
 				CC3F81FF2B5D6204006EDC95 /* ApiEndpointStorage.swift in Sources */,
 				CC2E62E92B95061900CCDCED /* BodyTrackingModuleAssembly.swift in Sources */,
 				CC3F81FD2B5D5F6C006EDC95 /* UserDefaultsStorage.swift in Sources */,
+				CCB606AF2BDBC28800F933AC /* MessageViewModel.swift in Sources */,
 				CCB26BA62B9DEC5300B7B9A0 /* SelectPlatformContract.swift in Sources */,
 				CCB800B52B84F0A4003F9AD2 /* RequestBuilder.swift in Sources */,
 				CC85ADAA2B71931800C91BFD /* RequestManager.swift in Sources */,

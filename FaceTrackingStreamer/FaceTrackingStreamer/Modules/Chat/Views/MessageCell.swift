@@ -53,11 +53,15 @@ final class MessageCell: UITableViewCell, ConfigurableView {
         super.prepareForReuse()
         message.isHidden = true
         message.text = nil
+        messageBubble.backgroundColor = .black
     }
     
     // MARK: - ConfigurableView
     
-    func configure(with model: MessageModel) {
+    func configure(with model: MessageViewModel) {
+        if model.isAction {
+            messageBubble.backgroundColor = .systemPurple
+        }
         message.isHidden = false
         message.text = model.message
         senderName.text = model.username

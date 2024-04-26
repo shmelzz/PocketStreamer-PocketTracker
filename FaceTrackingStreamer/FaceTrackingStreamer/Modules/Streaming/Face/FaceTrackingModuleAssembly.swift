@@ -22,6 +22,7 @@ final class FaceTrackingModuleAssembly: BaseModuleAssembly, IFaceTrackingModuleA
             chatService: servicesAssembly.chatService,
             platformManager: servicesAssembly.platformManager,
             endpointProvider: servicesAssembly.endpointProvider,
+            actionsStorage: servicesAssembly.actionsStorage,
             coordinator: coordinator
         )
         

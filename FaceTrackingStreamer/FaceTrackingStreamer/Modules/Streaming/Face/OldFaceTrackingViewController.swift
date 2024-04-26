@@ -12,6 +12,8 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
     private let actionsService: IActionsService
     private let chatService: IChatService
     private let platformManager: IPlatformManager
+    private let actionsStorage: IActionsStorage
+    
     
     private var websocket: WebSocket!
     
@@ -58,6 +60,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         let view = ActionsListView()
         let presenter = ActionsPresenter(
             actionsService: actionsService,
+            actionsStorage: actionsStorage,
             view: view,
             coordinator: coordinator
         )
@@ -70,6 +73,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         let presenter = ChatPresenter(
             chatService: chatService,
             platformManager: platformManager,
+            actionsStorage: actionsStorage,
             view: view,
             coordinator: coordinator
         )
@@ -88,6 +92,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         chatService: IChatService,
         platformManager: IPlatformManager,
         endpointProvider: IEndpointProvider,
+        actionsStorage: IActionsStorage,
         coordinator: ICoordinator
     ) {
         self.endpointStorage = endpointStorage
@@ -97,6 +102,7 @@ final class OldFaceTrackingViewController: UIViewController, IFaceTrackingView {
         self.chatService = chatService
         self.platformManager = platformManager
         self.endpointProvider = endpointProvider
+        self.actionsStorage = actionsStorage
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }

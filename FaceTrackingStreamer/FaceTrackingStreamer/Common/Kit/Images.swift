@@ -19,6 +19,7 @@ enum ImageAssets {
     static let error = UIImage(named: "error")
     static let undefined = UIImage(named: "undefined")
     static let cubes = UIImage(named: "cubes")
+    static let star = UIImage(named: "star")
     
     static let account = UIImage(systemName: "person.crop.circle")?.withRenderingMode(.alwaysOriginal).withTintColor(.white)
     static let key = UIImage(systemName: "key")?.withRenderingMode(.alwaysOriginal).withTintColor(.white)
