@@ -6,28 +6,8 @@ title: Welcome to PocketStreamer
 <img src="icon.png"  width="200" height="200">
 </p>
 
-<div style="display: flex; justify-content: space-between;">
- <div style="text-align: center;">
-   <h3 style="text-align: center;">PocketTracker</h3>
-   <a href="https://testflight.apple.com/join/hM2dHWso" target="_blank">
-     <img src="https://askyourself.app/assets/testflight.png" alt="Download on TestFlight" style="width: auto; height: 70px;">
-   </a>
-    <h3 style="text-align: center;">iOS</h3>
- </div>
- <div style="text-align: center;">
-   <h5 style="text-align: center;">Telegram Channel</h5>
-   <a href="https://t.me/+IVqwZ5QDvfY2YWMy" target="_blank">
-     <img src="https://cdn.worldvectorlogo.com/logos/telegram.svg" alt="Download on TestFlight" style="width: auto; height: 70px;">
-   </a>
- </div>
- <div style="text-align: center;">
-   <h3 style="text-align: center;">PocketComposer</h3>
-   <a href="https://testflight.apple.com/join/L2sEste8" target="_blank">
-     <img src="https://askyourself.app/assets/testflight.png" alt="Download on TestFlight" style="width: auto; height: 70px;">
-   </a>
-    <h3 style="text-align: center;">macOS</h3>
- </div>
-</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between;"> <div style="text-align: center; flex: 1 0 auto;"> <h3 style="text-align: center;">PocketTracker (iOS)</h3> <a href="https://testflight.apple.com/join/hM2dHWso" target="_blank"> <img src="https://askyourself.app/assets/testflight.png" alt="Download on TestFlight" style="width: auto; height: 70px;"> </a> </div> <div style="text-align: center; flex: 1 0 auto;"> <h5 style="text-align: center;">Telegram Channel</h5> <a href="https://t.me/+IVqwZ5QDvfY2YWMy" target="_blank"> <img src="https://cdn.worldvectorlogo.com/logos/telegram.svg" alt="Download on TestFlight" style="width: auto; height: 70px;"> </a> </div> <div style="text-align: center; flex: 1 0 auto;"> <h3 style="text-align: center;">PocketComposer (macOS) </h3> <a href="https://testflight.apple.com/join/L2sEste8" target="_blank"> <img src="https://askyourself.app/assets/testflight.png" alt="Download on TestFlight" style="width: auto; height: 70px;"> </a> </div> </div>
+
 
 ## Revolutionize Your Streaming Experience with PocketStreamer
 
