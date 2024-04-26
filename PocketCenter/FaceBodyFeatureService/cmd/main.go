@@ -38,6 +38,7 @@ func main() {
 		fmt.Println(err)
 	}
 	newCfg.Port = "4545"
+	newCfg.UserAuthAddress = "http://auth_service:8088"
 	newApplication := app.NewApp(newCfg)
 
 	newApplication.Run()

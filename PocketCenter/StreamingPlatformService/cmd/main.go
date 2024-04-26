@@ -50,6 +50,8 @@ func main() {
 		fmt.Println(err)
 	}
 	newCfg.Port = "7070"
+	newCfg.UserAuthAddress = "http://auth_service:8088"
+	newCfg.PocketActionAddress = "http://pocketaction:9091"
 	newApplication := app.NewApp(newCfg)
 
 	newApplication.Run()
