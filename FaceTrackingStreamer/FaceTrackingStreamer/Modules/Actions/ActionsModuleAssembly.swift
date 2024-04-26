@@ -17,6 +17,7 @@ final class ActionsModuleViewAssembly: BaseModuleAssembly, IActionsModuleViewAss
         let view = ActionsListView()
         let presenter = ActionsPresenter(
             actionsService: servicesAssembly.actionsService,
+            actionsStorage: servicesAssembly.actionsStorage,
             view: view,
             coordinator: coordinator
         )

@@ -10,6 +10,21 @@ final class BodyTrackingViewController: UIViewController, IBodyTrackingView, ARS
     
     private let arView: ARView
     
+    private lazy var connectionStatusImageView: UIImageView = {
+        let view = UIImageView(image: ImageAssets.undefined)
+        return view
+    }()
+    
+    private lazy var connectButton: UIButton = {
+        let button = UIButton.tinted(
+            title: "Connect",
+            font: Fonts.redditMonoSemiBold
+        )
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(onConnectTapped), for: .touchUpInside)
+        return button
+    }()
+    
     var character: BodyTrackedEntity?
     let characterOffset: SIMD3<Float> = [-0.5, 0, 0]
     let characterAnchor = AnchorEntity()
@@ -38,13 +53,29 @@ final class BodyTrackingViewController: UIViewController, IBodyTrackingView, ARS
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        arView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(arView)
+        arView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             arView.topAnchor.constraint(equalTo: view.topAnchor),
             arView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             arView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             arView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+        
+        view.addSubview(connectionStatusImageView)
+        connectionStatusImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            connectionStatusImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            connectionStatusImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            connectionStatusImageView.heightAnchor.constraint(equalToConstant: 52),
+            connectionStatusImageView.widthAnchor.constraint(equalToConstant: 52)
+        ])
+        
+        view.addSubview(connectButton)
+        connectButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            connectButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            connectButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24)
         ])
     }
     
@@ -78,8 +109,6 @@ final class BodyTrackingViewController: UIViewController, IBodyTrackingView, ARS
                 print("Error: Unable to load model as BodyTrackedEntity")
             }
         })
-        
-        onConnectTapped()
     }
     
     @objc
@@ -97,7 +126,6 @@ final class BodyTrackingViewController: UIViewController, IBodyTrackingView, ARS
         var request = URLRequest(url: URL(string: url)!)
         request.setValue(servicesAssembly.sessionProvider.token, forHTTPHeaderField: "Authentication")
         request.setValue(servicesAssembly.sessionProvider.sessionId, forHTTPHeaderField: "SessionId")
-        print("sessionId: \(servicesAssembly.sessionProvider.sessionId)")
         request.timeoutInterval = 10
         websocket = WebSocket(request: request)
         websocket.delegate = self
@@ -147,8 +175,12 @@ extension BodyTrackingViewController: WebSocketDelegate {
         switch event {
         case .connected(let headers):
             print("WebSocket connected")
+            connectButton.tintColor = .systemGreen
+            connectionStatusImageView.image = ImageAssets.net
         case .disconnected(let reason, let code):
             print("WebSocket disconnected: \(reason)")
+            connectButton.tintColor = .systemRed
+            connectionStatusImageView.image = ImageAssets.error
         case .text(let text):
             print("Received text: \(text)")
         case .binary(let data):
@@ -163,6 +195,8 @@ extension BodyTrackingViewController: WebSocketDelegate {
             break
         case .cancelled:
             print("WebSocket cancelled")
+            connectButton.tintColor = .systemRed
+            connectionStatusImageView.image = ImageAssets.error
         case .error(let error):
             let alert = UIAlertController(
                 title: "Error",

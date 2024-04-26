@@ -14,14 +14,17 @@ final class ActionsPresenter: BaseModuleOutput, IActionsPresenter {
     private weak var view: IActionsView?
     
     private let actionsService: IActionsService
+    private let actionsStorage: IActionsStorage
     
     init(
         actionsService: IActionsService,
+        actionsStorage: IActionsStorage,
         view: IActionsView,
         coordinator: ICoordinator
     ) {
         self.view = view
         self.actionsService = actionsService
+        self.actionsStorage = actionsStorage
         super.init(coordinator: coordinator)
         
         loadActionsList { [weak self] actions in
@@ -69,6 +72,7 @@ final class ActionsPresenter: BaseModuleOutput, IActionsPresenter {
             switch result {
             case .success(let data):
                 self?.actions = data.actions
+                self?.actionsStorage.set(data.actions)
                 completion(data.actions)
             case .failure(let failure):
                 print(failure.localizedDescription)

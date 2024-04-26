@@ -15,6 +15,7 @@ protocol IChatPresenter {
 
 protocol IChatView: AnyObject {
     func setFollowButton(isHidden: Bool)
-    func onNewMessage(_ model: MessageModel)
+    func onNewMessage(_ model: MessageViewModel)
+    func didReceiveAction()
 }
 
