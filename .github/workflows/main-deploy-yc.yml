@@ -101,7 +101,7 @@ jobs:
 
   update-yc:
     runs-on: self-hosted
-    needs: [build_and_push]
+    needs: [build_config_nginx]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
