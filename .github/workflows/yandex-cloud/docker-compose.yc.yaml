@@ -11,6 +11,8 @@ services:
       - SERVER_ADDRESS=0.0.0.0
       - SERVER_PORT=49454
       - USER_AUTH_ADDRESS=http://auth_service:50000
+      - APP_ENV={{ env.APP_ENV }}
+      - LOKI_ADDRESS={{ env.LOKI_ADDRESS }}
     restart: always
 
 ## UserAuthSession service    
@@ -32,6 +34,8 @@ services:
       SERVER_ADDRESS: "0.0.0.0"
       SERVER_PORT: "50000"
       SWAGGER_BASE_PATH: "/userauthsession/auth"
+      APP_ENV: {{ env.APP_ENV }}
+      LOKI_ADDRESS: {{ env.LOKI_ADDRESS }}
 
   ## Pocket action service
   pocketaction:
@@ -43,9 +47,10 @@ services:
       - SERVER_ADDRESS=0.0.0.0
       - SERVER_PORT=49333
       - USER_AUTH_ADDRESS=http://auth_service:50000
-      - APP_ENV="production"
+      - APP_ENV={{ env.APP_ENV }}
       - APPWRITE_API_KEY={{ env.APPWRITE_API_KEY }}
       - SWAGGER_BASE_PATH=/pocketaction
+      - LOKI_ADDRESS={{ env.LOKI_ADDRESS }}
     restart: always     
   
   streaming: 
@@ -57,11 +62,12 @@ services:
       - SERVER_ADDRESS=0.0.0.0
       - SERVER_PORT=63222
       - USER_AUTH_ADDRESS=http://auth_service:50000
-      - APP_ENV="production"
+      - APP_ENV={{ env.APP_ENV }}
       - POCKETACTION_ADDRESS=http://pocketaction:49333
       - TWITCH_CLIENT_ID={{ env.TWITCH_CLIENT_ID }}
       - TWITCH_CLIENT_SECRET={{ env.TWITCH_CLIENT_SECRET }}
       - SWAGGER_BASE_PATH=/streaming
+      - LOKI_ADDRESS={{ env.LOKI_ADDRESS }}
     restart: always 
 
   user_db:

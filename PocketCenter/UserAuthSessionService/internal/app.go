@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"time"
 	"userauth/internal/config"
 	"userauth/internal/handlers"
 	"userauth/internal/repository"
 	"userauth/internal/router"
 	"userauth/internal/service"
+	"userauth/internal/zaploki"
 
 	docs "userauth/internal/docs"
 
@@ -18,11 +20,29 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/jackc/pgx/v4/pgxpool"
+	"go.uber.org/zap"
 )
 
 type App struct {
 	Engine *gin.Engine
 	Config *config.Config
+}
+
+func SetUpLoki(cfg *config.Config) *zap.Logger {
+	zapConfig := zap.NewProductionConfig()
+	loki := zaploki.New(context.Background(), zaploki.Config{
+		Url:          cfg.LokiAddress,
+		BatchMaxSize: 1000,
+		BatchMaxWait: 10 * time.Second,
+		Labels:       map[string]string{"port": cfg.Port, "app_environment": cfg.AppEnv, "app": "userauthsession"},
+	})
+
+	logger, err := loki.WithCreateLogger(zapConfig, "port"+cfg.Port)
+	if err != nil {
+		logger.Error(err.Error())
+	}
+	logger.Info("Loki Setup")
+	return logger
 }
 
 // NewApp creates and configures your application.
@@ -38,7 +58,8 @@ func NewApp(cfg *config.Config) *App {
 	userAuthService := service.NewUserAuthService(userAuthRepository)
 	sessionService := service.NewSessionService(sessionRepository)
 	handler := handlers.NewUserAuthHandler(userAuthService, sessionService)
-	engine := router.InitRoutes(handler)
+	logger := SetUpLoki(cfg)
+	engine := router.InitRoutes(handler, logger)
 
 	return &App{
 		Engine: engine,

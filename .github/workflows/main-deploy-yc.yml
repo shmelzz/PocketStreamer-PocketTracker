@@ -68,6 +68,9 @@ jobs:
     runs-on: self-hosted
     needs: [build_and_push]
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
       - name: Deploy COI VM
         id: deploy-coi
         uses: yc-actions/yc-coi-deploy@v2
@@ -81,6 +84,8 @@ jobs:
           TWITCH_CLIENT_ID : ${{ secrets.TWITCH_CLIENT_ID }}
           TWITCH_CLIENT_SECRET : ${{ secrets.TWITCH_CLIENT_SECRET }}
           APPWRITE_API_KEY: ${{ secrets.APPWRITE_API_KEY }}
+          APP_ENV: production
+          LOKI_ADDRESS: ${{ secrets.LOKI_ADDRESS }}
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           folder-id: ${{ secrets.YC_FOLDER_ID }}

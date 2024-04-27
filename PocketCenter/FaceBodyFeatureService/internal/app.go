@@ -1,6 +1,7 @@
 package app
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net"
@@ -8,8 +9,12 @@ import (
 	"pocketcenter/internal/handlers"
 	"pocketcenter/internal/router"
 	"pocketcenter/internal/services"
+	"pocketcenter/internal/zaploki"
+
+	"time"
 
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 type App struct {
@@ -17,10 +22,30 @@ type App struct {
 	Config *config.Config
 }
 
+func SetUpLoki(cfg *config.Config) *zap.Logger {
+	zapConfig := zap.NewProductionConfig()
+	loki := zaploki.New(context.Background(), zaploki.Config{
+		Url:          cfg.LokiAddress,
+		BatchMaxSize: 1000,
+		BatchMaxWait: 10 * time.Second,
+		Labels:       map[string]string{"port": cfg.Port, "app_environment": cfg.AppEnv, "app": "facebodyfeature"},
+	})
+
+	logger, err := loki.WithCreateLogger(zapConfig, "port"+cfg.Port)
+	if err != nil {
+		logger.Error(err.Error())
+	}
+	logger.Info("Loki Setup")
+	return logger
+}
+
 // NewApp creates and configures your application.
 func NewApp(cfg *config.Config) *App {
-	handlers := handlers.NewFeatureHandler(services.NewBroadcastService(), cfg.UserAuthAddress)
-	engine := router.InitRoutes(handlers)
+	zaplogger := SetUpLoki(cfg)
+	faceHandlers := handlers.NewFeatureHandler(services.NewBroadcastService(zaplogger), cfg.UserAuthAddress, zaplogger)
+	bodyHandlers := handlers.NewBodyFeatureHandler(services.NewBroadcastService(zaplogger), cfg.UserAuthAddress, zaplogger)
+
+	engine := router.InitRoutes(faceHandlers, bodyHandlers, zaplogger)
 	// Set up the router and routes.
 
 	return &App{

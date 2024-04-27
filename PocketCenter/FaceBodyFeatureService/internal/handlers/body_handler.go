@@ -4,46 +4,31 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"pocketcenter/internal/model"
 	"pocketcenter/internal/services"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
-type FeatureHandler struct {
+type BodyFeatureHandler struct {
 	broadcastService *services.BroadcastService
 	userAuthAddress  string
 	logger           *zap.Logger
 }
 
-func NewFeatureHandler(
+func NewBodyFeatureHandler(
 	broadcastService *services.BroadcastService,
 	userAuthAddress string,
 	zapLogger *zap.Logger,
-) *FeatureHandler {
-	return &FeatureHandler{
+) *BodyFeatureHandler {
+	return &BodyFeatureHandler{
 		broadcastService: broadcastService,
 		userAuthAddress:  userAuthAddress,
 		logger:           zapLogger,
 	}
 }
 
-type VersionResponse struct {
-	Version string `json:"version"`
-}
-
-func (f *FeatureHandler) HandleVersion(c *gin.Context) {
-	r := c.Request
-	w := c.Writer
-	if r.Method != http.MethodGet {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-	json.NewEncoder(w).Encode(VersionResponse{Version: "v1"})
-}
-
-func (f *FeatureHandler) HandleFaceTracking(c *gin.Context) {
+func (f *BodyFeatureHandler) HandleBodyTracking(c *gin.Context) {
 	r := c.Request
 	w := c.Writer
 	token := r.Header.Get("Authentication")
@@ -62,8 +47,8 @@ func (f *FeatureHandler) HandleFaceTracking(c *gin.Context) {
 	client, err := f.broadcastService.AddTracker(w, r, username)
 	logger := f.logger.With(zap.String("username", username)).With(zap.String("session", session))
 	if err != nil {
-		logger.Error("Cant add tracker", zap.Error(err))
-		http.Error(w, "Can't add tracker", http.StatusBadRequest)
+		logger.Error("Cant add body tracker", zap.Error(err))
+		http.Error(w, "Can't add body tracker", http.StatusBadRequest)
 		return
 	}
 
@@ -76,11 +61,6 @@ func (f *FeatureHandler) HandleFaceTracking(c *gin.Context) {
 				return
 			}
 
-			var data model.FaceTrackingFeatures
-			if err = json.Unmarshal(message, &data); err != nil {
-				logger.Error("Error unmarshalling JSON:", zap.Error(err))
-			}
-
 			err = f.broadcastService.Broadcast(message, session)
 			if err != nil {
 				logger.Error("Error when broadcasting", zap.Error(err))
@@ -90,7 +70,7 @@ func (f *FeatureHandler) HandleFaceTracking(c *gin.Context) {
 	}()
 }
 
-func (f *FeatureHandler) HandleReceiver(c *gin.Context) {
+func (f *BodyFeatureHandler) HandleReceiver(c *gin.Context) {
 	r := c.Request
 	w := c.Writer
 	token := r.Header.Get("Authentication")
@@ -111,7 +91,7 @@ func (f *FeatureHandler) HandleReceiver(c *gin.Context) {
 	logger := f.logger.With(zap.String("username", username)).With(zap.String("session", session))
 	client, err := f.broadcastService.AddComposer(w, r, username)
 	if err != nil {
-		logger.Error("Cant add composer", zap.Error(err))
+		logger.Error("Cant add body composer", zap.Error(err))
 		return
 	}
 
@@ -135,7 +115,7 @@ func (f *FeatureHandler) HandleReceiver(c *gin.Context) {
 	}()
 }
 
-func (f *FeatureHandler) validateToken(token string) (bool, string, error) {
+func (f *BodyFeatureHandler) validateToken(token string) (bool, string, error) {
 	// Create a new request to the userauthsessionservice
 	req, err := http.NewRequest("POST", f.userAuthAddress+"/auth/validate", nil)
 	if err != nil {

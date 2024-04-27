@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"pocketaction/internal/model"
 	"pocketaction/internal/service"
@@ -14,17 +15,20 @@ type PocketActionHandler struct {
 	broadcastService *service.BroadcastService
 	documentService  *service.DocumentService
 	userAuthAddress  string
+	logger           *zap.Logger
 }
 
 func NewPocketActionHandler(
 	broadcastService *service.BroadcastService,
 	documentService *service.DocumentService,
 	userAuthAddress string,
+	zapLogger *zap.Logger,
 ) *PocketActionHandler {
 	return &PocketActionHandler{
 		broadcastService: broadcastService,
 		userAuthAddress:  userAuthAddress,
 		documentService:  documentService,
+		logger:           zapLogger,
 	}
 }
 
@@ -42,14 +46,14 @@ func NewPocketActionHandler(
 // @Router /pocketaction [post]
 func (p *PocketActionHandler) HandlePocketAction(c *gin.Context) {
 	token := c.Request.Header.Get("Authentication")
-	ok, err := p.validateToken(token)
+	ok, username, err := p.validateToken(token)
 	if err != nil {
-		zap.S().Errorf(err.Error())
+		p.logger.Sugar().Errorf(err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Error when try to validate"})
 		return
 	}
 	if !ok {
-		zap.S().Infof("Validation not passed")
+		p.logger.Sugar().Infof("Validation not passed")
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Validation not passed"})
 		return
 	}
@@ -57,7 +61,7 @@ func (p *PocketActionHandler) HandlePocketAction(c *gin.Context) {
 	var pocketAction model.PocketAction
 	if err := c.BindJSON(&pocketAction); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		zap.S().Infof("Error reading JSON: %s", err.Error())
+		p.logger.Sugar().Infof("Error reading JSON: %s", err.Error(), zap.String("username", username))
 		return
 	}
 
@@ -66,12 +70,12 @@ func (p *PocketActionHandler) HandlePocketAction(c *gin.Context) {
 	err = p.broadcastService.Broadcast(jsonBytes, c.Request.Header.Get("SessionId"))
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-		zap.S().Infof("Cant found session Id : %s", err.Error())
+		p.logger.Sugar().Infof("Cant found session Id : %s", err.Error())
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "success"})
-	zap.S().Infow("Pocket action handled successfully",
+	p.logger.Sugar().Infow("Pocket action handled successfully",
 		zap.String("type", pocketAction.Type),
 		zap.String("payload", pocketAction.Payload))
 }
@@ -89,14 +93,14 @@ func (p *PocketActionHandler) HandlePocketAction(c *gin.Context) {
 // @Router /document [get]
 func (p *PocketActionHandler) HandlePocketActionDocument(c *gin.Context) {
 	token := c.Request.Header.Get("Authentication")
-	ok, err := p.validateToken(token)
+	ok, _, err := p.validateToken(token)
 	if err != nil {
-		zap.S().Errorf(err.Error())
+		p.logger.Sugar().Errorf(err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Error when try to validate"})
 		return
 	}
 	if !ok {
-		zap.S().Infof("Validation not passed")
+		p.logger.Sugar().Infof("Validation not passed")
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Validation not passed"})
 		return
 	}
@@ -116,12 +120,11 @@ func (p *PocketActionHandler) HandleVersion(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func (f *PocketActionHandler) validateToken(token string) (bool, error) {
+func (f *PocketActionHandler) validateToken(token string) (bool, string, error) {
 	// Create a new request to the userauthsessionservice
-	zap.S().Debug(f.userAuthAddress + "/auth/validate")
 	req, err := http.NewRequest("POST", f.userAuthAddress+"/auth/validate", nil)
 	if err != nil {
-		return false, err
+		return false, "", err
 	}
 
 	// Add the token to the request header
@@ -131,17 +134,28 @@ func (f *PocketActionHandler) validateToken(token string) (bool, error) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		zap.S().Debug(err.Error())
-		return false, err
+		return false, "", err
 	}
 	defer resp.Body.Close()
 
 	// Check the response
 	if resp.StatusCode != http.StatusOK {
-		return false, nil
+		return false, "", nil
 	}
 
-	return true, nil
+	var result map[string]string
+	err = json.NewDecoder(resp.Body).Decode(&result)
+	if err != nil {
+		return false, "", err
+	}
+
+	// Extract the username from the response
+	username, ok := result["username"]
+	if !ok {
+		return false, "", fmt.Errorf("Username not found in response")
+	}
+
+	return true, username, nil
 }
 
 // Websocket connect handler
@@ -150,21 +164,21 @@ func (f *PocketActionHandler) HandleReceiver(c *gin.Context) {
 	w := c.Writer
 	token := r.Header.Get("Authentication")
 	session := r.Header.Get("SessionId")
-	ok, err := f.validateToken(token)
+	ok, username, err := f.validateToken(token)
 	if err != nil {
-		zap.S().Error(err)
+		f.logger.Sugar().Error(err)
 		c.JSON(http.StatusBadRequest, "Error when try to validate")
 		return
 	}
 	if !ok {
-		zap.S().Info("Validation not passed")
+		f.logger.Sugar().Info("Validation not passed")
 		c.JSON(http.StatusUnauthorized, "Validation not passed")
 		return
 	}
 
 	client, err := f.broadcastService.AddComposer(w, r)
 	if err != nil {
-		zap.S().Error(err)
+		f.logger.Sugar().Error(err, zap.String("username", username))
 		f.broadcastService.RemoveComposerClient(session)
 		return
 	}
@@ -181,7 +195,7 @@ func (f *PocketActionHandler) HandleReceiver(c *gin.Context) {
 				}
 				err := f.broadcastService.SendToClient(client, message)
 				if err != nil {
-					zap.S().Error("Error writing message:", err)
+					f.logger.Sugar().Error("Error writing message:", err)
 					return
 				}
 			}
@@ -202,19 +216,19 @@ func (f *PocketActionHandler) HandleReceiver(c *gin.Context) {
 // @Router /presentation [get]
 func (p *PocketActionHandler) HandlePresentation(c *gin.Context) {
 	token := c.Request.Header.Get("Authentication")
-	ok, err := p.validateToken(token)
+	ok, username, err := p.validateToken(token)
 	if err != nil {
-		zap.S().Errorf(err.Error())
+		p.logger.Sugar().Errorf(err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Error when try to validate"})
 		return
 	}
 	if !ok {
-		zap.S().Infof("Validation not passed")
+		p.logger.Sugar().Infof("Validation not passed")
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Validation not passed"})
 		return
 	}
 	document, err := p.documentService.GetPresentationPdfPath()
-	zap.S().Error(err)
+	p.logger.Sugar().Error(err, zap.String("username", username))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "cant get presentation processed, error: " + err.Error()})
 		return
@@ -237,20 +251,20 @@ func (p *PocketActionHandler) HandlePresentationZip(c *gin.Context) {
 	token := c.Request.Header.Get("Authentication")
 	sessionId := c.Request.Header.Get("SessionId")
 
-	ok, err := p.validateToken(token)
+	ok, username, err := p.validateToken(token)
 	if err != nil {
-		zap.S().Errorf(err.Error())
+		p.logger.Sugar().Errorf(err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Error when try to validate"})
 		return
 	}
 	if !ok {
-		zap.S().Infof("Validation not passed")
+		p.logger.Sugar().Infof("Validation not passed")
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Validation not passed"})
 		return
 	}
 	document, err := p.documentService.GetPresentationZipPath(sessionId)
 	if err != nil {
-		zap.S().Error(err)
+		p.logger.Sugar().Error(err, zap.String("username", username))
 		c.JSON(http.StatusBadRequest, gin.H{"message": "cant get presentation processed, error: " + err.Error()})
 		return
 	}

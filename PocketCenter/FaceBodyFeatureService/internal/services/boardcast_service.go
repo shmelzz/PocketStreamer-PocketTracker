@@ -11,6 +11,7 @@ import (
 
 	"github.com/gorilla/websocket"
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
+	"go.uber.org/zap"
 )
 
 var upgrader = websocket.Upgrader{
@@ -23,6 +24,7 @@ type BroadcastService struct {
 	trackerClients  map[string]*Client
 	composerClients map[string]*Client
 	mu              sync.Mutex
+	logger          *zap.Logger
 }
 
 type Client struct {
@@ -30,15 +32,18 @@ type Client struct {
 	Send chan []byte
 }
 
-func NewBroadcastService() *BroadcastService {
+func NewBroadcastService(
+	zapLogger *zap.Logger,
+) *BroadcastService {
 	return &BroadcastService{
 		sessions:        make(map[string]bool),
 		trackerClients:  make(map[string]*Client),
 		composerClients: make(map[string]*Client),
+		logger:          zapLogger,
 	}
 }
 
-func (s *BroadcastService) AddTracker(w http.ResponseWriter, r *http.Request) (*Client, error) {
+func (s *BroadcastService) AddTracker(w http.ResponseWriter, r *http.Request, username string) (*Client, error) {
 	session := r.Header.Get("SessionId")
 	if session == "" {
 		return nil, fmt.Errorf("can not find session Id")
@@ -52,12 +57,12 @@ func (s *BroadcastService) AddTracker(w http.ResponseWriter, r *http.Request) (*
 	s.mu.Lock()
 	s.sessions[session] = true
 	s.trackerClients[session] = client
-	log.Printf("Add tracker")
+	s.logger.With(zap.String("username", username), zap.String("session", session)).Info("Add tracker")
 	s.mu.Unlock()
 	return client, nil
 }
 
-func (s *BroadcastService) AddComposer(w http.ResponseWriter, r *http.Request) (*Client, error) {
+func (s *BroadcastService) AddComposer(w http.ResponseWriter, r *http.Request, username string) (*Client, error) {
 	session := r.Header.Get("SessionId")
 
 	if session == "" {
@@ -73,7 +78,7 @@ func (s *BroadcastService) AddComposer(w http.ResponseWriter, r *http.Request) (
 	s.mu.Lock()
 	s.sessions[session] = true
 	s.composerClients[session] = client
-	log.Printf("Add composer")
+	s.logger.With(zap.String("username", username), zap.String("session", session)).Info("Add composer")
 	s.mu.Unlock()
 	return client, nil
 }

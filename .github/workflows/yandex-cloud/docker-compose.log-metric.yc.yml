@@ -1,0 +1,63 @@
+version: "3"
+
+networks:
+  loki:
+
+services:
+  loki:
+    image: grafana/loki:2.9.2
+    ports:
+      - "0.0.0.0:3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+        - /home/coi-data/loki:/etc/loki
+    restart: no
+    networks:
+      - loki
+
+  promtail:
+    image: grafana/promtail:2.9.2
+    volumes:
+      - /var/log:/var/log
+      - /home/coi-data/promtail:/etc/promtail
+    command: -config.file=/etc/promtail/config.yml
+    restart: no
+    networks:
+      - loki
+
+  grafana:
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+    volumes:
+      - /home/coi-data/grafana:/var/lib/grafana
+    user: '0'
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy
+          orgId: 1
+          url: http://loki:3100
+          basicAuth: false
+          isDefault: true
+          version: 1
+          editable: false
+        EOF
+        /run.sh
+    image: grafana/grafana:latest
+    ports:
+      - "0.0.0.0:3000:3000"
+    restart: no
+    networks:
+      - loki
+
+x-yc-disks:
+  - device_name: coi-data
+    fs_type: ext4
+    host_path: /home/coi-data

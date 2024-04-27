@@ -104,6 +104,7 @@ func (t *TwichService) ConnectToTwitchChat(messages chan model.LiveChatMessage, 
 
 	client.OnPrivateMessage(func(message twitch.PrivateMessage) {
 		go func() {
+			fmt.Print(message.User.DisplayName)
 			messages <- model.LiveChatMessage{
 				Username: message.User.DisplayName,
 				Message:  message.Message,

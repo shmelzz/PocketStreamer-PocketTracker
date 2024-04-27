@@ -4,20 +4,25 @@ import (
 	"fmt"
 	"pocketaction/internal/model"
 	"pocketaction/internal/repository"
+
+	"go.uber.org/zap"
 )
 
 type DocumentService struct {
 	documentRepository *repository.AppwriteDocumentRepsitory
 	pdfToImageService  *PdfToImageService
+	logger             *zap.Logger
 }
 
 func NewDocumentService(
 	documentRepository *repository.AppwriteDocumentRepsitory,
 	pdfPdfToImageService *PdfToImageService,
+	zapLogger *zap.Logger,
 ) *DocumentService {
 	return &DocumentService{
 		documentRepository: documentRepository,
 		pdfToImageService:  pdfPdfToImageService,
+		logger:             zapLogger,
 	}
 }
 
