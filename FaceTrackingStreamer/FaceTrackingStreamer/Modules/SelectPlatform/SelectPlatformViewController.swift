@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 final class SelectPlatformViewController: UIViewController, ISelectPlatformView, UIGestureRecognizerDelegate, UITextFieldDelegate {
-    
+        
     private lazy var backgroundImage: UIImageView = {
         let view = UIImageView(image: ImageAssets.backRainbow)
         return view
@@ -82,7 +82,17 @@ final class SelectPlatformViewController: UIViewController, ISelectPlatformView,
         
         longTapGestureRecognizer.addTarget(self, action: #selector(onLongPress))
         longTapGestureRecognizer.delegate = self
+        
+        presenter?.onViewReady()
     }
+    
+    // MARK: - ISelectPlatformView
+
+    func configure(with model: SelectPlatformViewModel) {
+        channelTextInput.text = model.channel
+    }
+    
+    // MARK: - UIGestureRecognizerDelegate
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         true

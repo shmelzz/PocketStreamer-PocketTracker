@@ -58,6 +58,7 @@
 		CC40BEAD2B5F097A004036F3 /* FaceTrackingContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC40BEAC2B5F097A004036F3 /* FaceTrackingContract.swift */; };
 		CC40BEB02B5F0D95004036F3 /* StreamSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC40BEAF2B5F0D95004036F3 /* StreamSessionManager.swift */; };
 		CC40BEB22B5F10B6004036F3 /* FaceTrackingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC40BEB12B5F10B6004036F3 /* FaceTrackingPresenter.swift */; };
+		CC4E5F3F2BDD797C003A96D1 /* PlatformChannelStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4E5F3E2BDD797C003A96D1 /* PlatformChannelStorage.swift */; };
 		CC85ADA52B71807900C91BFD /* StartStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADA42B71807900C91BFD /* StartStreamViewController.swift */; };
 		CC85ADA82B71918C00C91BFD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADA72B71918C00C91BFD /* AuthService.swift */; };
 		CC85ADAA2B71931800C91BFD /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC85ADA92B71931800C91BFD /* RequestManager.swift */; };
@@ -177,6 +178,7 @@
 		CC40BEAC2B5F097A004036F3 /* FaceTrackingContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceTrackingContract.swift; sourceTree = "<group>"; };
 		CC40BEAF2B5F0D95004036F3 /* StreamSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamSessionManager.swift; sourceTree = "<group>"; };
 		CC40BEB12B5F10B6004036F3 /* FaceTrackingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceTrackingPresenter.swift; sourceTree = "<group>"; };
+		CC4E5F3E2BDD797C003A96D1 /* PlatformChannelStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformChannelStorage.swift; sourceTree = "<group>"; };
 		CC85ADA42B71807900C91BFD /* StartStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStreamViewController.swift; sourceTree = "<group>"; };
 		CC85ADA72B71918C00C91BFD /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		CC85ADA92B71931800C91BFD /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
@@ -504,6 +506,7 @@
 				CC3F81FE2B5D6204006EDC95 /* ApiEndpointStorage.swift */,
 				CCB800AD2B8287D7003F9AD2 /* SessionStorage.swift */,
 				CCB606AB2BDBBF8000F933AC /* ActionsStorage.swift */,
+				CC4E5F3E2BDD797C003A96D1 /* PlatformChannelStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -967,6 +970,7 @@
 				CCB26B892B9C562A00B7B9A0 /* ConnectPresenter.swift in Sources */,
 				CCB26BA22B9DEC3300B7B9A0 /* SelectPlatformViewController.swift in Sources */,
 				CCB26BB62B9DFA2700B7B9A0 /* ActionRequest.swift in Sources */,
+				CC4E5F3F2BDD797C003A96D1 /* PlatformChannelStorage.swift in Sources */,
 				CCB26BB42B9DF84300B7B9A0 /* ActionsService.swift in Sources */,
 				CC85ADA52B71807900C91BFD /* StartStreamViewController.swift in Sources */,
 				CCB26B9A2B9DC37700B7B9A0 /* ComposerRequest.swift in Sources */,

@@ -19,6 +19,7 @@ final class SelectPlatformModuleAssembly: BaseModuleAssembly, ISelectPlatformMod
             view: view,
             platformManager: servicesAssembly.platformManager,
             channelService: servicesAssembly.channelService,
+            platformChannelStorage: servicesAssembly.platformChannelStorage,
             coordinator: coordinator
         )
         view.presenter = presenter
