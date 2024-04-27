@@ -32,9 +32,15 @@ protocol IServicesAssembly: AnyObject {
     var faceTrackingService: IFaceTrackingService { get }
     
     var actionsStorage: IActionsStorage { get }
+    
+    var platformChannelStorage: IPlatformChannelStorage { get }
 }
 
 final class ServicesAssembly: IServicesAssembly {
+    
+    private enum Constants {
+        static let suiteName = "PocketTracker"
+    }
     
     private let requestManager: IRequestManager
     private let _endpointProvider: IEndpointProvider
@@ -52,11 +58,11 @@ final class ServicesAssembly: IServicesAssembly {
     }()
     
     lazy var endpointStorage: IApiEndpointStorage = {
-        ApiEndpointStorage(suiteName: "PocketTracker")
+        ApiEndpointStorage(suiteName: Constants.suiteName)
     }()
     
     lazy var sessionStorage: ISessionStorage = {
-        SessionStorage(suiteName: "PocketTracker")
+        SessionStorage(suiteName: Constants.suiteName)
     }()
     
     lazy var sessionProvider: ISessionProvider = {
@@ -112,5 +118,9 @@ final class ServicesAssembly: IServicesAssembly {
     
     lazy var actionsStorage: IActionsStorage = {
         ActionsStorage()
+    }()
+    
+    lazy var platformChannelStorage: IPlatformChannelStorage = {
+        PlatformChannelStorage(suiteName: Constants.suiteName)
     }()
 }

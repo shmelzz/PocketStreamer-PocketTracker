@@ -13,6 +13,7 @@ final class SelectPlatformPresenter: BaseModuleOutput, ISelectPlatformPresenter 
     
     private let platformManager: IPlatformManager
     private let channelService: IChannelService
+    private let platformChannelStorage: IPlatformChannelStorage
     
     private let dataSource = ["Twitch", "YouTube"]
     
@@ -20,12 +21,23 @@ final class SelectPlatformPresenter: BaseModuleOutput, ISelectPlatformPresenter 
         view: ISelectPlatformView,
         platformManager: IPlatformManager,
         channelService: IChannelService,
+        platformChannelStorage: IPlatformChannelStorage,
         coordinator: ICoordinator
     ) {
         self.view = view
         self.platformManager = platformManager
         self.channelService = channelService
+        self.platformChannelStorage = platformChannelStorage
         super.init(coordinator: coordinator)
+    }
+    
+    func onViewReady() {
+        let name = platformChannelStorage.get(for: .twitch)
+        let viewModel = SelectPlatformViewModel(
+            platform: .twitch,
+            channel: name
+        )
+        view?.configure(with: viewModel)
     }
     
     func onContinueTapped(platform name: String?) {
@@ -34,6 +46,7 @@ final class SelectPlatformPresenter: BaseModuleOutput, ISelectPlatformPresenter 
             switch result {
             case .success(let data):
                 self?.platformManager.selectPlatform(name)
+                self?.platformChannelStorage.add(name ?? "", for: .twitch)
                 self?.finish(.selectPlatformContinue(isLiveChannel: data.isLive))
             case .failure:
                 self?.finish(.selectPlatformValidationError)
