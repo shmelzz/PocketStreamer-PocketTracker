@@ -116,7 +116,7 @@ jobs:
           POCKETACTION_IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.POCKETACTION_IMAGE_NAME }}:${{ env.BRANCH_NAME }}
           STREAMING_IMAGE_TAG: ${{ env.REGISTRY }}/${{ env.STREAMING_IMAGE_NAME }}:${{ env.BRANCH_NAME }}
           YC_VM_USERNAME: ${{ vars.YC_VM_USERNAME }}
-          YC_VM_SSH: ${{ vars.YC_VM_SSH }}
+          YC_VM_SSH: ${{ secrets.YC_VM_SSH }}
           TWITCH_CLIENT_ID : ${{ secrets.TWITCH_CLIENT_ID }}
           TWITCH_CLIENT_SECRET : ${{ secrets.TWITCH_CLIENT_SECRET }}
           APPWRITE_API_KEY: ${{ secrets.APPWRITE_API_KEY }}
